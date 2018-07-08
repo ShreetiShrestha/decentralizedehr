@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     path = require('path');
 
 var PatientSchema = new Schema({
-    username: {type: String, requird: true, unique: true},
+    username: {type: String, required: true, unique: true},
     email: {type: String, required: true, unique:true},
     ethAddr: {type: String, unique: true},
 
@@ -36,11 +36,11 @@ var PatientSchema = new Schema({
     },
 
     vitalSign: [{
-        name: {String},
+        name: {type: String},
         date: {type: Date, 'default': Date.now},
         status: {type: String},
         value: {type: Number},
-        unit: {String},
+        unit: {type: String},
         notes: {type: String}
     }],
 
@@ -48,7 +48,7 @@ var PatientSchema = new Schema({
         name: {type: String},
         reaction: {type: String},
         allergenType: {type: String},
-        severity: {type: String},
+        severity: {type: String, enum: [1,2,3,4,5]},
         firstObserved: {type: Date},
         currentlyActive: {type: Boolean},
         note: {type: String}
@@ -56,7 +56,7 @@ var PatientSchema = new Schema({
 
     medications: [{
         name: {type: String},
-        dose: {type: Number},
+        dose: {type: String},
         frequency: {type: Number},
         timeInterval: {type: String},
         strength: {type: Number},
@@ -77,7 +77,7 @@ var PatientSchema = new Schema({
         name: {type: String},
         type: {type: String},
         givenBy: {type: String},
-        dose: {type: Number},
+        dose: {type: String},
         date: {type: Date},
         note: {type: String}
     }],
