@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "express-handlebars": "^3.0.0",
     "fs-extra": "^6.0.1",
     "ganache-cli": "^6.1.5",
+    "jquery-confirm": "^3.3.2",
     "mongoose": "^5.2.1",
     "nodemon": "^1.17.5",
     "path": "^0.12.7",

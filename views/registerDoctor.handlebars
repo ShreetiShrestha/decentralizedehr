@@ -22,7 +22,7 @@
                     <span class="step_descr">
                       Step 1
                       <br />
-                      <small>DOCTOR or PATIENT</small>
+                      <small>Basic Credentials</small>
                     </span>
                   </a>
                 </li>
@@ -32,7 +32,7 @@
                     <span class="step_descr">
                       Step 2
                       <br />
-                      <small>Basic Credentials</small>
+                      <small>Personal Details</small>
                     </span>
                   </a>
                 </li>
@@ -42,7 +42,7 @@
                     <span class="step_descr">
                       Step 3
                       <br />
-                      <small>Personal Details</small>
+                      <small>Profile Picture</small>
                     </span>
                   </a>
                 </li>
@@ -57,25 +57,9 @@
                   </a>
                 </li>
               </ul>
-              <div id="step-1">
-                <form class="form-horizontal form-label-left" action="/signup/">
-                  <div class="form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Enter as:</label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <div id="role" class="btn-group" data-toggle="buttons">
-                        <label class="btn " data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                          <input type="radio" name="role" value="doctor"> &nbsp; Doctor &nbsp;
-                        </label>
-                        <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                          <input type="radio" name="role" value="patient"> Patient
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
+            
 
-              <div id="step-2">
+              <div id="step-1">
                 <h2 class="StepTitle">Basic Credentials</h2>
                 <form class="form-horizontal form-label-left">
 
@@ -99,7 +83,7 @@
                 </form>
               </div>
 
-              <div id="step-3">
+              <div id="step-2">
                 <h2 class="StepTitle">Personal Details</h2>
                 <form class="form-horizontal form-label-left">
 
@@ -108,7 +92,7 @@
                       <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                      <input name="firstname"type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
                     </div>
                   </div>
                   <div class="form-group">
@@ -189,17 +173,20 @@
                     </div>
                   </div>
 
-                  <form>
-                    <div class="form-group">
+                </form>
+              </div>
+
+              <div id="step-3">
+                <form class="form-horizontal form-label-left" action="/signup/">
+                  <div class="form-group">
                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="profilePic">Upload Profile Pic </label>
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <input type="file" class="form-control-file col-md-7 col-xs-12" id="profilePic">
                       </div>
                     </div>
-                  </form>
-
                 </form>
               </div>
+              
               <div id="step-4">
                 <h2 class="StepTitle">Congratulations!!! You have successfully registered for our system. Click "Finish" to go to your Dashboard.</h2>
               </div>
