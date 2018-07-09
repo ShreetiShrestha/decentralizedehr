@@ -57,17 +57,25 @@ $(function () {
             } else {
                 var firstAccount = acc[0];
                 $.post('/home/' + firstAccount).done(function(data){
-                    alert(data.msg);
+                   
                     if (data.key===3){
-                        window.location.href = '/home/'+firstAccount+'/signup';
+                        var result=confirm(data.msg);
+                        if (result){
+                            window.location.href = '/home/'+firstAccount+'/signuppatient';
+                        }else{
+                            window.location.href = '/home/'+firstAccount+'/signupdr';
+                        }                        
                     }
                     else if (data.key===1){
+                        alert(data.msg);
                         window.location.href = '/patient/'+firstAccount;
                     }
                     else if (data.key===2){
+                        alert(data.msg);
                         window.location.href = '/doctor/'+firstAccount;
                     }
                     else {
+                        alert(data.msg);
                         window.location.href = '/';
                     }
                 });

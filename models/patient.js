@@ -3,8 +3,8 @@ var mongoose = require('mongoose'),
     path = require('path');
 
 var PatientSchema = new Schema({
-    username: {type: String, required: true, unique: true},
-    email: {type: String, required: true, unique:true},
+    username: {type: String},
+    email: {type: String,  unique:true},
     ethAddr: {type: String, unique: true},
 
     personalDetail: {

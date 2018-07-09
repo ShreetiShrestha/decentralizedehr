@@ -7,7 +7,10 @@ module.exports = function (app) {
     router.get('/', home.index);
 
     router.post('/home/:firstAccount',home.login);
-    router.get('/home/:firstAccount/signup',home.signup);
+    router.get('/home/:firstAccount/signuppatient',home.signuppatient);
+    router.post('/home/:firstAccount/signuppatient/firstform',home.patientfirstform);
+    router.post('/home/:firstAccount/signuppatient/secondform',home.patientsecondform);
+    router.get('/home/:firstAccount/signupdr',home.signuppatient);
     router.post('/patient/:firstAccount',patient.index);
     router.post('/doctor/:firstAccount',doctor.index);
     

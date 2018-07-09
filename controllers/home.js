@@ -33,9 +33,41 @@ module.exports ={
         });
     },
 
-    signup: function (req,res){
+    signuppatient: function (req,res){
+        console.log (req.params.firstAccount);
+        var newPatient = new Models.Patient({ethAddr:req.params.firstAccount});
+        // newPatient.save();
+        console.log(newPatient);
+        var viewModel = {
+            patient: req.params.firstAccount
+        }
+        res.render('registerPatient',viewModel);
+        // Models.Patient.findOne({ ethAddr: { $regex :req.params.firstAccount}}, function(err,patient){
+        //     if (err){throw err;}
+        //     if (patient){
+        //         console.log('m here');
+        //         viewModel.patient=patient;
+        //         console.log (viewModel.patient);
+        //         res.render('registerPatient', viewModel);  
+        //     }
+        //     console.log('m222 here');
+        // });
+        // res.render('registerPatient');
+    },
+    signupdr: function (req,res){
         console.log (req.params.firstAccount);
         // var viewModel= 
-        res.render('register');
+        res.render('registerDoctor');
+    },
+    patientfirstform: function(req,res){
+        console.log ('username is',req.body.username);
+       
+    },
+    patientsecondform: function(req,res){
+        console.log ('name is ', req.body.firstname); 
+        console.log ('name is ', req.body.bloodgroup);      
     }
+
+
+    
 };
