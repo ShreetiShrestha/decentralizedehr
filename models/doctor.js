@@ -11,6 +11,7 @@ var DoctorSchema = new Schema({
     personalDetail: {
         firstName: {type: String},
         lastName: {type: String},
+        middleName: {type: String},
         gender: {type: String, enum: ["Male", "Female"]},
         dob: {type: Date},
         address: {type: String},

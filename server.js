@@ -3,7 +3,7 @@ var express = require('express'),
     config = require('./server/configure'),
     mongoose = require('mongoose'),
     app = express();
-require('./models')
+require('./models');
 
 
 app.set('port', process.env.PORT || 3300);
@@ -11,7 +11,7 @@ app.set('views', __dirname+'/views');
 app = config(app);
 
 mongoose.connect ('mongodb://localhost/decentralizedehr');
-mongoose.connection.on('open',function(){
+mongoose.connection.on('open', function(){
     console.log('Mongoose connected.');
 });
 // mongoose.connect('mongodb://decentralizedehr:Rabibhawan1@ds149874.mlab.com:49874/decentralizedehr');

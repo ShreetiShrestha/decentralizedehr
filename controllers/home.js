@@ -35,6 +35,6 @@ module.exports ={
 
     signup: function (req,res){
         console.log (req.params.firstAccount);
-        res.render('signup');
+        res.render('register');
     }
 };
