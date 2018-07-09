@@ -11,9 +11,13 @@ app.set('views', __dirname+'/views');
 app = config(app);
 
 mongoose.connect ('mongodb://localhost/decentralizedehr');
-mongoose.connection.on('open', function () {
-    console.log('Mongoose connected');
-})
+mongoose.connection.on('open', function(){
+    console.log('Mongoose connected.');
+});
+// mongoose.connect('mongodb://decentralizedehr:Rabibhawan1@ds149874.mlab.com:49874/decentralizedehr');
+// mongoose.connection.on('open', function () {
+//     console.log('Mongoose connected');
+// })
  
 // app.get('/', function(req, res){
 //     res.send('Hello World');

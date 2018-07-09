@@ -10,6 +10,7 @@ var PatientSchema = new Schema({
     personalDetail: {
         firstName: {type: String},
         lastName: {type: String},
+        middleName: {type: String},
         gender: {type: String, enum: ["Male", "Female"]},
         dob: {type: Date},
         address: {type: String},
@@ -22,7 +23,7 @@ var PatientSchema = new Schema({
                 message: '{VALUE} is not a valid 10 digit number!'
             }
         },
-        bloodGroup: {type: String, enum: ["A+","A-","B+","B-","AB+","AB-","O+","O-"]},
+        bloodGroup: {type: String},
         emergencyContact: {
             type: Number,
             validate: {
@@ -36,11 +37,11 @@ var PatientSchema = new Schema({
     },
 
     vitalSign: [{
-        name: {String},
+        name: {type: String},
         date: {type: Date, 'default': Date.now},
         status: {type: String},
         value: {type: Number},
-        unit: {String},
+        unit: {type: String},
         notes: {type: String}
     }],
 
@@ -48,7 +49,7 @@ var PatientSchema = new Schema({
         name: {type: String},
         reaction: {type: String},
         allergenType: {type: String},
-        severity: {type: String},
+        severity: {type: String, enum: [1,2,3,4,5]},
         firstObserved: {type: Date},
         currentlyActive: {type: Boolean},
         note: {type: String}
@@ -56,7 +57,7 @@ var PatientSchema = new Schema({
 
     medications: [{
         name: {type: String},
-        dose: {type: Number},
+        dose: {type: String},
         frequency: {type: Number},
         timeInterval: {type: String},
         strength: {type: Number},
@@ -77,7 +78,7 @@ var PatientSchema = new Schema({
         name: {type: String},
         type: {type: String},
         givenBy: {type: String},
-        dose: {type: Number},
+        dose: {type: String},
         date: {type: Date},
         note: {type: String}
     }],
