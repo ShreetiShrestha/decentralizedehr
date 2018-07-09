@@ -40,7 +40,7 @@ module.exports = function(app){
     app.set('view engine', 'handlebars');
 
     // activate routes
-    // routes(app);   
+    routes(app);   
     return app;
  
 };
