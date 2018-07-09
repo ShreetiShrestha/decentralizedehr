@@ -4,21 +4,6 @@ var web3= web3Module.web3;
 var Models = require('../models');
 module.exports ={
     index: function (req, res){
-        // if (typeof web3 !== 'undefined'){
-        //     console.log("Ok I have metamask installed");
-        //     accounts = web3.eth.accounts;
-        //     console.log (accounts[0]);
-        //     if (accounts.length === 0){
-        //         console.log('you are not logged in');
-        //     } else{
-        //         res=web3.eth.personal.sign("Hello World", accounts[0]);
-        //         console.log(res);
-        //     }
-        // }
-        // else {
-        //     console.log ('not signed in?');
-        // }
-        // res.send (typeof web3);
         res.render ('index'); 
     },
    
