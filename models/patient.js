@@ -10,6 +10,7 @@ var PatientSchema = new Schema({
     personalDetail: {
         firstName: {type: String},
         lastName: {type: String},
+        middleName: {type: String},
         gender: {type: String, enum: ["Male", "Female"]},
         dob: {type: Date},
         address: {type: String},
@@ -22,7 +23,7 @@ var PatientSchema = new Schema({
                 message: '{VALUE} is not a valid 10 digit number!'
             }
         },
-        bloodGroup: {type: String, enum: ["A+","A-","B+","B-","AB+","AB-","O+","O-"]},
+        bloodGroup: {type: String},
         emergencyContact: {
             type: Number,
             validate: {
