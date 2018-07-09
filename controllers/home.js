@@ -35,6 +35,7 @@ module.exports ={
 
     signup: function (req,res){
         console.log (req.params.firstAccount);
+        // var viewModel= 
         res.render('register');
     }
 };
