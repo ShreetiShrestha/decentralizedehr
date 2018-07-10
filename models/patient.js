@@ -4,8 +4,8 @@ var mongoose = require('mongoose'),
 
 var PatientSchema = new Schema({
     username: {type: String},
-    email: {type: String,  unique:true},
-    ethAddr: {type: String, unique: true},
+    email: {type: String},
+    ethAddr: {type: String},
 
     personalDetail: {
         firstName: {type: String},
