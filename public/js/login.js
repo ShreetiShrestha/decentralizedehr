@@ -84,4 +84,7 @@ $(function () {
         } 
 
     });
+    // $('#wizard').smartWizard(function(){
+    //     alert(selected);
+    // });
 });

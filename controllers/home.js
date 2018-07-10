@@ -36,7 +36,7 @@ module.exports ={
     signuppatient: function (req,res){
         console.log (req.params.firstAccount);
         var newPatient = new Models.Patient({ethAddr:req.params.firstAccount});
-        // newPatient.save();
+        newPatient.save();
         console.log(newPatient);
         var viewModel = {
             patient: req.params.firstAccount
@@ -64,8 +64,11 @@ module.exports ={
        
     },
     patientsecondform: function(req,res){
+       
         console.log ('name is ', req.body.firstname); 
-        console.log ('name is ', req.body.bloodgroup);      
+        console.log ('name is ', req.body.bloodgroup);
+      
+        });      
     }
 
 
