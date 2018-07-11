@@ -23,7 +23,7 @@ function SmartWizard(target, options) {
     this.buttons = {
         next : $('<a>'+options.labelNext+'</a>').attr("href","#").addClass("buttonNext"),
         previous : $('<a>'+options.labelPrevious+'</a>').attr("href","#").addClass("buttonPrevious"),
-        finish  : $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish")
+        // finish  : $('<a>'+options.labelFinish+'</a>').attr("href","#").addClass("buttonFinish")
     };
 
     /*
@@ -52,8 +52,8 @@ function SmartWizard(target, options) {
         $this.elmStepContainer.append(allDivs);
         elmActionBar.append($this.loader);
         $this.target.append($this.elmStepContainer);
-        elmActionBar.append($this.buttons.finish)
-                    .append($this.buttons.next)
+        // elmActionBar.append($this.buttons.finish)
+        elmActionBar.append($this.buttons.next)
                     .append($this.buttons.previous);
         $this.target.append(elmActionBar);
         this.contentWidth = $this.elmStepContainer.width();
@@ -66,22 +66,22 @@ function SmartWizard(target, options) {
             $this.goBackward();
             return false;
         });
-        $($this.buttons.finish).click(function() {
-            if(!$(this).hasClass('buttonDisabled')){
-                if($.isFunction($this.options.onFinish)) {
-                    var context = { fromStep: $this.curStepIdx + 1 };
-                    if(!$this.options.onFinish.call(this,$($this.steps), context)){
-                        return false;
-                    }
-                }else{
-                    var frm = $this.target.parents('form');
-                    if(frm && frm.length){
-                        frm.submit();
-                    }
-                }
-            }
-            return false;
-        });
+        // $($this.buttons.finish).click(function() {
+        //     if(!$(this).hasClass('buttonDisabled')){
+        //         if($.isFunction($this.options.onFinish)) {
+        //             var context = { fromStep: $this.curStepIdx + 1 };
+        //             if(!$this.options.onFinish.call(this,$($this.steps), context)){
+        //                 return false;
+        //             }
+        //         }else{
+        //             var frm = $this.target.parents('form');
+        //             if(frm && frm.length){
+        //                 frm.submit();
+        //             }
+        //         }
+        //     }
+        //     return false;
+        // });
 
         $($this.steps).bind("click", function(e){
             if($this.steps.index(this) == $this.curStepIdx){
@@ -284,17 +284,17 @@ function SmartWizard(target, options) {
             }
         }
         // Finish Button
-        if (! $this.steps.hasClass('disabled') || $this.options.enableFinishButton){
-            $($this.buttons.finish).removeClass("buttonDisabled");
-            if ($this.options.hideButtonsOnDisabled) {
-                $($this.buttons.finish).show();
-            }
-        }else{
-            $($this.buttons.finish).addClass("buttonDisabled");
-            if ($this.options.hideButtonsOnDisabled) {
-                $($this.buttons.finish).hide();
-            }
-        }
+        // if (! $this.steps.hasClass('disabled') || $this.options.enableFinishButton){
+        //     $($this.buttons.finish).removeClass("buttonDisabled");
+        //     if ($this.options.hideButtonsOnDisabled) {
+        //         $($this.buttons.finish).show();
+        //     }
+        // }else{
+        //     $($this.buttons.finish).addClass("buttonDisabled");
+        //     if ($this.options.hideButtonsOnDisabled) {
+        //         $($this.buttons.finish).hide();
+        //     }
+        // }
     };
 
     /*

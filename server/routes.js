@@ -11,7 +11,7 @@ module.exports = function (app) {
     router.post('/home/:firstAccount/signuppatient/firstform',home.patientfirstform);
     router.post('/home/:firstAccount/signuppatient/secondform',home.patientsecondform);
     router.get('/home/:firstAccount/signupdr',home.signuppatient);
-    router.post('/patient/:firstAccount',patient.index);
+    router.get('/patient/:firstAccount',patient.index);
     router.post('/doctor/:firstAccount',doctor.index);
     
     // router.get('/images/:image_id', image.index);

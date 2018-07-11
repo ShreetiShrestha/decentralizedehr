@@ -33,7 +33,7 @@ module.exports ={
         });
     },
 
-    signuppatient: function (req,res){
+    signuppatient: function (req,res, next){
         console.log (req.params.firstAccount);
         var newPatient = new Models.Patient({ethAddr:req.params.firstAccount});
         console.log(newPatient);
@@ -60,6 +60,7 @@ module.exports ={
         res.render('registerDoctor');
     },
     patientfirstform: function(req,res){
+        console.log(req.query.ethAddr);
         Models.Patient.findOne({ethAddr: req.params.firstAccount}, function(err){
             if(err){throw err;}
             var newCredentials = new Models.Patient({
