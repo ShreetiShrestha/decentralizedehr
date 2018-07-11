@@ -58,7 +58,6 @@
                 </li>
               </ul>
 
-
               <div id="step-1">
                 <h2 class="StepTitle">Basic Credentials</h2>
                 <form class="form-horizontal form-label-left" method="post" action="/home/{{patient}}/signuppatient/firstform">
@@ -81,14 +80,18 @@
                   </div>
                   <div class="form-group col-sm-12">
                     <div class="col-sm-12 text-right">
-                      <button type="submit" id="firstform-post" class="buttonNext btn btn-success">
+                      <button class="btn btn-round" id="checkicon1">
+                        <i class="fa fa-check"></i>
+                      </button>
+
+                      <button type="submit" id="firstform-post" class="btn btn-success">
                         <i class="fa fa-comment">Post</i>
                       </button>
                     </div>
                   </div>
 
                 </form>
-                
+
               </div>
 
               <div id="step-2">
@@ -108,7 +111,7 @@
                       <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input name= 'lastname' type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
+                      <input name='lastname' type="text" id="last-name" name="last-name" required="required" class="form-control col-md-7 col-xs-12">
                     </div>
                   </div>
                   <div class="form-group">
@@ -135,7 +138,7 @@
                       <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input name='dob' id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" data-inputmask="'mask': '99/99/9999'">
+                      <input name='dob' id="birthday" class="date-picker form-control col-md-7 col-xs-12" type='date' required="required" data-inputmask="'mask': '99/99/9999'">
                     </div>
                   </div>
 
@@ -182,7 +185,10 @@
                   </div>
                   <div class="form-group col-sm-12">
                     <div class="col-sm-12 text-right">
-                      <button type="submit" id="secondform-post" class=" buttonNext btn btn-success">
+                      <button class="btn btn-round" id="checkicon2">
+                        <i class="fa fa-check"></i>
+                      </button>
+                      <button type="submit" id="secondform-post" class="btn btn-success">
                         <i class="fa fa-comment">Post</i>
                       </button>
                     </div>
@@ -191,18 +197,34 @@
               </div>
 
               <div id="step-3">
-                <form class="form-horizontal form-label-left" method="post" action="/home/{{patient}}/signuppatient/firstform">
+                <form class="form-horizontal form-label-left" method="post" action="/home/{{patient}}/signuppatient/thirdform">
                   <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="profilePic">Upload Profile Pic </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="file" class="form-control-file col-md-7 col-xs-12" id="profilePic">
+                      <input type="file" class="form-control-file col-md-7 col-xs-12" id="profilePic" name="profilePic">
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-12">
+                    <div class="col-sm-12 text-right">
+                      <button type="submit" id="thirdform-post" class="btn btn-success">
+                        <i class="fa fa-comment">Upload</i>
+                      </button>
                     </div>
                   </div>
                 </form>
               </div>
-
-              <div id="step-4">
-                <h2 class="StepTitle">Congratulations!!! You have successfully registered for our system. Click "Finish" to go to your Dashboard.</h2>
+              <div class=row>
+                <div id="step-4">
+                  <h2 class="StepTitle">Congratulations!!! You have successfully registered for our system.
+                    <br>Click "Finish" to go to your Dashboard.</h2>
+                </div>
+                <div class="col-sm-12 text-right" id="last">
+                  <a href="/patient/{{patient}}">
+                    <button type="submit" id="finish" class="btn btn-success">
+                      <i class="fa fa-check">Finish</i>
+                    </button>
+                  </a>
+                </div>
               </div>
 
             </div>
