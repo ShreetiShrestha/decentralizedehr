@@ -1,7 +1,11 @@
-var web3Module = require('../ethereum/web3');
-var Web3 = require('web3');
-var web3 = web3Module.web3;
-var Models = require('../models');
+var web3Module = require('../ethereum/web3'),
+    Web3 = require('web3'),
+    web3 = web3Module.web3,
+    Models = require('../models'),
+    multer = require('multer'),
+    fs = require('fs'),
+    path = require('path');
+    
 module.exports = {
     index: function (req, res) {
         res.render('index');
@@ -93,7 +97,7 @@ module.exports = {
                 'personalDetail.contact': req.body.contact,
                 'personalDetail.bloodGroup': req.body.bloodGroup,
                 'personalDetail.emergencyContact': req.body.econtact,
-                
+
             }
         }, function (err, result) {
             if (err) throw err;
@@ -103,12 +107,52 @@ module.exports = {
         });
         console.log(patient);
 
-    }, 
-    // patientthirdform: function(req,res){
+    },
+    patientthirdform: function (req, res) {
+        var saveImage = function () {
+            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
+                imgUrl = ' ';
 
-    // },
+            for (var i = 0; i < 6; i++) {
+                imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+
+            var tempPath = req.file.path,
+                ext = path.extname(req.file.originalname).toLowerCase(),
+                targetPath = path.resolve('./public/upload/' + imgUrl + ext);
+
+            if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
+                fs.rename(tempPath, targetPath, function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                    Models.Patient.update({
+                        'ethAddr': req.params.firstAccount
+                    }, {
+                        $set: {
+                            'personalDetail.profilePic': imgUrl + ext,
+                        }
+                    }, function (err, result) {
+                        if (err) throw err;
+                    });
+                    var patient = Models.Patient.findOne({
+                        'ethAddr': req.params.firstAccount
+                    });
+                    console.log(patient);
+                });
+            } else {
+                fs.unlink(tempPath, function (err) {
+                    if (err) throw err;
+                    res.json(500, {
+                        error: 'Only image files are allowed.'
+                    });
+                });
+            }
+        };
+        saveImage();
+    },
     // patientfourthform: function(req,res){
-        
+
     // }
 
 

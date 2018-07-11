@@ -10,7 +10,7 @@ module.exports = function (app) {
     router.get('/home/:firstAccount/signuppatient',home.signuppatient);
     router.post('/home/:firstAccount/signuppatient/firstform',home.patientfirstform);
     router.post('/home/:firstAccount/signuppatient/secondform',home.patientsecondform);
-    // router.post('/home/:firstAccount/signuppatient/thirdform',home.patientthirdform);
+    router.post('/home/:firstAccount/signuppatient/thirdform',home.patientthirdform);
     // router.post('/home/:firstAccount/signuppatient/fourthform',home.patientfourthform);
     router.get('/home/:firstAccount/signupdr',home.signuppatient);
     router.get('/patient/:firstAccount',patient.index);
