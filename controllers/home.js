@@ -104,19 +104,7 @@ module.exports = {
         });
     }, 
 
-    patientthirdform: function(req,res){
-        // Models.Patient.update({
-        //     'ethAddr': req.params.firstAccount
-        // }, {
-        //     $set: {
-        //         'personalDetail.profilePic.data': fs.readFileSync(req.file.profilePic.path),
-        //         'patientDetail.profilePic.contentType' : 'image/png' 
-        //     }
-        // }, function (err, result) {
-        //     if (err) throw err;
-        // });
-        console.log(req.body.profilePic);
-    },
+    
     // patientfourthform: function(req,res){
         
     // }
