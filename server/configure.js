@@ -3,17 +3,19 @@ var path = require('path'),
     routes = require('./routes'),
     exphbs = require('express-handlebars'),
     express = require('express'),
-    bodyParser = require('body-parser');
+    fs = require('fs'),
+    bodyParser = require('body-parser'),
+    multer = require('multer');
     // cookieParser = require('cookie-parser'),
     // morgan = require('morgan'),
     // methodOverride = require('method-override'),
     // errorHandler = require('errorhandler'),
     // moment = require('moment'),
-    // multer = require('multer');
+    
 
 module.exports = function(app){
     // app.use(morgan('dev'));
-    // app.use(multer({ dest:path.join(__dirname, 'public/upload/temp/')}).single('img'));
+    // app.use(multer({ dest:path.join(__dirname, 'public/upload/temp/')}).single('profilePic'));
     app.use(bodyParser.urlencoded({'extended':true}));
     app.use(bodyParser.json());
     // app.use(methodOverride());

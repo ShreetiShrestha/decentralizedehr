@@ -1,6 +1,7 @@
 var web3Module = require('../ethereum/web3');
 var Web3 = require('web3');
 var web3 = web3Module.web3;
+var fs = require('fs');
 var Models = require('../models');
 module.exports = {
     index: function (req, res) {
@@ -104,15 +105,17 @@ module.exports = {
     }, 
 
     patientthirdform: function(req,res){
-        Models.Patient.update({
-            'ethAddr': req.params.firstAccount
-        }, {
-            $set: {
-                'personalDetail.profilePic': req.body.profilePic
-            }
-        }, function (err, result) {
-            if (err) throw err;
-        });
+        // Models.Patient.update({
+        //     'ethAddr': req.params.firstAccount
+        // }, {
+        //     $set: {
+        //         'personalDetail.profilePic.data': fs.readFileSync(req.file.profilePic.path),
+        //         'patientDetail.profilePic.contentType' : 'image/png' 
+        //     }
+        // }, function (err, result) {
+        //     if (err) throw err;
+        // });
+        console.log(req.body.profilePic);
     },
     // patientfourthform: function(req,res){
         
