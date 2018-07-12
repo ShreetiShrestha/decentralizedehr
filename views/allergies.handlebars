@@ -20,14 +20,14 @@
           </div>
           <div class="x_content">
             <br />
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/patient/{{patient.ethAddr}}/allergiessubmit">
 
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Name
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12">
+                  <input type="text" name="name" id="name" required="required" class="form-control col-md-7 col-xs-12">
                 </div>
               </div>
               <div class="form-group">
@@ -35,16 +35,16 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" class="form-control col-md-7 col-xs-12" required="required">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="reaction">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Allergentype
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Allergen Type
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" class="form-control col-md-7 col-xs-12" required="required">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="allergentype">
                 </div>
               </div>
               <div class="form-group">
@@ -52,7 +52,7 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="number" min="0" max="5" class="form-control" required="required" placeholder="Choose or Input From range 1-5.">
+                  <input type="number" min="0" max="5" class="form-control" required="required" placeholder="Choose or Input From range 1-5." name="severity">
                 </div>
               </div>
 
@@ -61,7 +61,7 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="date">
+                  <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="date" name="firstobserved">
                 </div>
               </div>
 
@@ -82,7 +82,7 @@
 
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="message"> Notes(20 chars min, 100 max) :</label>
-                <textarea id="message" required="required" class="col-md-6 col-sm-6 col-xs-12" name="message" data-parsley-trigger="keyup"
+                <textarea id="message" required="required" class="col-md-6 col-sm-6 col-xs-12" name="note" data-parsley-trigger="keyup"
                   data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
                   data-parsley-validation-threshold="10"></textarea>
               </div>
