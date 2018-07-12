@@ -38,7 +38,7 @@ var PatientSchema = new Schema({
 
     vitalSign: [{
         name: {type: String},
-        date: {type: Date, 'default': Date.now},
+        date: {type: Date},
         status: {type: String},
         value: {type: Number},
         unit: {type: String},
