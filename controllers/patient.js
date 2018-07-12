@@ -21,6 +21,9 @@ module.exports = {
     //         }
     //     });
     // }
-    res.render('patientdashboard');
+    res.render('patientdashboard', {
+                        title: 'patientdashboard',
+                        layout: 'base'
+                    });
     }
 }
