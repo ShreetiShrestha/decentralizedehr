@@ -109,10 +109,10 @@ var PatientSchema = new Schema({
     }]
 });
 
-PatientSchema.virtual('propic')
-    .get(function(){
-        return this.personalDetail.profilePic.replace(path.extname(this.personalDetail.profilePic), '');
-    });
+PatientSchema.virtual('uniqueId')
+.get(function(){
+    return this.personalDetail.profilePic.replace(path.extname(this.personalDetail.profilePic), '');
+});
 
 
 module.exports = mongoose.model('Patient', PatientSchema);
