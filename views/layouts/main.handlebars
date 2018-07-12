@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SANJIVANI</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="/public/css/vendors/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/public/css/vendors/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -17,10 +17,137 @@
     <link rel="stylesheet" type="text/css" href="/public/css/styles.css">
 </head>
 
-<body>
-    <div class="container">
-        <div class="row">
-            {{{ body }}}
+
+<body class='nav-md'>
+    <div class="container body">
+        <div class="main_container">
+            {{#if patient}}
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title">
+                            <i class="fa fa-paw"></i>
+                            <span>Gentelella Alela!</span>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="/public/upload/{{patient.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2>John Doe</h2>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Patient Dashboard</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a>
+                                        <i class="fa fa-home"></i> Personal Details </a>
+                                    <li>
+                                        <a>Name</a>
+                                    </li>
+                                    <li>
+                                        <a>Address</a>
+                                    </li>
+                                    <li>
+                                        <a>Gender</a>
+                                    </li>
+                                    <li>
+                                        <a>Date of Birth</a>
+                                    </li>
+                                    <li>
+                                        <a>blabla</a>
+                                    </li>
+                                    <li>
+                                        <a>blabla</a>
+                                    </li>
+                                    <li>
+                                        <a>bla bla</a>
+                                    </li>
+                                </li>
+                                <div class="row-bottom">
+                                    <button type="button" class="btn btn-round btn-info">Add Details</button>
+                                </div>
+                                <div class="row-bottom">
+                                    <button type="button" class="btn btn-success btn-lg">Get Appointment</button>
+                                </div>
+
+
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="images/img.jpg" alt="">John Doe
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li>
+                                        <a href="javascript:;"> Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">About Sanjivani</a>
+                                    </li>
+                                    <li>
+                                        <a href="login.html">
+                                            <i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            {{/if}}
+                {{{ body }}}
+            
         </div>
     </div>
 
@@ -36,7 +163,7 @@
         </div>
     </div>
 
-    
+
     <!-- jQuery -->
     <script src="/public/js/scriptjs/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -48,9 +175,8 @@
     <!-- jQuery Smart Wizard -->
     <script src="/public/js/scriptjs/jquery.smartWizard.js"></script>
     <!-- Custom Theme Scripts -->
-    <script src="/public/js/scriptjs/custom.min.js"></script>
-    {{!-- jquery modal --}}
-    
+    <script src="/public/js/scriptjs/custom.min.js"></script> {{!-- jquery modal --}}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> {{!-- web3 --}}
     <script type="text/javascript" src="/public/js/web3.min.js"></script> {{!--
