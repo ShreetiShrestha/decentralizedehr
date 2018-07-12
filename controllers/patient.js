@@ -20,8 +20,20 @@ module.exports = {
     },
     allergies: function(req, res){
         var viewModel = {
-            patient: req.params.firstAccount
-        }
-        res.render('allergies', viewModel);
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                console.log(viewModel.patient.personalDetail.profilePic);
+                res.render( 'allergies',viewModel);
+            }
+        });
     }
 }
