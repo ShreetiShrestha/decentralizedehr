@@ -20,6 +20,6 @@ module.exports = function (app) {
     router.get('/patient/:firstAccount/surgicalHistory', patient.surgicalhistory);
     router.get('/patient/:firstAccount/medications', patient.medications);
     router.get('/patient/:firstAccount/personalDetail', patient.personaldetail);
-    router.get('/patient/:firstAccount/records', patient.records);
+    router.get('/patient/:firstAccount/reports', patient.reports);
     app.use(router);
 };

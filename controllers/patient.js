@@ -119,7 +119,7 @@ module.exports = {
             }
         });
     },
-    records: function(req, res){
+    reports: function(req, res){
         var viewModel = {
             patient: {}
         };
@@ -132,7 +132,7 @@ module.exports = {
             if (!err && patient) {
                 
                 viewModel.patient = patient;
-                res.render( 'records',viewModel);
+                res.render( 'reports',viewModel);
             }
         });
     },
