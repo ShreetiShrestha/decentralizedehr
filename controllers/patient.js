@@ -13,7 +13,6 @@ module.exports = {
             if (!err && patient) {
                 
                 viewModel.patient = patient;
-                console.log(viewModel.patient.personalDetail.profilePic);
                 res.render( 'patientdashboard',viewModel);
             }
         });
@@ -31,9 +30,110 @@ module.exports = {
             if (!err && patient) {
                 
                 viewModel.patient = patient;
-                console.log(viewModel.patient.personalDetail.profilePic);
                 res.render( 'allergies',viewModel);
             }
         });
-    }
+    },
+    immunization: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                res.render( 'immunization',viewModel);
+            }
+        });
+    },
+    vitalsigns: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                res.render( 'vitalSigns',viewModel);
+            }
+        });
+    },
+    surgicalhistory: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                res.render( 'surgicalHistory',viewModel);
+            }
+        });
+    },
+    medications: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                res.render( 'medications',viewModel);
+            }
+        });
+    },
+    personaldetail: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                res.render( 'personalDetails',viewModel);
+            }
+        });
+    },
+    records: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                
+                viewModel.patient = patient;
+                res.render( 'records',viewModel);
+            }
+        });
+    },
 }

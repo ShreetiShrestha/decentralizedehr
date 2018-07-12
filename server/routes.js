@@ -15,5 +15,11 @@ module.exports = function (app) {
     router.get('/patient/:firstAccount',patient.index);
     router.get('/doctor/:firstAccount',doctor.index);
     router.get('/patient/:firstAccount/allergies', patient.allergies);
+    router.get('/patient/:firstAccount/immunization', patient.immunization);
+    router.get('/patient/:firstAccount/vitalSigns', patient.vitalsigns);
+    router.get('/patient/:firstAccount/surgicalHistory', patient.surgicalhistory);
+    router.get('/patient/:firstAccount/medications', patient.medications);
+    router.get('/patient/:firstAccount/personalDetail', patient.personaldetail);
+    router.get('/patient/:firstAccount/records', patient.records);
     app.use(router);
 };
