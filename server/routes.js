@@ -14,5 +14,6 @@ module.exports = function (app) {
     router.get('/home/:firstAccount/signupdr',home.signuppatient);
     router.get('/patient/:firstAccount',patient.index);
     router.get('/doctor/:firstAccount',doctor.index);
+    router.get('/patient/:firstAccount/allergies', patient.allergies);
     app.use(router);
 };
