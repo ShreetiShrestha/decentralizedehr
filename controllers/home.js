@@ -5,7 +5,7 @@ var web3Module = require('../ethereum/web3'),
     multer = require('multer'),
     fs = require('fs'),
     path = require('path');
-    
+
 module.exports = {
     index: function (req, res) {
         res.render('index');
@@ -45,11 +45,13 @@ module.exports = {
                         key: 2
                     });
                 }
-                console.log('4');
-                res.json({
-                    msg: 'You have not yet been registered to our system. Would you like to sign up?',
-                    key: 3
-                });
+                if(!doctor && !patient){
+                    console.log('4');
+                    res.json({
+                        msg: 'You have not yet been registered to our system. Would you like to sign up?',
+                        key: 3
+                    });
+                }
             });
         });
     },

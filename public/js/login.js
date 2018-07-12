@@ -1,23 +1,3 @@
-// var myModule= require ('./web3');
-// var web3= myModule.web3;
-// console.log(typeof web3);
-// $(document).ready(function(){
-//     $(function(){
-//         $('#enter-system').on('click', function(event){
-//             event.preventDefault();
-
-//             if (typeof web3 !== 'undefined'){
-//                 alert('y');
-//             } else {
-//                 alert('n');
-//             }
-
-//         });
-//     });
-
-// });
-
-
 $(function () {
     $('#enter-system').on('click', function (event, acc, res) {
         event.preventDefault();
@@ -67,12 +47,8 @@ $(function () {
                             window.location.href = '/home/' + firstAccount + '/signupdr';
                         }
                     } else if (data.key === 1) {
-                        var result = confirm(data.msg);
-                        if (result) {
-                            window.location.href = '/patient/' + firstAccount;
-                        } else {
-                            window.location.href = '/';
-                        }
+                        alert(data.msg);
+                        window.location.href= '/patient/' + firstAccount;
                     } else if (data.key === 2) {
                         alert(data.msg);
                         window.location.href = '/doctor/' + firstAccount;
