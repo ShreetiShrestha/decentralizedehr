@@ -136,4 +136,21 @@ module.exports = {
             }
         });
     },
+    vitalsignssubmit: function(req, res){
+        Models.Patient.update({
+            'ethAddr': req.params.firstAccount
+        }, {
+            $set: {
+                'vitalSign.name': req.body.name,
+                'vitalSign.date': req.body.date,
+                'vitalSign.status': req.body.status,
+                'vitalSign.value': req.body.value,
+                'vitalSign.unit': req.body.unit,
+                'vitalSign.notes': req.body.notes
+            }
+        }, function (err, result) {
+            if (err) throw err;
+        });
+
+    }
 }
