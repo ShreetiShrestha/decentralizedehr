@@ -53,30 +53,46 @@
                         <div class="menu_section">
                             <h3>Patient Dashboard</h3>
                             <ul class="nav side-menu">
-                                <li>
+                                <li >
                                     <a>
-                                        <i class="fa fa-home"></i> Personal Details </a>
-                                    <li>
-                                        <a>Name</a>
-                                    </li>
-                                    <li>
-                                        <a>Address</a>
-                                    </li>
-                                    <li>
-                                        <a>Gender</a>
-                                    </li>
-                                    <li>
-                                        <a>Date of Birth</a>
-                                    </li>
-                                    <li>
-                                        <a>blabla</a>
-                                    </li>
-                                    <li>
-                                        <a>blabla</a>
-                                    </li>
-                                    <li>
-                                        <a>bla bla</a>
-                                    </li>
+                                        <i class="fa fa-home"></i> Personal Details
+                                        <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu navbar_maximize">
+                                      
+                                            <li class = "navlist">
+                                            First Name :  &nbsp; {{patient.personalDetail.firstName}}
+                                        </li>
+                                        {{#if patient.personalDetail.middleName}}
+                                        <li class = "navlist">
+                                            Middle Name :  &nbsp; {{patient.personalDetail.middleName}}
+                                        </li>
+                                        {{/if}}
+                                        
+                                        <li class = "navlist">
+                                            Last Name : &nbsp; {{patient.personalDetail.lastName}}
+                                        </li>
+                                        <li class = "navlist">
+                                            Gender : &nbsp; {{patient.personalDetail.gender}}
+                                        </li>
+                                        <li class = "navlist">
+                                            Date of Birth : &nbsp; {{patient.personalDetail.dob}}
+                                        </li>
+                                        <li class = "navlist">
+                                            Address : &nbsp; {{patient.personalDetail.address}}
+                                        </li>
+                                        <li class = "navlist">
+                                            Contact : &nbsp; {{patient.personalDetail.contact}}
+                                        </li>
+                                        <li class = "navlist">
+                                            Emergency Contact : &nbsp; {{patient.personalDetail.econtact}}
+                                        </li>
+                                        <li class = "navlist">
+                                            Blood Group : &nbsp; {{patient.personalDetail.bloodGroup}}
+                                        </li>
+                                    </ul>
+
+
                                 </li>
                                 <div class="row-bottom">
                                     <button type="button" class="btn btn-round btn-info">Add Details</button>
@@ -145,9 +161,8 @@
                 </div>
             </div>
             <!-- /top navigation -->
-            {{/if}}
-                {{{ body }}}
-            
+            {{/if}} {{{ body }}}
+
         </div>
     </div>
 
