@@ -68,11 +68,13 @@ module.exports = {
         newPatient.save();
         res.render('registerPatient', viewModel);
     },
+
     signupdr: function (req, res) {
         console.log(req.params.firstAccount);
         // var viewModel= 
         res.render('registerDoctor');
     },
+
     patientfirstform: function (req, res) {
         Models.Patient.update({
             'ethAddr': req.params.firstAccount
@@ -85,6 +87,7 @@ module.exports = {
             if (err) throw err;
         });
     },
+
     patientsecondform: function (req, res) {
         Models.Patient.update({
             'ethAddr': req.params.firstAccount
@@ -97,17 +100,13 @@ module.exports = {
                 'personalDetail.dob': req.body.dob,
                 'personalDetail.address': req.body.address,
                 'personalDetail.contact': req.body.contact,
-                'personalDetail.bloodGroup': req.body.bloodgroup,
-                'personalDetail.emergencyContact': req.body.econtact,
 
+                'personalDetail.bloodGroup': req.body.bloodgroup,
+                'personalDetail.emergencyContact': req.body.econtact
             }
         }, function (err, result) {
             if (err) throw err;
         });
-        var patient = Models.Patient.findOne({
-            'ethAddr': req.params.firstAccount
-        });
-        console.log(patient);
 
     },
     patientthirdform: function (req, res) {
@@ -152,5 +151,13 @@ module.exports = {
             }
         };
         saveImage();
-    },
+    }
+
+    // patientfourthform: function(req,res){
+
+    // }
+
+
+
+
 };
