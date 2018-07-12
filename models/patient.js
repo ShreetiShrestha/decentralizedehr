@@ -3,9 +3,9 @@ var mongoose = require('mongoose'),
     path = require('path');
 
 var PatientSchema = new Schema({
-    username: {type: String},
-    email: {type: String},
-    ethAddr: {type: String},
+    username: {type: String,unique:true},
+    email: {type: String,unique:true},
+    ethAddr: {type: String,unique:true},
 
     personalDetail: {
         firstName: {type: String},
@@ -33,7 +33,7 @@ var PatientSchema = new Schema({
                 message: '{VALUE} is not a valid 10 digit number!'
             }
         },
-        profilePic: {type: String} 
+        profilePic: {type: String}
     },
 
     vitalSign: [{
@@ -108,5 +108,11 @@ var PatientSchema = new Schema({
          }
     }]
 });
+
+PatientSchema.virtual('propic')
+    .get(function(){
+        return this.personalDetail.profilePic.replace(path.extname(this.personalDetail.profilePic), '');
+    });
+
 
 module.exports = mongoose.model('Patient', PatientSchema);
