@@ -17,10 +17,16 @@ module.exports = function (app) {
     
     
     router.get('/patient/:firstAccount/allergies', patient.allergies);
+    router.post('/patient/:firstAccount/allergiessubmit', patient.allergiessubmit);
+
     router.get('/patient/:firstAccount/immunization', patient.immunization);
+    router.post('/patient/:firstAccount/immunizationsubmit', patient.immunizationsubmit);
+
     router.get('/patient/:firstAccount/vitalSigns', patient.vitalsigns);
     router.post('/patient/:firstAccount/vitalSignssubmit', patient.vitalsignssubmit);
+
     router.get('/patient/:firstAccount/surgicalHistory', patient.surgicalhistory);
+    // router.post('/patient/:firstAccount/surgicalHistorysubmit', patient.surgicalhistorysubmit);
     router.get('/patient/:firstAccount/medications', patient.medications);
     router.get('/patient/:firstAccount/personalDetail', patient.personaldetail);
     router.get('/patient/:firstAccount/reports', patient.reports);

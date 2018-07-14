@@ -38,7 +38,7 @@ var PatientSchema = new Schema({
 
     vitalSign: [{
         name: {type: String},
-        date: {type: Date},
+        dateOfNote: {type: Date},
         status: {type: String},
         value: {type: Number},
         unit: {type: String},
@@ -49,7 +49,7 @@ var PatientSchema = new Schema({
         name: {type: String},
         reaction: {type: String},
         allergenType: {type: String},
-        severity: {type: String, enum: [1,2,3,4,5]},
+        severity: {type: Number},
         firstObserved: {type: Date},
         currentlyActive: {type: Boolean},
         note: {type: String}

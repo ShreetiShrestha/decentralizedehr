@@ -140,17 +140,69 @@ module.exports = {
         Models.Patient.update({
             'ethAddr': req.params.firstAccount
         }, {
-            $set: {
-                'vitalSign.name': req.body.name,
-                'vitalSign.date': req.body.date,
-                'vitalSign.status': req.body.status,
-                'vitalSign.value': req.body.value,
-                'vitalSign.unit': req.body.unit,
-                'vitalSign.notes': req.body.notes
-            }
+            $addToSet: { 'vitalSign':{
+                'name': req.body.name,
+                'date': req.body.dateOfNote,
+                'status':req.body.status,
+                'value':req.body.value,
+                'unit': req.body.unit,
+                'note': req.body.note
+            }}
         }, function (err, result) {
             if (err) throw err;
-        });
-
-    }
+        },false,true);
+        res.redirect('/patient/'+ req.params.firstAccount);
+    },
+    allergiessubmit: function(req, res){
+        Models.Patient.update({
+            'ethAddr': req.params.firstAccount
+        }, {
+            $addToSet: { 'allergies':{
+                'name': req.body.name,
+                'reaction': req.body.reaction,
+                'allergenType':req.body.allergentype,
+                'severity':req.body.severity,
+                'firstObserved': req.body.firstobserved,
+                'currentlyActive': req.body.iCheck,
+                'note': req.body.note
+            }}
+        }, function (err, result) {
+            if (err) throw err;
+        },false,true);
+        res.redirect('/patient/'+ req.params.firstAccount);
+    },
+    immunizationsubmit: function(req, res){
+        Models.Patient.update({
+            'ethAddr': req.params.firstAccount
+        }, {
+            $addToSet: { 'immunization':{
+                'name': req.body.name,
+                'type': req.body.type,
+                'givenBy':req.body.givenBy,
+                'dose':req.body.dose,
+                'date': req.body.date,
+                'note': req.body.note
+            }}
+        }, function (err, result) {
+            if (err) throw err;
+        },false,true);
+        res.redirect('/patient/'+ req.params.firstAccount);
+    },
+    // surgicalhistorysubmit: function(req, res){
+    //     Models.Patient.update({
+    //         'ethAddr': req.params.firstAccount
+    //     }, {
+    //         $addToSet: { 'immunization':{
+    //             'name': req.body.name,
+    //             'type': req.body.type,
+    //             'givenBy':req.body.givenBy,
+    //             'dose':req.body.dose,
+    //             'date': req.body.date,
+    //             'note': req.body.note
+    //         }}
+    //     }, function (err, result) {
+    //         if (err) throw err;
+    //     },false,true);
+    //     res.redirect('/patient/'+ req.params.firstAccount);
+    // }
 }
