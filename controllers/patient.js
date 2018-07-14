@@ -204,5 +204,26 @@ module.exports = {
     //         if (err) throw err;
     //     },false,true);
     //     res.redirect('/patient/'+ req.params.firstAccount);
-    // }
+    // },
+    personalDetailedit: function(req, res){
+        Models.Patient.update({
+            'ethAddr': req.params.firstAccount
+        }, {
+            $set: { 'personalDetail':{
+                'firstName': req.body.firstname,
+                'middleName': req.body.middlename,
+                'lastName':req.body.lastname,
+                'gender':req.body.gender,
+                'dob': req.body.dob,
+                'address': req.body.address,
+                'contact': req.body.contact,
+                'bloodGroup': req.body.bloodgroup,
+                'emergencyContact':req.body.econtact,
+                // 'profilePic':req.body.dose
+            }}
+        }, function (err, result) {
+            if (err) throw err;
+        },false,true);
+        res.redirect('/patient/'+ req.params.firstAccount);
+    },
 }

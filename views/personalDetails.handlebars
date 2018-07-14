@@ -20,14 +20,14 @@
           </div>
           <div class="x_content">
             <br />
-            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/patient/{{patient.ethAddr}}/personalDetailedit">
 
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="first-name">
+                  <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="firstname" value="{{patient.personalDetail.firstName}}">
                 </div>
               </div>
 
@@ -35,7 +35,7 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Middle Name
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="middle-name" required="required" class="form-control col-md-7 col-xs-12" name="middle-name">
+                  <input type="text" id="middle-name" required="required" class="form-control col-md-7 col-xs-12" name="middlename" value="{{patient.personalDetail.middleName}}">
                 </div>
               </div>
 
@@ -44,7 +44,7 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="last-name" required="required" class="form-control col-md-7 col-xs-12" name="last-name">
+                  <input type="text" id="last-name" required="required" class="form-control col-md-7 col-xs-12" name="lastname" value="{{patient.personalDetail.lastName}}">
                 </div>
               </div>
 
@@ -67,7 +67,7 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="date" name="dob">
+                  <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="date" name="dob"  value="{{patient.personalDetail.dob}}">
                 </div>
               </div>
 
@@ -76,7 +76,7 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="address" required="required" class="form-control col-md-7 col-xs-12" name="address">
+                  <input type="text" id="address" required="required" class="form-control col-md-7 col-xs-12" name="address" value="{{patient.personalDetail.address}}">
                 </div>
               </div>
 
@@ -85,7 +85,7 @@
                   <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="contact">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="contact" value="{{patient.personalDetail.contact}}">
                 </div>
               </div>
 
@@ -93,14 +93,14 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Emergency Contact
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="econtact">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="econtact" value="{{patient.personalDetail.emergencyContact}}">
                 </div>
               </div>
 
               <div class="form-group">
                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Blood Group</label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <select class="form-control" name="bloodgroup">
+                      <select class="form-control" name="bloodgroup" value="{{patient.personalDetail.bloodGroup}}">
                         <option>A+</option>
                         <option>A-</option>
                         <option>B+</option>
