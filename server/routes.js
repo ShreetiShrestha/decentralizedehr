@@ -29,7 +29,7 @@ module.exports = function (app) {
     router.post('/patient/:firstAccount/vitalSignssubmit', patient.vitalsignssubmit);
 
     router.get('/patient/:firstAccount/surgicalHistory', patient.surgicalhistory);
-    // router.post('/patient/:firstAccount/patientsurgicalHistorysubmit', patient.surgicalhistorysubmit);
+    router.post('/patient/:firstAccount/patientsurgicalHistorysubmit', patient.surgicalhistorysubmit);
 
     router.get('/patient/:firstAccount/medications', patient.medications);
     // router.post('/patient/:firstAccount/medicationssubmit', patient.medicationssubmit);
