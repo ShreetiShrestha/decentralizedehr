@@ -3,8 +3,8 @@ var mongoose = require('mongoose'),
     path = require('path');
 
 var DoctorSchema = new Schema({
-    username: {type: String, required: true, unique: true},
-    email: {type: String, required: true, unique: true},
+    username: {type: String,  unique: true},
+    email: {type: String, unique: true},
     ethAddr: {type: String, unique: true},
     validDoc: {type: Boolean, default:false},
     voteCount: {type: Number, default:0},
@@ -25,5 +25,8 @@ var DoctorSchema = new Schema({
         profilePic: {type: String} 
     },
 });
-
+DoctorSchema.virtual('uniqueId')
+.get(function(){
+    return this.personalDetail.profilePic.replace(path.extname(this.personalDetail.profilePic), '');
+});
 module.exports = mongoose.model('Doctor', DoctorSchema);
