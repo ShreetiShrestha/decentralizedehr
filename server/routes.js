@@ -36,5 +36,7 @@ module.exports = function (app) {
 
     router.get('/patient/:firstAccount/reports', patient.reports);
     // router.post('/patient/:firstAccount/reportssubmit', patient.reportssubmit);
+
+    router.get('/patient/:firstAccount/sharedoc', patient.sharedoc);
     app.use(router);
 };

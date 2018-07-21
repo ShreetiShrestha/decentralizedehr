@@ -7,7 +7,10 @@ var web3Module = require('../ethereum/web3'),
     path = require('path');
 module.exports = {
     index: function (req, res) {
-        res.render('index');
+        var viewModel={
+            msg : 'home'
+        }
+        res.render('index',viewModel);
     },
 
     login: function (req, res) {
@@ -62,16 +65,21 @@ module.exports = {
         });
         console.log(newPatient);
         var viewModel = {
-            patient: req.params.firstAccount
+            patient: req.params.firstAccount,
+            msg: 'signup'
         }
         newPatient.save();
         res.render('registerPatient', viewModel);
     },
 
     signupdr: function (req, res) {
+        var viewModel ={
+            msg : 'signupdr'
+        }
+
         console.log(req.params.firstAccount);
         // var viewModel= 
-        res.render('registerDoctor');
+        res.render('registerDoctor',viewModel);
     },
 
     patientfirstform: function (req, res) {
