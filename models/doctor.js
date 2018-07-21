@@ -6,7 +6,8 @@ var DoctorSchema = new Schema({
     username: {type: String, required: true, unique: true},
     email: {type: String, required: true, unique: true},
     ethAddr: {type: String, unique: true},
-    validDoc: {type: Boolean},
+    validDoc: {type: Boolean, default:false},
+    voteCount: {type: Number, default:0},
 
     personalDetail: {
         firstName: {type: String},

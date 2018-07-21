@@ -73,18 +73,16 @@ module.exports = {
     },
 
     signupdr: function (req, res) {
-        var newDR = new Models.Doctor({
+        console.log(req.params.firstAccount);
+        var newDr = new Models.Doctor({
             ethAddr: req.params.firstAccount
         });
-        // console.log(newPatient);
-        var viewModel ={
+        console.log(newDr);
+        var viewModel = {
             dr: req.params.firstAccount,
-            msg : 'signupdr'
+            msg: 'signup'
         }
-        newDR.save();
-
-        console.log(req.params.firstAccount);
-        // var viewModel= 
+        newDr.save();
         res.render('registerDoctor',viewModel);
     },
 
