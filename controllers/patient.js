@@ -260,7 +260,7 @@ module.exports = {
                     'surgicalHistory': {
                         'procedureType': req.body.procedureType,
                         'date': req.body.date,
-                        'hospital': docID,
+                        'hospital': req.body.hospital,
                         'bodyLocation': req.body.bodyLocation,
                         'operatedBy': docID,
                         'surgicalNotes': req.body.surgicalNotes,
