@@ -84,7 +84,6 @@ module.exports = {
                     viewModel.doctors.push(doctors[index].personalDetail.firstName + " " + doctors[index].personalDetail.lastName);
                 }
             }
-            console.log(viewModel.doctors);
         });
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
@@ -101,8 +100,19 @@ module.exports = {
     },
     medications: function (req, res) {
         var viewModel = {
+            doctors: [],
             patient: {}
         };
+        Models.Doctor.find(function (err, doctors) {
+            if (err) {
+                throw err;
+            }
+            for (index = 0; index < doctors.length; ++index) {
+                if (doctors[index].validDoc) {
+                    viewModel.doctors.push(doctors[index].personalDetail.firstName + " " + doctors[index].personalDetail.lastName);
+                }
+            }
+        });
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
         }, function (err, patient) {
@@ -267,6 +277,44 @@ module.exports = {
                         'physicianNotes': req.body.physicianNotes,
                         'anaesthesiaNotes': req.body.anaesthesiaNotes,
                         'consequence': req.body.consequence,
+                    }
+                }
+            }, function (err, result) {
+                if (err) throw err;
+            }, false, true);
+        });
+
+        res.redirect('/patient/' + req.params.firstAccount);
+    },
+    medicationssubmit: function (req, res) {
+
+        Models.Doctor.findOne({
+            'personalDetail.firstName': {
+                $regex: req.body.prescribedBy.split(" ")[0]
+            }
+        }, function (err, doctor) {
+            if (err) {
+                throw err;
+            }
+            docID = doctor.id;
+            Models.Patient.update({
+                'ethAddr': req.params.firstAccount
+            }, {
+                $addToSet: {
+                    'medications': {
+                        'name': req.body.name,
+                        'dose': req.body.dose,
+                        'frequency': req.body.frequency,
+                        'timeInterval': req.body.timeInterval,
+                        'strength': req.body.strength,
+                        'medicationType': req.body.medicationType,
+                        'prescribedBy': docID,
+                        'instructions': req.body.instructions,
+                        'reasonsForTaking': req.body.reasons,
+                        'startDate': req.body.startDate,
+                        'endDate': req.body.endDate,
+                        'currentlyTaking': req.body.currentlyTaking,
+                        'notes': req.body.notes
                     }
                 }
             }, function (err, result) {

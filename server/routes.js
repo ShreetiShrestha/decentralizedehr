@@ -32,7 +32,7 @@ module.exports = function (app) {
     router.post('/patient/:firstAccount/patientsurgicalHistorysubmit', patient.surgicalhistorysubmit);
 
     router.get('/patient/:firstAccount/medications', patient.medications);
-    // router.post('/patient/:firstAccount/medicationssubmit', patient.medicationssubmit);
+    router.post('/patient/:firstAccount/medicationssubmit', patient.medicationssubmit);
 
     router.get('/patient/:firstAccount/personalDetail', patient.personaldetail);
     router.post('/patient/:firstAccount/personalDetailedit', patient.personalDetailedit);
