@@ -38,7 +38,7 @@ module.exports = function (app) {
     router.post('/patient/:firstAccount/personalDetailedit', patient.personalDetailedit);
 
     router.get('/patient/:firstAccount/reports', patient.reports);
-    // router.post('/patient/:firstAccount/reportssubmit', patient.reportssubmit);
+    router.post('/patient/:firstAccount/reportssubmit', patient.reportssubmit);
 
     router.get('/patient/:firstAccount/sharedoc', patient.sharedoc);
     app.use(router);
