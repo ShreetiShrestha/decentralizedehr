@@ -15,7 +15,7 @@ module.exports = {
 
     login: function (req, res) {
         acc = req.params.firstAccount;
-        console.log(req.params.firstAccount);
+        // console.log(req.params.firstAccount);
         Models.Patient.findOne({
             ethAddr: {
                 $regex: acc
@@ -59,11 +59,11 @@ module.exports = {
     },
 
     signuppatient: function (req, res) {
-        console.log(req.params.firstAccount);
+        // console.log(req.params.firstAccount);
         var newPatient = new Models.Patient({
             ethAddr: req.params.firstAccount
         });
-        console.log(newPatient);
+        // console.log(newPatient);
         var viewModel = {
             patient: req.params.firstAccount,
             msg: 'signup'
@@ -73,16 +73,19 @@ module.exports = {
     },
 
     signupdr: function (req, res) {
-        console.log(req.params.firstAccount);
+            
+
         var newDr = new Models.Doctor({
             ethAddr: req.params.firstAccount
         });
-        console.log(newDr);
+        newDr.save(function (err) {
+            if (err) { res.send({'error' : err}); }
+        });       
         var viewModel = {
             dr: req.params.firstAccount,
             msg: 'signup'
         }
-        newDr.save();
+        
         res.render('registerDoctor',viewModel);
     },
 
@@ -150,7 +153,7 @@ module.exports = {
                     var patient = Models.Patient.findOne({
                         'ethAddr': req.params.firstAccount
                     });
-                    console.log(patient);
+                    // console.log(patient);
                 });
             } else {
                 fs.unlink(tempPath, function (err) {
@@ -227,7 +230,6 @@ module.exports = {
                     var dr = Models.Doctor.findOne({
                         'ethAddr': req.params.firstAccount
                     });
-                    console.log(dr);
                 });
             } else {
                 fs.unlink(tempPath, function (err) {
@@ -240,12 +242,4 @@ module.exports = {
         };
         saveImage();
     },
-
-    // patientfourthform: function(req,res){
-
-    // }
-
-
-
-
 };
