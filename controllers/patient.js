@@ -70,9 +70,22 @@ module.exports = {
         });
     },
     surgicalhistory: function (req, res) {
+
         var viewModel = {
+            doctors: [],
             patient: {}
         };
+        Models.Doctor.find(function (err, doctors) {
+            if (err) {
+                throw err;
+            }
+            for (index = 0; index < doctors.length; ++index) {
+                if (doctors[index].validDoc) {
+                    viewModel.doctors.push(doctors[index].personalDetail.firstName + " " + doctors[index].personalDetail.lastName);
+                }
+            }
+            console.log(viewModel.doctors);
+        });
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
         }, function (err, patient) {
@@ -229,23 +242,40 @@ module.exports = {
         }, false, true);
         res.redirect('/patient/' + req.params.firstAccount);
     },
-    // surgicalhistorysubmit: function(req, res){
-    //     Models.Patient.update({
-    //         'ethAddr': req.params.firstAccount
-    //     }, {
-    //         $addToSet: { 'immunization':{
-    //             'name': req.body.name,
-    //             'type': req.body.type,
-    //             'givenBy':req.body.givenBy,
-    //             'dose':req.body.dose,
-    //             'date': req.body.date,
-    //             'note': req.body.note
-    //         }}
-    //     }, function (err, result) {
-    //         if (err) throw err;
-    //     },false,true);
-    //     res.redirect('/patient/'+ req.params.firstAccount);
-    // },
+    surgicalhistorysubmit: function (req, res) {
+
+        Models.Doctor.findOne({
+            'personalDetail.firstName': {
+                $regex: req.body.operatedby.split(" ")[0]
+            }
+        }, function (err, doctor) {
+            if (err) {
+                throw err;
+            }
+            docID = doctor.id;
+            Models.Patient.update({
+                'ethAddr': req.params.firstAccount
+            }, {
+                $addToSet: {
+                    'surgicalHistory': {
+                        'procedureType': req.body.procedureType,
+                        'date': req.body.date,
+                        'hospital': docID,
+                        'bodyLocation': req.body.bodyLocation,
+                        'operatedBy': docID,
+                        'surgicalNotes': req.body.surgicalNotes,
+                        'physicianNotes': req.body.physicianNotes,
+                        'anaesthesiaNotes': req.body.anaesthesiaNotes,
+                        'consequence': req.body.consequence,
+                    }
+                }
+            }, function (err, result) {
+                if (err) throw err;
+            }, false, true);
+        });
+
+        res.redirect('/patient/' + req.params.firstAccount);
+    },
     personalDetailedit: function (req, res) {
         Models.Patient.update({
             'ethAddr': req.params.firstAccount
