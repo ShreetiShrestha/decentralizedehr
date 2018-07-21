@@ -1,0 +1,49 @@
+{
+	"personalDetail": {
+		"firstName": "Shushant",
+		"middleName": "Jung",
+		"lastName": "Thapa",
+		"gender": null,
+		"dob": "2018-07-09T00:00:00.000Z",
+		"address": "rabibhawan",
+		"contact": 9494949499,
+		"bloodGroup": "5",
+		"emergencyContact": 9999999999
+	},
+	"_id": "5b4707725e5e4d7a54ed595d",
+	"ethAddr": "0x5d70cc5b2282e28cbcb67add1cf10da0135f778c",
+	"vitalSign": [
+		{
+			"_id": "5b478264e4d1af3646a2da13",
+			"name": "blood pressure",
+			"status": "high",
+			"value": 2,
+			"unit": "mmz"
+		},
+		{
+			"_id": "5b4782fc71f10136e3ae816e",
+			"name": "temperature",
+			"status": "high",
+			"value": 2,
+			"unit": "unit"
+		}
+	],
+	"allergies": [],
+	"medications": [],
+	"immunization": [
+		{
+			"_id": "5b4789f82105f73dc3b3b84d",
+			"name": "bcg",
+			"type": "annual",
+			"givenBy": "sudeep",
+			"dose": "50",
+			"date": "2018-07-12T00:00:00.000Z",
+			"note": "annually"
+		}
+	],
+	"surgicalHistory": [],
+	"reports": [],
+	"__v": 0,
+	"email": "lambardo.dave@gmail.com",
+	"username": "talu"
+}
