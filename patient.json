@@ -1,49 +1,70 @@
 {
-	"personalDetail": {
-		"firstName": "Shushant",
-		"middleName": "Jung",
-		"lastName": "Thapa",
-		"gender": null,
-		"dob": "2018-07-09T00:00:00.000Z",
-		"address": "rabibhawan",
-		"contact": 9494949499,
-		"bloodGroup": "5",
-		"emergencyContact": 9999999999
-	},
-	"_id": "5b4707725e5e4d7a54ed595d",
-	"ethAddr": "0x5d70cc5b2282e28cbcb67add1cf10da0135f778c",
-	"vitalSign": [
-		{
-			"_id": "5b478264e4d1af3646a2da13",
-			"name": "blood pressure",
-			"status": "high",
-			"value": 2,
-			"unit": "mmz"
-		},
-		{
-			"_id": "5b4782fc71f10136e3ae816e",
-			"name": "temperature",
-			"status": "high",
-			"value": 2,
-			"unit": "unit"
-		}
-	],
-	"allergies": [],
-	"medications": [],
+	"_id": "5b459b6fb8d0ef72b0836ee5",
+	"ethAddr": "0xe0924c47cde605af87856476cd8edf26732f3ecf",
+	"__v": 0,
+	"email": "cer1dumru@gmail.com",
+	"username": "admin",
+	"reports": [],
+	"surgicalHistory": [],
 	"immunization": [
 		{
-			"_id": "5b4789f82105f73dc3b3b84d",
-			"name": "bcg",
-			"type": "annual",
-			"givenBy": "sudeep",
-			"dose": "50",
-			"date": "2018-07-12T00:00:00.000Z",
-			"note": "annually"
+			"_id": "5b4a02ec9dd05340d9a2709f",
+			"note": "sfsdfsdfsdfs",
+			"date": "2018-07-14T00:00:00.000Z",
+			"dose": "3",
+			"givenBy": "dfsdkl",
+			"type": "rbs",
+			"name": "bcg"
 		}
 	],
-	"surgicalHistory": [],
-	"reports": [],
-	"__v": 0,
-	"email": "lambardo.dave@gmail.com",
-	"username": "talu"
+	"medications": [],
+	"allergies": [
+		{
+			"_id": "5b4a01a99dd05340d9a2709c",
+			"note": "zvcxsfdzcxcsdscdx",
+			"currentlyActive": true,
+			"firstObserved": "2018-07-04T00:00:00.000Z",
+			"severity": 1,
+			"allergenType": "saas",
+			"reaction": "rash",
+			"name": "Blood pressure"
+		},
+		{
+			"_id": "5b4a01f89dd05340d9a2709d",
+			"note": "dfsfsdfds",
+			"currentlyActive": true,
+			"firstObserved": "2018-07-10T00:00:00.000Z",
+			"severity": 4,
+			"allergenType": "sdfs",
+			"reaction": "dsf",
+			"name": "sdfs"
+		}
+	],
+	"vitalSign": [
+		{
+			"_id": "5b4a02159dd05340d9a2709e",
+			"unit": "sdds",
+			"value": 3,
+			"status": "sfds",
+			"name": "dfs"
+		},
+		{
+			"_id": "5b52d5d4eac3fa1bb70995b3",
+			"unit": "ui",
+			"value": 3,
+			"status": "sfds",
+			"name": "Blood pressure"
+		}
+	],
+	"personalDetail": {
+		"firstName": "Prakriti",
+		"middleName": "Maiya",
+		"lastName": "Dumaru",
+		"gender": "on",
+		"dob": "2018-07-14T00:00:00.000Z",
+		"address": "Bkt",
+		"contact": 9860652944,
+		"bloodGroup": "A+",
+		"emergencyContact": 9841130783
+	}
 }

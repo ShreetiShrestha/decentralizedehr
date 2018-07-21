@@ -15,15 +15,7 @@ var DoctorSchema = new Schema({
         gender: {type: String, enum: ["Male", "Female"]},
         dob: {type: Date},
         address: {type: String},
-        contact: {
-            type: Number,
-            validate: {
-                validator: function(v) {
-                    return /d{10}/.test(v);
-                },
-                message: '{VALUE} is not a valid 10 digit number!'
-            }
-        },
+        contact: {type: Number},
         specializationDesc:  {type: String},
         nmc: {type: String},
         hospitals: [{

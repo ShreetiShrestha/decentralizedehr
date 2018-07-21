@@ -73,9 +73,15 @@ module.exports = {
     },
 
     signupdr: function (req, res) {
+        var newDR = new Models.Doctor({
+            ethAddr: req.params.firstAccount
+        });
+        // console.log(newPatient);
         var viewModel ={
+            dr: req.params.firstAccount,
             msg : 'signupdr'
         }
+        newDR.save();
 
         console.log(req.params.firstAccount);
         // var viewModel= 
@@ -158,7 +164,84 @@ module.exports = {
             }
         };
         saveImage();
-    }
+    },
+    drfirstform: function (req, res) {
+        Models.Doctor.update({
+            'ethAddr': req.params.firstAccount
+        }, {
+            $set: {
+                'username': req.body.username,
+                'email': req.body.email
+            }
+        }, function (err, result) {
+            if (err) throw err;
+        });
+    },
+    drsecondform: function (req, res) {
+        Models.Doctor.update({
+            'ethAddr': req.params.firstAccount
+        }, {
+            $set: {
+                'personalDetail.firstName': req.body.firstname,
+                'personalDetail.lastName': req.body.lastname,
+                'personalDetail.middleName': req.body.middlename,
+                'personalDetail.gender': req.body.gender,
+                'personalDetail.dob': req.body.dob,
+                'personalDetail.address': req.body.address,
+                'personalDetail.contact': req.body.contact,
+
+                'personalDetail.specializationDesc': req.body.specializationdesc,
+                'personalDetail.nmc': req.body.nmc,
+                'personalDetail.hospitals': req.body.hospitals
+            }
+        }, function (err, result) {
+            if (err) throw err;
+        });
+
+    },
+    drthirdform: function (req, res) {
+        var saveImage = function () {
+            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
+                imgUrl = ' ';
+
+            for (var i = 0; i < 6; i++) {
+                imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+
+            var tempPath = req.file.path,
+                ext = path.extname(req.file.originalname).toLowerCase(),
+                targetPath = path.resolve('./public/upload/' + imgUrl + ext);
+
+            if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
+                fs.rename(tempPath, targetPath, function (err) {
+                    if (err) {
+                        throw err;
+                    }
+                    Models.Doctor.update({
+                        'ethAddr': req.params.firstAccount
+                    }, {
+                        $set: {
+                            'personalDetail.profilePic': imgUrl + ext,
+                        }
+                    }, function (err, result) {
+                        if (err) throw err;
+                    });
+                    var dr = Models.Doctor.findOne({
+                        'ethAddr': req.params.firstAccount
+                    });
+                    console.log(dr);
+                });
+            } else {
+                fs.unlink(tempPath, function (err) {
+                    if (err) throw err;
+                    res.json(500, {
+                        error: 'Only image files are allowed.'
+                    });
+                });
+            }
+        };
+        saveImage();
+    },
 
     // patientfourthform: function(req,res){
 
