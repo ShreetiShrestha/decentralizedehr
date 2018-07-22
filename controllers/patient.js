@@ -1,5 +1,7 @@
-var Models = require('../models');
-const fs = require('fs');
+var Models = require('../models'),
+    multer = require('multer'),
+    path = require('path'),
+    fs = require('fs');
 module.exports = {
     index: function (req, res) {
         var viewModel = {
@@ -179,8 +181,20 @@ module.exports = {
     },
     reports: function (req, res) {
         var viewModel = {
+            users: [],
             patient: {}
         };
+
+        Models.Doctor.find(function (err, doctors) {
+            if (err) {
+                throw err;
+            }
+            for (index = 0; index < doctors.length; ++index) {
+                if (doctors[index].validDoc) {
+                    viewModel.users.push(doctors[index].personalDetail.firstName + " " + doctors[index].personalDetail.lastName);
+                }
+            }
+        });
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
         }, function (err, patient) {
@@ -188,7 +202,7 @@ module.exports = {
                 throw err;
             }
             if (!err && patient) {
-
+                viewModel.users.push(patient.personalDetail.firstName + " " + patient.personalDetail.lastName)
                 viewModel.patient = patient;
                 res.render('reports', viewModel);
             }
@@ -323,6 +337,75 @@ module.exports = {
         });
 
         res.redirect('/patient/' + req.params.firstAccount);
+    },
+    reportssubmit: function (req, res) {
+         pathFile=req.file.path;
+        nameFile=req.file.originalname;
+        acc=req.params.firstAccount;
+        title=req.body.title;
+        desc=req.body.description;
+        Models.Doctor.findOne({
+            'personalDetail.firstName': {
+                $regex: req.body.addedBy.split(" ")[0]
+            }
+        }, function (err, doctor,req) {
+            if (err) {
+                throw err;
+            }
+            docID = doctor.id;
+            console.log(req);
+            var saveFile = function (req) {
+                var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
+                    fileUrl = ' ';
+    
+                for (var i = 0; i < 6; i++) {
+                    fileUrl += possible.charAt(Math.floor(Math.random() * possible.length));
+                }
+    
+    var tempPath = pathFile,
+                    ext = path.extname(nameFile).toLowerCase(),
+                    targetPath = path.resolve('./public/upload/' + fileUrl + ext);
+    
+                if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif' || ext === '.pdf' || ext === '.docx') {
+                    fs.rename(tempPath, targetPath, function (err,req) {
+                        if (err) {
+                            throw err;
+                        }
+                        Models.Patient.update({
+                            'ethAddr': acc
+                        }, {
+                            $addToSet: {
+                                'reports': {
+                                    'filename': fileUrl + ext,
+                                    'title': title,
+                            'description': desc,
+                            'docEdited': docID
+    
+                                }
+                            }
+                        }, function (err, result) {
+                            if (err) throw err;
+                        }, false, true);
+                        var patient = Models.Patient.findOne({
+                            'ethAddr': acc
+                        });
+                        // console.log(patient);
+                    });
+                } else {
+                    fs.unlink(tempPath, function (err) {
+                        if (err) throw err;
+                        res.json(500, {
+                            error: 'The type of Files that were uploaded are unsupported formats.'
+                        });
+                    });
+                }
+            };
+            saveFile();
+                
+            res.redirect('/patient/' +acc);
+        });
+       
+        
     },
     personalDetailedit: function (req, res) {
         Models.Patient.update({

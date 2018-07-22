@@ -17,6 +17,7 @@ module.exports = function(app){
     app.use(multer({
         dest: path.join(__dirname, 'public/upload/temp/')
     }).single('img'));
+    
     app.use(bodyParser.urlencoded({'extended':true}));
     app.use(bodyParser.json());
     app.use(methodOverride());

@@ -114,5 +114,10 @@ PatientSchema.virtual('uniqueId')
     return this.personalDetail.profilePic.replace(path.extname(this.personalDetail.profilePic), '');
 });
 
+PatientSchema.virtual('uniqueReportId')
+.get(function(){
+    return this.reports.filename.replace(path.extname(this.reports.filename), '');
+});
+
 
 module.exports = mongoose.model('Patient', PatientSchema);
