@@ -1,9 +1,9 @@
 var Models = require('../models');
 module.exports = {
     index: function (req, res) {
-        var viewModel= {
+        var viewModel = {
             dr: {},
-            validationList:[]
+            validationList: []
         }
         Models.Doctor.count({}, function (err, count) {
             console.log("Number of doctors:", count);
@@ -23,7 +23,7 @@ module.exports = {
                     throw err;
                 }
                 for (index = 0; index < doctors.length; ++index) {
-                    if (doctors[index].validDoc===false) {
+                    if (doctors[index].validDoc === false) {
                         viewModel.validationList.push(doctors[index]);
                         console.log(viewModel.validationList);
                     }
@@ -36,9 +36,9 @@ module.exports = {
             }, function (err, doctor) {
                 validity = doctor.validDoc;
                 console.log(doctor.validDoc);
-                viewModel.dr= doctor;
+                viewModel.dr = doctor;
                 if (validity === true) {
-                    res.render('drdashboard',viewModel);
+                    res.render('drdashboard', viewModel);
                 } else {
                     res.send('ya voting ko status dekhaune page hunexa');
                 }
@@ -66,8 +66,8 @@ module.exports = {
             }
         });
     },
-    personalDetailedit: function(req,res){
-       
+    personalDetailedit: function (req, res) {
+
         Models.Doctor.update({
             'ethAddr': req.params.firstAccount
         }, {
@@ -82,7 +82,7 @@ module.exports = {
                     'contact': req.body.contact,
                     'specializationDesc': req.body.specializationDesc,
                     'nmc': req.body.nmc,
-                    'hospitals':req.body.hospitals
+                    'hospitals': req.body.hospitals
                     // 'profilePic':req.body.dose
                 }
             }
@@ -90,5 +90,54 @@ module.exports = {
             if (err) throw err;
         }, false, true);
         res.redirect('/doctor/' + req.params.firstAccount);
+    },
+    vote: function (req, res) {
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.firstAccount
+            }
+        }, function (err, candidate) {
+            if (err) {
+                throw err;
+            }
+
+            if (!err && candidate) {
+                var threshold;
+                Models.Doctor.update({
+                    'ethAddr': req.params.firstAccount
+                }, {
+                    $set: {
+                        'voteCount': candidate.voteCount + 1
+                    }
+                }, function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                }, false, true);
+
+                Models.Doctor.count({}, function (err, count) {
+                    threshold = Math.ceil(count * .51);
+                    if (candidate.voteCount > threshold) {
+                        Models.Doctor.update({
+                            'ethAddr': req.params.firstAccount
+                        }, {
+                            $set: {
+                                'validDoc': true
+                            }
+                        }, function (err, result) {
+                            if (err) {
+                                throw err;
+                            }
+                        }, false, true);
+
+                    }
+
+                });
+                res.send({
+                    msg: 'Your vote has been received. Thank You'
+                });
+            }
+        });
+
     }
 };
