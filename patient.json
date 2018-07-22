@@ -1,70 +1,22 @@
 {
-	"_id": "5b459b6fb8d0ef72b0836ee5",
-	"ethAddr": "0xe0924c47cde605af87856476cd8edf26732f3ecf",
+	"_id": "5b533ca00b717a1715f0b308",
+	"ethAddr": "0x0bbe7f9915caa8470fe6acd734358ae759dd8180",
 	"__v": 0,
-	"email": "cer1dumru@gmail.com",
-	"username": "admin",
 	"reports": [],
-	"surgicalHistory": [],
-	"immunization": [
+	"surgicalHistory": [
 		{
-			"_id": "5b4a02ec9dd05340d9a2709f",
-			"note": "sfsdfsdfsdfs",
-			"date": "2018-07-14T00:00:00.000Z",
-			"dose": "3",
-			"givenBy": "dfsdkl",
-			"type": "rbs",
-			"name": "bcg"
+			"_id": "5b5347c32ca39c2470a3688f",
+			"consequence": "sfsdfsdfs",
+			"physicianNotes": "fdsdf",
+			"surgicalNotes": "dfsfs",
+			"operatedBy": "5b533cf3d6fbe818186822c0",
+			"bodyLocation": "sdf",
+			"date": "2018-07-12T00:00:00.000Z",
+			"procedureType": "kdjfds"
 		}
 	],
+	"immunization": [],
 	"medications": [],
-	"allergies": [
-		{
-			"_id": "5b4a01a99dd05340d9a2709c",
-			"note": "zvcxsfdzcxcsdscdx",
-			"currentlyActive": true,
-			"firstObserved": "2018-07-04T00:00:00.000Z",
-			"severity": 1,
-			"allergenType": "saas",
-			"reaction": "rash",
-			"name": "Blood pressure"
-		},
-		{
-			"_id": "5b4a01f89dd05340d9a2709d",
-			"note": "dfsfsdfds",
-			"currentlyActive": true,
-			"firstObserved": "2018-07-10T00:00:00.000Z",
-			"severity": 4,
-			"allergenType": "sdfs",
-			"reaction": "dsf",
-			"name": "sdfs"
-		}
-	],
-	"vitalSign": [
-		{
-			"_id": "5b4a02159dd05340d9a2709e",
-			"unit": "sdds",
-			"value": 3,
-			"status": "sfds",
-			"name": "dfs"
-		},
-		{
-			"_id": "5b52d5d4eac3fa1bb70995b3",
-			"unit": "ui",
-			"value": 3,
-			"status": "sfds",
-			"name": "Blood pressure"
-		}
-	],
-	"personalDetail": {
-		"firstName": "Prakriti",
-		"middleName": "Maiya",
-		"lastName": "Dumaru",
-		"gender": "on",
-		"dob": "2018-07-14T00:00:00.000Z",
-		"address": "Bkt",
-		"contact": 9860652944,
-		"bloodGroup": "A+",
-		"emergencyContact": 9841130783
-	}
+	"allergies": [],
+	"vitalSign": []
 }
