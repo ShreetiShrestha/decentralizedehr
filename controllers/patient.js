@@ -1,7 +1,12 @@
 var Models = require('../models'),
     multer = require('multer'),
     path = require('path'),
+    ipfsAPI = require('ipfs-api'),
+    archiver = require('archiver'),
     fs = require('fs');
+let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
+    protocol: 'https'
+});
 module.exports = {
     index: function (req, res) {
         var viewModel = {
@@ -364,15 +369,15 @@ module.exports = {
 
                 var tempPath = pathFile,
                     ext = path.extname(nameFile).toLowerCase();
-                var dir = './public/upload/patients/' + acc +'/';
+                var dir = './public/upload/patients/' + acc + '/';
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                var dir2 = dir + 'reports/';
-                if (!fs.existsSync(dir2)) {
-                    fs.mkdirSync(dir2);
-                }
-                targetPath = path.resolve(dir2 + fileUrl + ext);
+                // var dir2 = dir + 'reports/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + fileUrl + ext);
                 console.log('account', acc);
 
 
@@ -450,16 +455,77 @@ module.exports = {
             }
             if (!err && patient) {
                 data = (JSON.stringify(patient, null, '\t'));
-                var dir = './public/upload/patients/' + acc +'/details/';
+                var dir = './public/upload/patients/' + acc + '/';
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                fs.writeFile(dir+'patient.json', data, (err) => {
-                    if (err) throw err;
+                fs.writeFile(dir + 'patientdata.txt', data, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
                     console.log('Data written to file');
+                });
+                // fs.writeFile(dir + 'patient.json', data, (err) => {
+                //     if (err) throw err;
+                //     console.log('Data written to file');
+                // });
+
+                //Archive the folder
+                // var baseDir = './public/upload/patients/' + acc + '/';
+                // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
+
+                // var archive = archiver.create('zip', {});
+                // archive.on('error', function (err) {
+                //     throw err;
+                // });
+
+                // var output = fs.createWriteStream(baseDir + acc + '.zip'); //path to create .zip file
+                // output.on('close', function () {
+                //     console.log(archive.pointer() + ' total bytes');
+                //     console.log('archiver has been finalized and the output file descriptor has closed.');
+                // });
+                // archive.pipe(output);
+
+                // dirNames.forEach(function (dirName) {
+                //     // 1st argument is the path to directory 
+                //     // 2nd argument is how to be structured in the archive (thats what i was missing!)
+                //     archive.directory(baseDir + dirName, dirName);
+                // });
+                // archive.finalize();
+
+
+                //IPFS storage
+                var filelist = [];
+                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+                    files.forEach(file => {
+                        console.log(file);
+                        filelist.push(file);
+
+
+                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
+                        var testBuffer = new Buffer(testFile);
+                        ipfs.files.add(testBuffer, function (err, output) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log(output);
+                        });
+
+                    });
                 });
                 res.redirect('/patient/' + req.params.firstAccount);
             }
         });
+    },
+    getdoc: function (req, res) {
+        const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
+
+        ipfs.files.get(validCID, function (err, files) {
+            files.forEach((file) => {
+                console.log(file.path);
+                console.log(file.content.toString('utf8'));
+            });
+        });
+        res.redirect('/patient/' + req.params.firstAccount);
     }
 }

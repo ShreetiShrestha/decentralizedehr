@@ -138,11 +138,11 @@ module.exports = {
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                var dir2 = dir + 'proimg/';
-                if (!fs.existsSync(dir2)) {
-                    fs.mkdirSync(dir2);
-                }
-                targetPath = path.resolve(dir2 + imgUrl + ext);
+                // var dir2 = dir + 'proimg/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + imgUrl + ext);
                 console.log('account', acc);
                     
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
@@ -224,11 +224,11 @@ module.exports = {
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                var dir2 = dir + 'proimg/';
-                if (!fs.existsSync(dir2)) {
-                    fs.mkdirSync(dir2);
-                }
-                targetPath = path.resolve(dir2 + imgUrl + ext);
+                // var dir2 = dir + 'proimg/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + imgUrl + ext);
                 console.log('account', acc);
                    
 

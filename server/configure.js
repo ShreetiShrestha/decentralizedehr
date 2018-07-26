@@ -4,6 +4,7 @@ var path = require('path'),
     exphbs = require('express-handlebars'),
     express = require('express'),
     bodyParser = require('body-parser'),
+    ipfsAPI =require ('ipfs-api'),
     multer = require ('multer');
     // cookieParser = require('cookie-parser'),
     // morgan = require('morgan'),

@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "archiver": "^2.1.1",
     "body-parser": "^1.18.3",
     "errorhandler": "^1.5.0",
     "express": "^4.16.3",
@@ -19,6 +20,7 @@
     "ganache-cli": "^6.1.5",
     "ipfs-api": "^22.2.4",
     "jquery-confirm": "^3.3.2",
+    "jshint": "^2.9.5",
     "method-override": "^2.3.10",
     "mongodb": "^2.2.16",
     "mongoose": "^4.7.2",
