@@ -496,21 +496,20 @@ module.exports = {
 
                 //IPFS storage
                 var filelist = [];
+                var listOfHases=[];
                 fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
                     files.forEach(file => {
                         console.log(file);
                         filelist.push(file);
-
-
                         testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
                         var testBuffer = new Buffer(testFile);
                         ipfs.files.add(testBuffer, function (err, output) {
                             if (err) {
                                 console.log(err);
                             }
-                            console.log(output);
+                            listOfHases.push(output[0].hash);
                         });
-
+                        console.log(listOfHases);// needs blockchain now
                     });
                 });
                 res.redirect('/patient/' + req.params.firstAccount);
