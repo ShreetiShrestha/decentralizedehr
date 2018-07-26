@@ -1,0 +1,33 @@
+{
+	"_id": "5b59f4ed95445d40fbe7bfa6",
+	"ethAddr": "0x47c6a7354455857a3266823038d4d251c91ad9d3",
+	"__v": 0,
+	"email": "shreetis13@gmail.com",
+	"username": "nmzz",
+	"reports": [
+		{
+			"_id": "5b59f69213d46a4323e89caa",
+			"docEdited": "5b59f64813d46a4323e89ca9",
+			"description": "mri",
+			"title": "mri",
+			"filename": " nmisln.png"
+		}
+	],
+	"surgicalHistory": [],
+	"immunization": [],
+	"medications": [],
+	"allergies": [],
+	"vitalSign": [],
+	"personalDetail": {
+		"address": "rabibhawan",
+		"bloodGroup": "A+",
+		"contact": 9494949499,
+		"dob": "2018-07-19T00:00:00.000Z",
+		"emergencyContact": 9999999999,
+		"firstName": "shreeti",
+		"gender": "female",
+		"lastName": "shrestha",
+		"middleName": "",
+		"profilePic": " 6154lz.png"
+	}
+}

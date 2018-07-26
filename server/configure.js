@@ -41,7 +41,8 @@ module.exports = function(app){
                       return options.fn(this);
                     }
                     return options.inverse(this);
-                  }
+                  },
+                  
         //     timeago: function(timestamp){
         //         return moment(timestamp).startOf('minute').fromNow();
         //     }

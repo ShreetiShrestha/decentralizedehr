@@ -17,6 +17,7 @@
     "fs": "0.0.1-security",
     "fs-extra": "^6.0.1",
     "ganache-cli": "^6.1.5",
+    "ipfs-api": "^22.2.4",
     "jquery-confirm": "^3.3.2",
     "method-override": "^2.3.10",
     "mongodb": "^2.2.16",

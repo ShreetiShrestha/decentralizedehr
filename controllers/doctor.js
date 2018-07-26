@@ -3,7 +3,7 @@ module.exports = {
     index: function (req, res) {
         var viewModel = {
             dr: {},
-            validationList: []
+            validationList: [],
         }
         Models.Doctor.count({}, function (err, count) {
             console.log("Number of doctors:", count);
@@ -92,6 +92,9 @@ module.exports = {
         res.redirect('/doctor/' + req.params.firstAccount);
     },
     vote: function (req, res) {
+        let message={
+            msg:""
+        }
         Models.Doctor.findOne({
             'ethAddr': {
                 $regex: req.params.firstAccount
@@ -102,19 +105,23 @@ module.exports = {
             }
 
             if (!err && candidate) {
+               
                 var threshold;
+                
                 Models.Doctor.update({
                     'ethAddr': req.params.firstAccount
                 }, {
                     $set: {
                         'voteCount': candidate.voteCount + 1
-                    }
+                    },
+                    
                 }, function (err, result) {
                     if (err) {
                         throw err;
                     }
                 }, false, true);
 
+                
                 Models.Doctor.count({}, function (err, count) {
                     threshold = Math.ceil(count * .51);
                     if (candidate.voteCount > threshold) {
@@ -134,7 +141,7 @@ module.exports = {
 
                 });
                 res.send({
-                    msg: 'Your vote has been received. Thank You'
+                    msg: 'Your vote has been received. Thank You',
                 });
             }
         });

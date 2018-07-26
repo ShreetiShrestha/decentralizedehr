@@ -339,16 +339,16 @@ module.exports = {
         res.redirect('/patient/' + req.params.firstAccount);
     },
     reportssubmit: function (req, res) {
-         pathFile=req.file.path;
-        nameFile=req.file.originalname;
-        acc=req.params.firstAccount;
-        title=req.body.title;
-        desc=req.body.description;
+        pathFile = req.file.path;
+        nameFile = req.file.originalname;
+        acc = req.params.firstAccount;
+        title = req.body.title;
+        desc = req.body.description;
         Models.Doctor.findOne({
             'personalDetail.firstName': {
                 $regex: req.body.addedBy.split(" ")[0]
             }
-        }, function (err, doctor,req) {
+        }, function (err, doctor, req) {
             if (err) {
                 throw err;
             }
@@ -357,17 +357,27 @@ module.exports = {
             var saveFile = function (req) {
                 var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
                     fileUrl = ' ';
-    
+
                 for (var i = 0; i < 6; i++) {
                     fileUrl += possible.charAt(Math.floor(Math.random() * possible.length));
                 }
-    
-    var tempPath = pathFile,
-                    ext = path.extname(nameFile).toLowerCase(),
-                    targetPath = path.resolve('./public/upload/' + fileUrl + ext);
-    
+
+                var tempPath = pathFile,
+                    ext = path.extname(nameFile).toLowerCase();
+                var dir = './public/upload/patients/' + acc +'/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                var dir2 = dir + 'reports/';
+                if (!fs.existsSync(dir2)) {
+                    fs.mkdirSync(dir2);
+                }
+                targetPath = path.resolve(dir2 + fileUrl + ext);
+                console.log('account', acc);
+
+
                 if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif' || ext === '.pdf' || ext === '.docx') {
-                    fs.rename(tempPath, targetPath, function (err,req) {
+                    fs.rename(tempPath, targetPath, function (err, req) {
                         if (err) {
                             throw err;
                         }
@@ -378,9 +388,9 @@ module.exports = {
                                 'reports': {
                                     'filename': fileUrl + ext,
                                     'title': title,
-                            'description': desc,
-                            'docEdited': docID
-    
+                                    'description': desc,
+                                    'docEdited': docID
+
                                 }
                             }
                         }, function (err, result) {
@@ -401,11 +411,11 @@ module.exports = {
                 }
             };
             saveFile();
-                
-            res.redirect('/patient/' +acc);
+
+            res.redirect('/patient/' + acc);
         });
-       
-        
+
+
     },
     personalDetailedit: function (req, res) {
         Models.Patient.update({
@@ -431,6 +441,7 @@ module.exports = {
         res.redirect('/patient/' + req.params.firstAccount);
     },
     sharedoc: function (req, res) {
+        acc = req.params.firstAccount;
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
         }, function (err, patient) {
@@ -439,7 +450,11 @@ module.exports = {
             }
             if (!err && patient) {
                 data = (JSON.stringify(patient, null, '\t'));
-                fs.writeFile('patient.json', data, (err) => {
+                var dir = './public/upload/patients/' + acc +'/details/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                fs.writeFile(dir+'patient.json', data, (err) => {
                     if (err) throw err;
                     console.log('Data written to file');
                 });
