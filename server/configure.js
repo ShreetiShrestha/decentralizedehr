@@ -4,6 +4,7 @@ var path = require('path'),
     exphbs = require('express-handlebars'),
     express = require('express'),
     bodyParser = require('body-parser'),
+    ipfsAPI =require ('ipfs-api'),
     multer = require ('multer');
     // cookieParser = require('cookie-parser'),
     // morgan = require('morgan'),
@@ -41,7 +42,8 @@ module.exports = function(app){
                       return options.fn(this);
                     }
                     return options.inverse(this);
-                  }
+                  },
+                  
         //     timeago: function(timestamp){
         //         return moment(timestamp).startOf('minute').fromNow();
         //     }

@@ -8,7 +8,8 @@ var DoctorSchema = new Schema({
     ethAddr: {type: String, unique: true},
     validDoc: {type: Boolean, default:false},
     voteCount: {type: Number, default:0},
-
+    votedAccounts: [{
+        acc: {type: String}}],
     personalDetail: {
         firstName: {type: String},
         lastName: {type: String},

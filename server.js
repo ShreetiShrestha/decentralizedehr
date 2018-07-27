@@ -26,3 +26,4 @@ mongoose.connection.on('open', function(){
 app.listen(app.get('port'),function(){
     console.log('Server up: http://localhost:'+app.get('port'));
 });
+

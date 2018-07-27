@@ -1,7 +1,12 @@
 var Models = require('../models'),
     multer = require('multer'),
     path = require('path'),
+    ipfsAPI = require('ipfs-api'),
+    archiver = require('archiver'),
     fs = require('fs');
+let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
+    protocol: 'https'
+});
 module.exports = {
     index: function (req, res) {
         var viewModel = {
@@ -339,16 +344,16 @@ module.exports = {
         res.redirect('/patient/' + req.params.firstAccount);
     },
     reportssubmit: function (req, res) {
-         pathFile=req.file.path;
-        nameFile=req.file.originalname;
-        acc=req.params.firstAccount;
-        title=req.body.title;
-        desc=req.body.description;
+        pathFile = req.file.path;
+        nameFile = req.file.originalname;
+        acc = req.params.firstAccount;
+        title = req.body.title;
+        desc = req.body.description;
         Models.Doctor.findOne({
             'personalDetail.firstName': {
                 $regex: req.body.addedBy.split(" ")[0]
             }
-        }, function (err, doctor,req) {
+        }, function (err, doctor, req) {
             if (err) {
                 throw err;
             }
@@ -357,17 +362,27 @@ module.exports = {
             var saveFile = function (req) {
                 var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
                     fileUrl = ' ';
-    
+
                 for (var i = 0; i < 6; i++) {
                     fileUrl += possible.charAt(Math.floor(Math.random() * possible.length));
                 }
-    
-    var tempPath = pathFile,
-                    ext = path.extname(nameFile).toLowerCase(),
-                    targetPath = path.resolve('./public/upload/' + fileUrl + ext);
-    
+
+                var tempPath = pathFile,
+                    ext = path.extname(nameFile).toLowerCase();
+                var dir = './public/upload/patients/' + acc + '/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                // var dir2 = dir + 'reports/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + fileUrl + ext);
+                console.log('account', acc);
+
+
                 if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif' || ext === '.pdf' || ext === '.docx') {
-                    fs.rename(tempPath, targetPath, function (err,req) {
+                    fs.rename(tempPath, targetPath, function (err, req) {
                         if (err) {
                             throw err;
                         }
@@ -378,9 +393,9 @@ module.exports = {
                                 'reports': {
                                     'filename': fileUrl + ext,
                                     'title': title,
-                            'description': desc,
-                            'docEdited': docID
-    
+                                    'description': desc,
+                                    'docEdited': docID
+
                                 }
                             }
                         }, function (err, result) {
@@ -401,11 +416,11 @@ module.exports = {
                 }
             };
             saveFile();
-                
-            res.redirect('/patient/' +acc);
+
+            res.redirect('/patient/' + acc);
         });
-       
-        
+
+
     },
     personalDetailedit: function (req, res) {
         Models.Patient.update({
@@ -431,6 +446,7 @@ module.exports = {
         res.redirect('/patient/' + req.params.firstAccount);
     },
     sharedoc: function (req, res) {
+        acc = req.params.firstAccount;
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
         }, function (err, patient) {
@@ -439,12 +455,76 @@ module.exports = {
             }
             if (!err && patient) {
                 data = (JSON.stringify(patient, null, '\t'));
-                fs.writeFile('patient.json', data, (err) => {
-                    if (err) throw err;
+                var dir = './public/upload/patients/' + acc + '/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                fs.writeFile(dir + 'patientdata.txt', data, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
                     console.log('Data written to file');
+                });
+                // fs.writeFile(dir + 'patient.json', data, (err) => {
+                //     if (err) throw err;
+                //     console.log('Data written to file');
+                // });
+
+                //Archive the folder
+                // var baseDir = './public/upload/patients/' + acc + '/';
+                // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
+
+                // var archive = archiver.create('zip', {});
+                // archive.on('error', function (err) {
+                //     throw err;
+                // });
+
+                // var output = fs.createWriteStream(baseDir + acc + '.zip'); //path to create .zip file
+                // output.on('close', function () {
+                //     console.log(archive.pointer() + ' total bytes');
+                //     console.log('archiver has been finalized and the output file descriptor has closed.');
+                // });
+                // archive.pipe(output);
+
+                // dirNames.forEach(function (dirName) {
+                //     // 1st argument is the path to directory 
+                //     // 2nd argument is how to be structured in the archive (thats what i was missing!)
+                //     archive.directory(baseDir + dirName, dirName);
+                // });
+                // archive.finalize();
+
+
+                //IPFS storage
+                var filelist = [];
+                var listOfHases=[];
+                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+                    files.forEach(file => {
+                        console.log(file);
+                        filelist.push(file);
+                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
+                        var testBuffer = new Buffer(testFile);
+                        ipfs.files.add(testBuffer, function (err, output) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            listOfHases.push(output[0].hash);
+                        });
+                        console.log(listOfHases);// needs blockchain now
+                    });
                 });
                 res.redirect('/patient/' + req.params.firstAccount);
             }
         });
+    },
+    getdoc: function (req, res) {
+        const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
+
+        ipfs.files.get(validCID, function (err, files) {
+            files.forEach((file) => {
+                console.log(file.path);
+                console.log(file.content.toString('utf8'));
+            });
+        });
+        res.redirect('/patient/' + req.params.firstAccount);
     }
 }
