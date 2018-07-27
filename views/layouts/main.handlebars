@@ -37,7 +37,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic col-md-6">
-                            <img src="/public/upload/{{patient.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
+                            <img src="/public/upload/patients/{{patient.ethAddr}}/{{patient.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
                         </div>
                         <div class="profile_info text-center col-md-6">
                             <span>Welcome</span>
@@ -142,7 +142,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="/public/upload/{{patient.personalDetail.profilePic}}" alt="">{{patient.personalDetail.firstName}}&nbsp;{{patient.personalDetail.lastName}}
+                                    <img src="/public/upload/patients/{{patient.ethAddr}}/{{patient.personalDetail.profilePic}}" alt="">{{patient.personalDetail.firstName}}&nbsp;{{patient.personalDetail.lastName}}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -179,7 +179,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic col-md-6">
-                            <img src="/public/upload/{{dr.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
+                            <img src="/public/upload/doctors/{{dr.ethAddr}}/{{dr.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome</span>
@@ -280,7 +280,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/user.png" alt="">John Doe
+                                    <img src="/public/upload/doctors/{{dr.ethAddr}}/{{dr.personalDetail.profilePic}}"  alt="PP">{{patient.personalDetail.firstName}}&nbsp;{{patient.personalDetail.lastName}}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">

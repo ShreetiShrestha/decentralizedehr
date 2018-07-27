@@ -133,9 +133,18 @@ module.exports = {
             }
 
             var tempPath = req.file.path,
-                ext = path.extname(req.file.originalname).toLowerCase(),
-                targetPath = path.resolve('./public/upload/' + imgUrl + ext);
-
+                ext = path.extname(req.file.originalname).toLowerCase();
+                var dir = './public/upload/patients/' + acc +'/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                // var dir2 = dir + 'proimg/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + imgUrl + ext);
+                console.log('account', acc);
+                    
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
                 fs.rename(tempPath, targetPath, function (err) {
                     if (err) {
@@ -210,8 +219,18 @@ module.exports = {
             }
 
             var tempPath = req.file.path,
-                ext = path.extname(req.file.originalname).toLowerCase(),
-                targetPath = path.resolve('./public/upload/' + imgUrl + ext);
+                ext = path.extname(req.file.originalname).toLowerCase();
+                var dir = './public/upload/doctors/' + acc +'/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                // var dir2 = dir + 'proimg/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + imgUrl + ext);
+                console.log('account', acc);
+                   
 
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
                 fs.rename(tempPath, targetPath, function (err) {
