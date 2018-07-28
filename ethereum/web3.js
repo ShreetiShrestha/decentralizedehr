@@ -1,6 +1,5 @@
 // var Web3 = require('web3');
 
-
 // let web3;
 // // var window= Web3.window;
 // if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {

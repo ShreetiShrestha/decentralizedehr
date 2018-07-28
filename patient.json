@@ -1,49 +1,25 @@
 {
-	"personalDetail": {
-		"firstName": "Shushant",
-		"middleName": "Jung",
-		"lastName": "Thapa",
-		"gender": null,
-		"dob": "2018-07-09T00:00:00.000Z",
-		"address": "rabibhawan",
-		"contact": 9494949499,
-		"bloodGroup": "5",
-		"emergencyContact": 9999999999
-	},
-	"_id": "5b4707725e5e4d7a54ed595d",
-	"ethAddr": "0x5d70cc5b2282e28cbcb67add1cf10da0135f778c",
-	"vitalSign": [
-		{
-			"_id": "5b478264e4d1af3646a2da13",
-			"name": "blood pressure",
-			"status": "high",
-			"value": 2,
-			"unit": "mmz"
-		},
-		{
-			"_id": "5b4782fc71f10136e3ae816e",
-			"name": "temperature",
-			"status": "high",
-			"value": 2,
-			"unit": "unit"
-		}
-	],
-	"allergies": [],
-	"medications": [],
-	"immunization": [
-		{
-			"_id": "5b4789f82105f73dc3b3b84d",
-			"name": "bcg",
-			"type": "annual",
-			"givenBy": "sudeep",
-			"dose": "50",
-			"date": "2018-07-12T00:00:00.000Z",
-			"note": "annually"
-		}
-	],
-	"surgicalHistory": [],
-	"reports": [],
+	"_id": "5b52e8cf677f3d17843bf43f",
+	"ethAddr": "0x694e261be38c5ae8493d880a4e091371221de0d5",
 	"__v": 0,
-	"email": "lambardo.dave@gmail.com",
-	"username": "talu"
+	"email": "ajaymandal1996@gmail.com",
+	"username": "071bct501",
+	"reports": [],
+	"surgicalHistory": [],
+	"immunization": [],
+	"medications": [],
+	"allergies": [],
+	"vitalSign": [],
+	"personalDetail": {
+		"address": "Jhiljhile",
+		"bloodGroup": "O+",
+		"contact": 9862008370,
+		"dob": "1996-01-07T00:00:00.000Z",
+		"emergencyContact": null,
+		"firstName": "Ajaya",
+		"gender": "male",
+		"lastName": "Mandal",
+		"middleName": "",
+		"profilePic": " l00ilj.jpg"
+	}
 }
