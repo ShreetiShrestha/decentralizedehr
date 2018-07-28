@@ -446,82 +446,7 @@ module.exports = {
         }, false, true);
         res.redirect('/patient/' + req.params.firstAccount);
     },
-    // sharedoc: function (req, res) {
-    //     acc = req.params.firstAccount;
-    //     Models.Patient.findOne({
-    //         'ethAddr': req.params.firstAccount
-    //     }, function (err, patient) {
-    //         if (err) {
-    //             throw err;
-    //         }
-    //         if (!err && patient) {
-    //             data = (JSON.stringify(patient, null, '\t'));
-    //             var dir = './public/upload/patients/' + acc + '/';
-    //             if (!fs.existsSync(dir)) {
-    //                 fs.mkdirSync(dir);
-    //             }
-    //             fs.writeFile(dir + 'patientdata.txt', data, function (err) {
-    //                 if (err) {
-    //                     console.log(err);
-    //                 }
-    //                 console.log('Data written to file');
-    //             });
-    //             // fs.writeFile(dir + 'patient.json', data, (err) => {
-    //             //     if (err) throw err;
-    //             //     console.log('Data written to file');
-    //             // });
-
-    //             //Archive the folder
-    //             // var baseDir = './public/upload/patients/' + acc + '/';
-    //             // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
-
-    //             // var archive = archiver.create('zip', {});
-    //             // archive.on('error', function (err) {
-    //             //     throw err;
-    //             // });
-
-    //             // var output = fs.createWriteStream(baseDir + acc + '.zip'); //path to create .zip file
-    //             // output.on('close', function () {
-    //             //     console.log(archive.pointer() + ' total bytes');
-    //             //     console.log('archiver has been finalized and the output file descriptor has closed.');
-    //             // });
-    //             // archive.pipe(output);
-
-    //             // dirNames.forEach(function (dirName) {
-    //             //     // 1st argument is the path to directory 
-    //             //     // 2nd argument is how to be structured in the archive (thats what i was missing!)
-    //             //     archive.directory(baseDir + dirName, dirName);
-    //             // });
-    //             // archive.finalize();
-
-
-    //             //IPFS storage
-    //             var filelist = [];
-                
-    //             fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-    //                 var listOfHases = '';
-    //                 files.forEach(file => {
-    //                     console.log(file);
-    //                     filelist.push(file);
-    //                     testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
-    //                     var testBuffer = new Buffer(testFile);
-    //                     ipfs.files.add(testBuffer, function (err, output) {
-    //                         if (err) {
-    //                             console.log(err);
-    //                         }
-    //                         console.log(output[0].hash);
-    //                     });
-    //                     // needs blockchain now
-    //                 });
-    //             });
-    //             // const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
-    //             // QRCode.toDataURL(validCID, function (err, url) {
-    //             //     console.log(url);
-    //             // });
-    //             res.redirect('/patient/' + req.params.firstAccount);
-    //         }
-    //     });
-    // },
+    
     getdoc: function (req, res) {
         const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
 
@@ -561,7 +486,6 @@ module.exports = {
         });
     }, 
     retrieveinfo: function (req,res){
-        console.log (req.params.patientAccount);
         var viewModel ={
             patient : {},
             dr : {}
@@ -589,5 +513,81 @@ module.exports = {
             }
         });
        
-    }
+    },
+    share: function (req, res) {
+        acc = req.params.firstAccount;
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                data = (JSON.stringify(patient, null, '\t'));
+                var dir = './public/upload/patients/' + acc + '/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                fs.writeFile(dir + 'patientdata.txt', data, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log('Data written to file');
+                });
+                // fs.writeFile(dir + 'patient.json', data, (err) => {
+                //     if (err) throw err;
+                //     console.log('Data written to file');
+                // });
+
+                //Archive the folder
+                // var baseDir = './public/upload/patients/' + acc + '/';
+                // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
+
+                // var archive = archiver.create('zip', {});
+                // archive.on('error', function (err) {
+                //     throw err;
+                // });
+
+                // var output = fs.createWriteStream(baseDir + acc + '.zip'); //path to create .zip file
+                // output.on('close', function () {
+                //     console.log(archive.pointer() + ' total bytes');
+                //     console.log('archiver has been finalized and the output file descriptor has closed.');
+                // });
+                // archive.pipe(output);
+
+                // dirNames.forEach(function (dirName) {
+                //     // 1st argument is the path to directory 
+                //     // 2nd argument is how to be structured in the archive (thats what i was missing!)
+                //     archive.directory(baseDir + dirName, dirName);
+                // });
+                // archive.finalize();
+
+
+                //IPFS storage
+                var filelist = [];
+                
+                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+                    var listOfHases = '';
+                    files.forEach(file => {
+                        console.log(file);
+                        filelist.push(file);
+                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
+                        var testBuffer = new Buffer(testFile);
+                        ipfs.files.add(testBuffer, function (err, output) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            console.log(output[0].hash);
+                        });
+                        // needs blockchain now
+                    });
+                });
+                // const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
+                // QRCode.toDataURL(validCID, function (err, url) {
+                //     console.log(url);
+                // });
+                res.redirect('/patient/' + req.params.patientAccount);
+            }
+        });
+    },
 }

@@ -1,0 +1,25 @@
+{
+	"_id": "5b5bedb8f907cb608005da79",
+	"ethAddr": "0x2e8e9a3dfa08792666c68d294387cf9f813322cb",
+	"__v": 0,
+	"email": "dshrestha933@gmail.com",
+	"username": "rabin",
+	"reports": [],
+	"surgicalHistory": [],
+	"immunization": [],
+	"medications": [],
+	"allergies": [],
+	"vitalSign": [],
+	"personalDetail": {
+		"address": "rabibhawan",
+		"bloodGroup": "AB-",
+		"contact": 9494949499,
+		"dob": "2018-07-18T00:00:00.000Z",
+		"emergencyContact": 9999999999,
+		"firstName": "Rabin",
+		"gender": "male",
+		"lastName": "shrestha",
+		"middleName": "",
+		"profilePic": " xk0dnh.png"
+	}
+}
