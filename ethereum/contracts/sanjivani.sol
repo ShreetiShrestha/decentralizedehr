@@ -18,12 +18,12 @@ contract User{
     }
     Record[] records;
     
-    function addPatient() public { 
-        isPatient[msg.sender] = true;
+    function addPatient(address x) public { 
+        isPatient[x] = true;
     }
 
-    function addHCP()public{
-        isHCP[msg.sender] = true;
+    function addHCP(address x)public{
+        isHCP[x] = true;
     }
 
     function addRecord(uint recid, string ipfs) public{
@@ -37,11 +37,11 @@ contract User{
         setPerm[msg.sender] = recordIDtoRec[recid];
     }
     
-    function getUserType() public view returns (uint){
-        if (isHCP[msg.sender]){
+    function getUserType(address x) public view returns (uint){
+        if (isHCP[x]){
             return 2;
         }
-        else if (isPatient[msg.sender]){
+        else if (isPatient[x]){
             return 1;
         }
     }
