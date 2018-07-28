@@ -1,6 +1,6 @@
 $(function(){
     $('#drProfile').hide();
-    $('#btn-retrieve').on('click',function(event){
+    $('.btn-retrieve').on('click',function(event){
         event.preventDefault();
         var ids = $(this).data('id');
         ids=ids.split(' ');
