@@ -208,7 +208,7 @@ module.exports = {
                 throw err;
             }
             if (!err && patient) {
-                viewModel.users.push(patient.personalDetail.firstName + " " + patient.personalDetail.lastName)
+                viewModel.users.push(patient.personalDetail.firstName + " " + patient.personalDetail.lastName);
                 viewModel.patient = patient;
                 res.render('reports', viewModel);
             }
@@ -542,7 +542,7 @@ module.exports = {
                 //Archive the folder
                 // var baseDir = './public/upload/patients/' + acc + '/';
                 // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
-                ``
+                // ``
                 // var archive = archiver.create('zip', {});
                 // archive.on('error', function (err) {
                 //     throw err;
@@ -680,4 +680,4 @@ module.exports = {
             }
         });
     },
-}
+};

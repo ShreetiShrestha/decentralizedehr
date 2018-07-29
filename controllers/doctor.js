@@ -6,7 +6,7 @@ module.exports = {
             validationList: [],
             countlist: {},
             linkslist: []
-        }
+        };
 
 
         Models.Doctor.count({}, function (err, count) {
@@ -60,7 +60,7 @@ module.exports = {
                     Models.Doctor.find({
                         'validDoc': true
                     }).count({}, function (err, count) {
-                        threshold = Math.floor(count * .50);
+                        threshold = Math.ceil(count * .50);
                         console.log("No of valid dr:", count);
                         viewModel.countlist.dr = count;
                         viewModel.countlist.threshold = threshold;
@@ -123,9 +123,9 @@ module.exports = {
         res.redirect('/doctor/' + req.params.firstAccount);
     },
     vote: function (req, res) {
-        let message = {
+        var message = {
             msg: ""
-        }
+        };
         Models.Doctor.findOne({
             'ethAddr': {
                 $regex: req.params.candidateAccount
