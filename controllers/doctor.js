@@ -48,7 +48,7 @@ module.exports = {
                     Models.Doctor.find({
                         'validDoc': true
                     }).count({}, function (err, count) {
-                        threshold = Math.floor(count * .50);
+                        threshold = Math.ceil(count * .50);
                         console.log("No of valid dr:", count);
                         viewModel.countlist.dr = count;
                         viewModel.countlist.threshold = threshold;
