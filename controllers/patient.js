@@ -473,7 +473,7 @@ module.exports = {
                 //Archive the folder
                 // var baseDir = './public/upload/patients/' + acc + '/';
                 // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
-
+``
                 // var archive = archiver.create('zip', {});
                 // archive.on('error', function (err) {
                 //     throw err;
