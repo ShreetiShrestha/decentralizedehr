@@ -1,4 +1,4 @@
-// configure the server
+ // configure the server
 var path = require('path'),
     routes = require('./routes'),
     exphbs = require('express-handlebars'),
