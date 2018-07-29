@@ -593,21 +593,33 @@ module.exports = {
 
                 //IPFS storage
                 var filelist = [];
+                // ipfs.key.gen('my-key', {
+                //     type: 'rsa',
+                //     size: 2048
+                // }, function(err, key) {
+                //     if(err){
+                //         console.log(JSON.stringify(err, null));
+                //     }else{
+                //         console.log(JSON.stringify(key, null));
+                //     }
+                // });
+                // ipfs.key.export('self', 'password', (err, pem) => console.log(pem))
 
                 fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-                    var listOfHases = '';
+                    var listOfHases = ' ';
                     files.forEach(file => {
                         console.log(file);
                         filelist.push(file);
                         testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
-                        var testBuffer = new Buffer(testFile);
+                        var testBuffer = new Buffer(testFile)
+
                         ipfs.files.add(testBuffer, function (err, output) {
                             if (err) {
                                 console.log(err);
                             }
                             console.log(output[0].hash);
+                            // listOfHases.push(output[0].hash);
                         });
-
                         // needs blockchain now
                     });
                 });

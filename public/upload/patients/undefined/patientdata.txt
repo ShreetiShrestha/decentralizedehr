@@ -1,33 +1,25 @@
 {
-	"_id": "5b5a16f3ffbf3c339ecba2f1",
-	"ethAddr": "0x47c6a7354455857a3266823038d4d251c91ad9d3",
+	"_id": "5b5d1744131dce44622272c6",
+	"ethAddr": "0xe0924c47cde605af87856476cd8edf26732f3ecf",
 	"__v": 0,
-	"email": "a@gmail.com",
-	"username": "nmzz",
-	"reports": [
-		{
-			"_id": "5b5a17a0ffbf3c339ecba2f3",
-			"docEdited": "5b5a1749ffbf3c339ecba2f2",
-			"description": "ct",
-			"title": "CTScan",
-			"filename": " cn2dti.jpg"
-		}
-	],
+	"email": "admin@gmail.com",
+	"username": "admin",
+	"reports": [],
 	"surgicalHistory": [],
 	"immunization": [],
 	"medications": [],
 	"allergies": [],
 	"vitalSign": [],
 	"personalDetail": {
-		"address": "rabibhawan",
-		"bloodGroup": "A-",
-		"contact": 9494949499,
-		"dob": "2018-07-10T00:00:00.000Z",
-		"emergencyContact": 9999999999,
-		"firstName": "shreeti",
+		"address": "Bkt",
+		"bloodGroup": "AB+",
+		"contact": 9860652944,
+		"dob": "1996-11-03T00:00:00.000Z",
+		"emergencyContact": 9841130783,
+		"firstName": "Prakriti",
 		"gender": "female",
-		"lastName": "shrestha",
+		"lastName": "Dumaru",
 		"middleName": "",
-		"profilePic": " 90gum8.png"
+		"profilePic": " tqx16x.jpg"
 	}
 }
