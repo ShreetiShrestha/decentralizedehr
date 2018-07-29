@@ -4,7 +4,8 @@ module.exports = {
         var viewModel = {
             dr: {},
             validationList: [],
-            countlist: {}
+            countlist: {},
+            linkslist: []
         }
 
 
@@ -43,7 +44,18 @@ module.exports = {
                 viewModel.dr = doctor;
                 viewModel.countlist.myCount = doctor.voteCount;
                 if (validity === true) {
-                    res.render('drdashboard', viewModel);
+                    Models.Link.find({
+                        'doctor':doctor.id
+                    },function(err,links){
+                        if (err)throw err;
+                        else{
+                            for (var i=0;i<links.length;i++){
+                                viewModel.linkslist.push(links[i]);
+                            }
+                        }
+                        res.render('drdashboard', viewModel);
+                    });
+                    
                 } else {
                     Models.Doctor.find({
                         'validDoc': true
