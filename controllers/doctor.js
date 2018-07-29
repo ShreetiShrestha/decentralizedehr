@@ -4,9 +4,13 @@ module.exports = {
         var viewModel = {
             dr: {},
             validationList: [],
+            countlist: {}
         }
+
+
         Models.Doctor.count({}, function (err, count) {
             console.log("Number of doctors:", count);
+
             if (count <= 3) {
                 Models.Doctor.update({
                     'ethAddr': req.params.firstAccount
@@ -37,10 +41,25 @@ module.exports = {
                 validity = doctor.validDoc;
                 console.log(doctor.validDoc);
                 viewModel.dr = doctor;
+                viewModel.countlist.myCount = doctor.voteCount;
                 if (validity === true) {
                     res.render('drdashboard', viewModel);
                 } else {
-                    res.send('ya voting ko status dekhaune page hunexa');
+                    Models.Doctor.find({
+                        'validDoc': true
+                    }).count({}, function (err, count) {
+                        threshold = Math.floor(count * .50);
+                        console.log("No of valid dr:", count);
+                        viewModel.countlist.dr = count;
+                        viewModel.countlist.threshold = threshold;
+                        viewModel.countlist.needed = threshold - viewModel.countlist.myCount + 1;
+                        Models.Patient.count({}, function (err, countPatient) {
+                            viewModel.countlist.patients=countPatient;
+                            viewModel.countlist.total = countPatient +viewModel.countlist.dr;
+                            res.render('drVotingStatus', viewModel);
+                        });
+                    });
+
                 }
             });
         });
@@ -92,8 +111,8 @@ module.exports = {
         res.redirect('/doctor/' + req.params.firstAccount);
     },
     vote: function (req, res) {
-        let message={
-            msg:""
+        let message = {
+            msg: ""
         }
         Models.Doctor.findOne({
             'ethAddr': {
@@ -105,16 +124,16 @@ module.exports = {
             }
 
             if (!err && candidate) {
-               
+
                 var threshold;
-                
+
                 Models.Doctor.update({
                     'ethAddr': req.params.candidateAccount
                 }, {
                     $set: {
                         'voteCount': candidate.voteCount + 1
                     }
-                    
+
                 }, function (err, result) {
                     if (err) {
                         throw err;
@@ -129,19 +148,20 @@ module.exports = {
                             'acc': req.params.candidateAccount
                         }
                     }
-                    
+
                 }, function (err, result) {
                     if (err) {
                         throw err;
                     }
                 }, false, true);
 
-                
+
                 Models.Doctor.find({
-                    'validDoc': true}).count({}, function (err, count) {
-                    threshold = Math.floor(count *.50);
-                    console.log("No of valid dr:",count);
-                    console.log("Threshold value:",threshold);
+                    'validDoc': true
+                }).count({}, function (err, count) {
+                    threshold = Math.floor(count * .50);
+                    console.log("No of valid dr:", count);
+                    console.log("Threshold value:", threshold);
                     if (candidate.voteCount >= threshold) {
                         Models.Doctor.update({
                             'ethAddr': req.params.candidateAccount
