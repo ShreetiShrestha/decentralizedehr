@@ -514,7 +514,8 @@ module.exports = {
 
     },
     share: function (req, res) {
-        acc = req.params.firstAccount;
+        
+        acc = req.params.patientAccount;
         Models.Patient.findOne({
             'ethAddr': req.params.patientAccount
         }, function (err, patient) {
@@ -541,7 +542,7 @@ module.exports = {
                 //Archive the folder
                 // var baseDir = './public/upload/patients/' + acc + '/';
                 // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
-``
+                ``
                 // var archive = archiver.create('zip', {});
                 // archive.on('error', function (err) {
                 //     throw err;
@@ -569,7 +570,6 @@ module.exports = {
                         throw err;
                     }
                     if (!err && patient) {
-                        console.log(patient.ethAddr);
                         Models.Doctor.findOne({
                             'ethAddr': {
                                 $regex: req.params.drAccount
@@ -579,7 +579,6 @@ module.exports = {
                                 throw err;
                             }
                             if (!err && doctor) {
-                                console.log(doctor.ethAddr);
                                 var newLink = new Models.Link({
                                     patient: patient.id,
                                     doctor: doctor.id
@@ -592,7 +591,8 @@ module.exports = {
                 });
 
                 //IPFS storage
-                var filelist = [];
+                
+                
                 // ipfs.key.gen('my-key', {
                 //     type: 'rsa',
                 //     size: 2048
@@ -606,30 +606,77 @@ module.exports = {
                 // ipfs.key.export('self', 'password', (err, pem) => console.log(pem))
 
                 fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-                    var listOfHases = ' ';
-                    files.forEach(file => {
-                        console.log(file);
-                        filelist.push(file);
-                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
-                        var testBuffer = new Buffer(testFile)
-
+                    console.log(files);
+                    for (var i = 0; i < files.length; i++) {
+                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                        var testBuffer = new Buffer(testFile);
                         ipfs.files.add(testBuffer, function (err, output) {
                             if (err) {
                                 console.log(err);
                             }
                             console.log(output[0].hash);
-                            // listOfHases.push(output[0].hash);
+                            Models.Doctor.findOne({
+                                'ethAddr':{
+                                    $regex :req.params.drAccount
+                                } 
+                                
+                            },function (err,dr){
+                                if (err) throw err;
+                                else{
+                                    Models.Patient.findOne({
+                                        'ethAddr':{
+                                            $regex :req.params.patientAccount
+                                        } 
+                                        
+                                    },function (err,patient){
+                                        if (err) throw err;
+                                        else{
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': dr.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage':output[0].hash
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+                                        }
+                                    });
+                                }
+                            });
+                          
                         });
-                        // needs blockchain now
-                    });
+                    }
+                    // files.forEach(file => {
+                    //     console.log(file);
+                    //     filelist.push(file);
+                    // testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
+                    // var testBuffer = new Buffer(testFile)
+
+                    // ipfs.files.add(testBuffer, function (err, output) {
+                    //     if (err) {
+                    //         console.log(err);
+                    //     }
+                    //     console.log(output[0].hash);
+                    //     hashlist.concat(' ', output[0].hash);
+                    // });
+                    // needs blockchain now
+                    // }, function (err, done) {
+                    //     console.log('filelist:', filelist);
+                    // });
+                   
+                    res.redirect('/patient/' + req.params.patientAccount);
                 });
-                
+
 
                 // const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
                 // QRCode.toDataURL(validCID, function (err, url) {
                 //     console.log(url);
                 // });
-                res.redirect('/patient/' + req.params.patientAccount);
+
             }
         });
     },
