@@ -4,8 +4,9 @@ module.exports = {
         var viewModel = {
             dr: {},
             validationList: [],
-            countlist: {}
-        }
+            countlist: {},
+            linkslist: []
+        };
 
 
         Models.Doctor.count({}, function (err, count) {
@@ -43,7 +44,18 @@ module.exports = {
                 viewModel.dr = doctor;
                 viewModel.countlist.myCount = doctor.voteCount;
                 if (validity === true) {
-                    res.render('drdashboard', viewModel);
+                    Models.Link.find({
+                        'doctor':doctor.id
+                    },function(err,links){
+                        if (err)throw err;
+                        else{
+                            for (var i=0;i<links.length;i++){
+                                viewModel.linkslist.push(links[i]);
+                            }
+                        }
+                        res.render('drdashboard', viewModel);
+                    });
+                    
                 } else {
                     Models.Doctor.find({
                         'validDoc': true
@@ -111,9 +123,9 @@ module.exports = {
         res.redirect('/doctor/' + req.params.firstAccount);
     },
     vote: function (req, res) {
-        let message = {
+        var message = {
             msg: ""
-        }
+        };
         Models.Doctor.findOne({
             'ethAddr': {
                 $regex: req.params.candidateAccount

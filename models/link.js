@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
     path = require('path');
 
 var LinkSchema = new Schema({
-       
+    hashes: [{
+        linkage: {type: String}}],
     patient: {
         type: Schema.Types.ObjectId,
         ref: "Patient"
