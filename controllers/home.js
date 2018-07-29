@@ -5,6 +5,8 @@ var web3Module = require('../ethereum/web3'),
     multer = require('multer'),
     fs = require('fs'),
     path = require('path');
+    var Web3 = require('web3');
+
 module.exports = {
     index: function (req, res) {
         var viewModel={

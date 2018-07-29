@@ -1,11 +1,11 @@
 $(function(){
     $('#checkicon1').hide();
-    $('#finishDr').hide();
     $('#finishPatient').hide();
+    $('#finishDr').hide();
     $('#firstform-post').on('click',function(event){
         $('#firstform-post').hide();
         $('#checkicon1').show();
-        $('#finishPatient').hide();
+        $('#finishDr').hide();
     });
 
     $('#checkicon2').hide();
@@ -13,8 +13,8 @@ $(function(){
         $('#secondform-post').hide();
         $('#checkicon2').show();
     });    
-    $('#thirdform-postpatient').on('click',function(event){
-        $('#thirdform-postpatient').hide();
-        $('#finishPatient').show();
+    $('#thirdform-postdr').on('click',function(event){
+        $('#thirdform-postdr').hide();
+        $('#finishDr').show();
     });    
 });

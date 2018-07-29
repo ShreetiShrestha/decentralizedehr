@@ -3,6 +3,7 @@ var Models = require('../models'),
     path = require('path'),
     ipfsAPI = require('ipfs-api'),
     archiver = require('archiver'),
+    QRCode = require('qrcode'),
     fs = require('fs');
 let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
     protocol: 'https'
@@ -445,10 +446,77 @@ module.exports = {
         }, false, true);
         res.redirect('/patient/' + req.params.firstAccount);
     },
+
+    getdoc: function (req, res) {
+        const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
+
+        ipfs.files.get(validCID, function (err, files) {
+            files.forEach((file) => {
+                console.log(file.path);
+                console.log(file.content.toString('utf8'));
+            });
+        });
+        res.redirect('/patient/' + req.params.firstAccount);
+    },
     sharedoc: function (req, res) {
-        acc = req.params.firstAccount;
+        var viewModel = {
+            doctors: [],
+            patient: {},
+
+        };
+        Models.Doctor.find(function (err, doctors) {
+            if (err) {
+                throw err;
+            } else {
+                viewModel.doctors = doctors;
+            }
+        });
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('shareToDoc', viewModel);
+            }
+        });
+    },
+    retrieveinfo: function (req, res) {
+        var viewModel = {
+            patient: {},
+            dr: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patient = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+
+                        viewModel.dr = doctor;
+                        res.send(viewModel);
+                    }
+                });
+            }
+        });
+
+    },
+    share: function (req, res) {
+        acc = req.params.firstAccount;
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
         }, function (err, patient) {
             if (err) {
                 throw err;
@@ -492,12 +560,42 @@ module.exports = {
                 //     archive.directory(baseDir + dirName, dirName);
                 // });
                 // archive.finalize();
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && patient) {
+                        console.log(patient.ethAddr);
+                        Models.Doctor.findOne({
+                            'ethAddr': {
+                                $regex: req.params.drAccount
+                            }
+                        }, function (err, doctor) {
+                            if (err) {
+                                throw err;
+                            }
+                            if (!err && doctor) {
+                                console.log(doctor.ethAddr);
+                                var newLink = new Models.Link({
+                                    patient: patient.id,
+                                    doctor: doctor.id
+                                });
+                                newLink.save();
+                            }
+                        });
 
+                    }
+                });
 
                 //IPFS storage
                 var filelist = [];
-                var listOfHases=[];
+
                 fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+                    var listOfHases = '';
                     files.forEach(file => {
                         console.log(file);
                         filelist.push(file);
@@ -507,24 +605,20 @@ module.exports = {
                             if (err) {
                                 console.log(err);
                             }
-                            listOfHases.push(output[0].hash);
+                            console.log(output[0].hash);
                         });
-                        console.log(listOfHases);// needs blockchain now
+
+                        // needs blockchain now
                     });
                 });
-                res.redirect('/patient/' + req.params.firstAccount);
+                
+
+                // const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
+                // QRCode.toDataURL(validCID, function (err, url) {
+                //     console.log(url);
+                // });
+                res.redirect('/patient/' + req.params.patientAccount);
             }
         });
     },
-    getdoc: function (req, res) {
-        const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
-
-        ipfs.files.get(validCID, function (err, files) {
-            files.forEach((file) => {
-                console.log(file.path);
-                console.log(file.content.toString('utf8'));
-            });
-        });
-        res.redirect('/patient/' + req.params.firstAccount);
-    }
 }

@@ -1,10 +1,10 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
-const Web3 = require('Web3');
+const Web3 = require('web3');
 const compiledUser = require('./build/User.json');
 const compiledRecord = require('./build/Record.json');
 
 const provider = new HDWalletProvider(
-' 12 word mnemonic','link to provider may geth or infura'
+'apart bundle waste cook winter surround cart fence bundle merry law book','https://rinkeby.infura.io/F7F0FVQU2NvNwqRLrwHn'
 );
 
 const web3 = new Web3(provider);
