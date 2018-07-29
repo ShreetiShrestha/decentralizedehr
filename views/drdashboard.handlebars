@@ -41,7 +41,13 @@
                 <div class="x_panel">
                     <div class="x_content">
                         <div class="row">
+                            
                             {{#each validationList}}
+                            
+                            {{!-- {{#each ../dr.votedAccounts}} --}}
+                            {{#ifCondList this.ethAddr ../dr.votedAccounts}}
+                            Voted {{this.ethAddr}} <br>
+                            {{else}}
                             <div class="col-md-5 col-sm-4 col-xs-12 prodetails profile_details">
                                 <div class="well profile_view">
                                     <div class="col-sm-12">
@@ -74,7 +80,7 @@
 
                                         <div class="col-xs-12 col-sm-6 emphasis">
                                             <strong><p style= "color:red;" id="warning"></p></strong>
-                                            <button type="button" class="button-vote btn btn-success btn-xs" data-id="{{this.ethAddr}}">
+                                            <button type="button" class="button-vote btn btn-success btn-xs" data-id="{{this.ethAddr}} {{../dr.ethAddr}}">
                                                 <strong>Vote</strong>
                                             </button>
                                            
@@ -85,6 +91,57 @@
                                     </div>
                                 </div>
                             </div>
+                            {{/ifCondList}}
+                               
+                            {{!-- {{#ifCond this.acc ../this.ethAddr}}
+                            You Have Already Voted {{../this.ethAddr}}
+                            {{/ifCond}} --}}
+                            {{!-- {{#ifNotCond this.acc ../this.ethAddr}}
+                            <div class="col-md-5 col-sm-4 col-xs-12 prodetails profile_details">
+                                <div class="well profile_view">
+                                    <div class="col-sm-12">
+                                        <h4 class="brief">
+                                            <i>Health Care Provider</i>
+                                        </h4>
+                                        <div class="left col-xs-7">
+                                            <h2>{{../this.personalDetail.firstName}} {{../this.personalDetail.lastName}}</h2>
+                                            <p>
+                                                <strong>Specialization: </strong> {{../this.personalDetail.specializationDesc}}
+                                            </p>
+                                            <p>
+                                                <strong>NMC Registration #: </strong> {{../this.personalDetail.nmc}}
+                                            </p>
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    <i class="fa fa-building"></i> Address: {{../this.personalDetail.address}}</li>
+                                                <li>
+                                                    <i class="fa fa-phone"></i> Contact: {{../this.personalDetail.contact}}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="right col-xs-5 text-center">
+                                            <img src="/public/upload/{{../this.personalDetail.profilePic}}" alt="" class="img-circle img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 bottom text-center">
+                                        <div class="col-xs-12 col-sm-6 emphasis">
+
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-6 emphasis">
+                                            <strong><p style= "color:red;" id="warning"></p></strong>
+                                            <button type="button" class="button-vote btn btn-success btn-xs" data-id="{{../this.ethAddr}} {{../../dr.ethAddr}}">
+                                                <strong>Vote</strong>
+                                            </button>
+                                           
+                                            <button type="button" class="btn btn-primary btn-xs">
+                                                View Profile
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/ifNotCond}} --}}
+                            {{!-- {{/each}} --}}
                             {{/each}}
                         </div>
                     </div>

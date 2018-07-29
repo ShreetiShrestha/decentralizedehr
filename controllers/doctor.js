@@ -97,7 +97,7 @@ module.exports = {
         }
         Models.Doctor.findOne({
             'ethAddr': {
-                $regex: req.params.firstAccount
+                $regex: req.params.candidateAccount
             }
         }, function (err, candidate) {
             if (err) {
@@ -109,11 +109,26 @@ module.exports = {
                 var threshold;
                 
                 Models.Doctor.update({
-                    'ethAddr': req.params.firstAccount
+                    'ethAddr': req.params.candidateAccount
                 }, {
                     $set: {
                         'voteCount': candidate.voteCount + 1
-                    },
+                    }
+                    
+                }, function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                }, false, true);
+
+                Models.Doctor.update({
+                    'ethAddr': req.params.voterAccount
+                }, {
+                    $addToSet: {
+                        'votedAccounts': {
+                            'acc': req.params.candidateAccount
+                        }
+                    }
                     
                 }, function (err, result) {
                     if (err) {
@@ -122,11 +137,14 @@ module.exports = {
                 }, false, true);
 
                 
-                Models.Doctor.count({}, function (err, count) {
-                    threshold = Math.ceil(count * .51);
-                    if (candidate.voteCount > threshold) {
+                Models.Doctor.find({
+                    'validDoc': true}).count({}, function (err, count) {
+                    threshold = Math.floor(count *.50);
+                    console.log("No of valid dr:",count);
+                    console.log("Threshold value:",threshold);
+                    if (candidate.voteCount >= threshold) {
                         Models.Doctor.update({
-                            'ethAddr': req.params.firstAccount
+                            'ethAddr': req.params.candidateAccount
                         }, {
                             $set: {
                                 'validDoc': true

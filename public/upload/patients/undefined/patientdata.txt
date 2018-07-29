@@ -1,9 +1,17 @@
 {
+<<<<<<< HEAD
 	"_id": "5b5d1744131dce44622272c6",
 	"ethAddr": "0xe0924c47cde605af87856476cd8edf26732f3ecf",
 	"__v": 0,
 	"email": "admin@gmail.com",
 	"username": "admin",
+=======
+	"_id": "5b5bedb8f907cb608005da79",
+	"ethAddr": "0x2e8e9a3dfa08792666c68d294387cf9f813322cb",
+	"__v": 0,
+	"email": "dshrestha933@gmail.com",
+	"username": "rabin",
+>>>>>>> 69916ae4ebd060140ae23a85e0df0c8c73d1eab3
 	"reports": [],
 	"surgicalHistory": [],
 	"immunization": [],
@@ -11,6 +19,7 @@
 	"allergies": [],
 	"vitalSign": [],
 	"personalDetail": {
+<<<<<<< HEAD
 		"address": "Bkt",
 		"bloodGroup": "AB+",
 		"contact": 9860652944,
@@ -21,5 +30,17 @@
 		"lastName": "Dumaru",
 		"middleName": "",
 		"profilePic": " tqx16x.jpg"
+=======
+		"address": "rabibhawan",
+		"bloodGroup": "AB-",
+		"contact": 9494949499,
+		"dob": "2018-07-18T00:00:00.000Z",
+		"emergencyContact": 9999999999,
+		"firstName": "Rabin",
+		"gender": "male",
+		"lastName": "shrestha",
+		"middleName": "",
+		"profilePic": " xk0dnh.png"
+>>>>>>> 69916ae4ebd060140ae23a85e0df0c8c73d1eab3
 	}
 }

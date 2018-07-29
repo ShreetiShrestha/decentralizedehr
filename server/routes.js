@@ -48,6 +48,6 @@ module.exports = function (app) {
     router.get('/doctor/:firstAccount/personalDetail', doctor.personaldetail);
     router.post('/doctor/:firstAccount/personalDetailedit', doctor.personalDetailedit);
 
-    router.post('/doctor/:firstAccount/vote', doctor.vote);
+    router.post('/doctor/:voterAccount/:candidateAccount/vote', doctor.vote);
     app.use(router);
 };
