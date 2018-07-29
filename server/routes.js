@@ -45,6 +45,8 @@ module.exports = function (app) {
     router.get('/patient/:patientAccount/:drAccount/sharedoc/info', patient.share);
     router.get('/patient/:firstAccount/getdoc', patient.getdoc);
 
+    router.post('/doctor/:drAccount/:patientAccount/getPatientInfo/', doctor.patientretrieveinfo);
+
     router.get('/doctor/:firstAccount/personalDetail', doctor.personaldetail);
     router.post('/doctor/:firstAccount/personalDetailedit', doctor.personalDetailedit);
 

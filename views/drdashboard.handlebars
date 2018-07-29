@@ -3,7 +3,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Contacts Design</h3>
+                <h3>HCP Dashboard</h3>
             </div>
 
             <div class="title_right">
@@ -25,15 +25,96 @@
                 <div class='x_panel'>
                     <div class="x_content">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3>Recent Notifications</h3>
-                                {{#each linkslist}}
-                                    {{this.patient}}
-                                {{/each}}
+                            <div class="x_content">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Recent Notifications
+                                        <small><br>Here is a list of patients who want to share their information.</small>
+                                    </h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Username</th>
+                                                <th>Contact</th>
+                                                <th>View Profile</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            {{#each linkslist}}
+                                            <tr>
+                                                <td>{{this.personalDetail.firstName}}</td>
+                                                <td>{{this.personalDetail.lastName}}</td>
+                                                <td>{{this.username}}</td>
+                                                <td>{{this.personalDetail.contact}}</td>
+                                                <td>
+                                                    
+                                                    <button class="btn btn-info btn-retrieve-patient" data-id='{{this.ethAddr}} {{../dr.ethAddr}}'>
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                                
+                                            </tr>
+                                            {{/each}}
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                Another Column
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="blankProfilePatient">
+                            <h4 class="text-center" style="margin:6em;">Click on View Profile from the list to view Patient profile.</h4>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="patientProfile">
+                            <div class="profile_img">
+                                <div id="crop-avatar">
+                                    <!-- Current avatar -->
+                                    <img class="img-responsive avatar-view" style="height:10em;"id="patientProImg" src="" alt="Avatar" title="Change the avatar">
+                                </div>
                             </div>
+                            <h3 id = "patientName"></h3>
+                            <h4 id = "patientAge"></h4>
+                            <h4 id = "patientGender"></h4>
+                            <ul class="list-unstyled user_data">
+                                <li>
+                                    <i class="fa fa-map-marker user-profile-icon"></i> Address: <text id= "patientAddress" style="font-size:11pt"></text>
+                                </li>
+
+                                <li>
+                                    <i class="fa fa-phone user-profile-icon"></i> Contact: <text id= "patientContact" style="font-size:11pt"></text>
+                                </li>
+                                </li>
+
+                                <li class="m-top-xs">
+                                    <i class="fa fa-plus user-profile-icon"></i> Message: <text id= "patientMsg" style="font-size:11pt"></text>
+                                </li>
+                            </ul>
+
+                            <a class="btn btn-success" >
+                                <i class="fa fa-share-alt m-right-xs"></i>Retrieve</a>
+                            <br />
+
+                        
+
+                        </div>
+                    </div>
+                            {{!-- <div class="col-md-6"> --}}
+                                {{!-- <h3>Recent Notifications</h3> --}}
+                                {{!-- {{#each linkslist}}
+                                    {{this.personalDetail.firstName}}
+                                {{/each}} --}}
+
+                            {{!-- </div> --}}
+                            
                         </div>
                     </div>
                 </div>
