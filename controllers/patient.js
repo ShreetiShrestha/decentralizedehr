@@ -617,8 +617,7 @@ module.exports = {
                             if (err) {
                                 console.log(err);
                             }
-                            console.log(output[0].hash);
-                            // listOfHases.push(output[0].hash);
+                            console.log(output[0].hash)
                         });
                         // needs blockchain now
                     });
