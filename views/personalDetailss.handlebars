@@ -3,7 +3,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Vital Signs </h3>
+                <h3>Personal Details </h3>
               </div>
 
               <div class="title_right">
@@ -25,7 +25,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>List of Vital Signs</h2>
+                    <h2>Personal Information of Patients</h2>
                     <div class="clearfix"></div>
                   </div>
 
@@ -35,33 +35,32 @@
                       <table class="table table-striped jambo_table">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title">Name </th>
-                            <th class="column-title">Date </th>
-                            <th class="column-title">Status </th>
-                            <th class="column-title">Value </th>
-                            <th class="column-title">Unit </th>
-                            <th class="column-title">Notes </th>
-                        
+                            <th class="column-title">First Name </th>
+                            <th class="column-title">Middle Name </th>
+                            <th class="column-title">Last Name </th>
+                            <th class="column-title">Gender </th>
+                            <th class="column-title">Date of Birth </th>
+                            <th class="column-title">Address </th>
+                            <th class="column-title">Contact </th>
+                            <th class="column-title">Emergency Contact </th>
+                            <th class="column-title">Blood Group </th>
                           </tr>
                         </thead>
 
                         <tbody>
-                                            
-                            {{#each patient}}
-                            {{#each vitalSign}}
+                            
                             <tr class="even pointer">
-                            <td class=" ">{{this.name}}</td>
-                            <td class=" ">{{this.dateOfNote}} </td>
-                            <td class=" ">{{this.status}}</td>
-                            <td class=" ">{{this.value}}</td>
-                            <td class=" ">{{this.unit}}</td>
-                            <td class=" ">{{this.notes}}</td>
+                            <td class=" ">{{patient.personalDetail.firstName}}</td>
+                            <td class=" ">{{patient.personalDetail.middleName}} </td>
+                            <td class=" ">{{patient.personalDetail.lastName}}</td>
+                            <td class=" ">{{patient.personalDetail.gender}}</td>
+                            <td class=" ">{{patient.personalDetail.dob}}</td>
+                            <td class=" ">{{patient.personalDetail.address}}</td>
+                            <td class=" ">{{patient.personalDetail.contact}}</td>
+                            <td class=" ">{{patient.personalDetail.emergencyContact}}</td>
+                            <td class=" ">{{patient.personalDetail.bloodGroup}}</td>
                           </tr>
-
-                          {{/each}}
-                         {{/each}}
-                          
-                          
+                                                 
                         </tbody>
                       </table>
                     </div>

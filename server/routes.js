@@ -21,9 +21,11 @@ module.exports = function (app) {
     
     router.get('/patient/:firstAccount/allergies', patient.allergies);
     router.post('/patient/:firstAccount/allergiessubmit', patient.allergiessubmit);
+    router.get('/patient/:firstAccount/allergiesDetails', patient.allergiesDetails);
 
     router.get('/patient/:firstAccount/immunization', patient.immunization);
     router.post('/patient/:firstAccount/immunizationsubmit', patient.immunizationsubmit);
+    router.get('/patient/:firstAccount/immunizationDetails', patient.immunizationDetails);
 
     router.get('/patient/:firstAccount/vitalSigns', patient.vitalsigns);
     router.post('/patient/:firstAccount/vitalSignssubmit', patient.vitalsignssubmit);
@@ -31,15 +33,19 @@ module.exports = function (app) {
 
     router.get('/patient/:firstAccount/surgicalHistory', patient.surgicalhistory);
     router.post('/patient/:firstAccount/patientsurgicalHistorysubmit', patient.surgicalhistorysubmit);
+    router.get('/patient/:firstAccount/surgicalhistoryDetails', patient.surgicalhistoryDetails);
 
     router.get('/patient/:firstAccount/medications', patient.medications);
     router.post('/patient/:firstAccount/medicationssubmit', patient.medicationssubmit);
+    router.get('/patient/:firstAccount/medicationDetails', patient.medicationDetails);
 
     router.get('/patient/:firstAccount/personalDetail', patient.personaldetail);
     router.post('/patient/:firstAccount/personalDetailedit', patient.personalDetailedit);
+    router.get('/patient/:firstAccount/personalDetails', patient.personalDetails);
 
     router.get('/patient/:firstAccount/reports', patient.reports);
     router.post('/patient/:firstAccount/reportssubmit', patient.reportssubmit);
+    router.get('/patient/:firstAccount/reportsDetails', patient.reportsDetails);
 
     router.get('/patient/:firstAccount/sharedoc', patient.sharedoc);
     router.post('/patient/:patientAccount/:drAccount/sharedoc/', patient.retrieveinfo);

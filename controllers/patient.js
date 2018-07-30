@@ -26,6 +26,8 @@ module.exports = {
             }
         });
     },
+
+
     allergies: function (req, res) {
         var viewModel = {
             patient: {}
@@ -214,6 +216,8 @@ module.exports = {
             }
         });
     },
+
+
     vitalsignssubmit: function (req, res) {
         Models.Patient.update({
             'ethAddr': req.params.firstAccount
@@ -221,11 +225,11 @@ module.exports = {
             $addToSet: {
                 'vitalSign': {
                     'name': req.body.name,
-                    'date': req.body.dateOfNote,
+                    'dateOfNote': req.body.dateOfNote,
                     'status': req.body.status,
                     'value': req.body.value,
                     'unit': req.body.unit,
-                    'note': req.body.note
+                    'notes': req.body.notes
                 }
             }
         }, function (err, result) {
@@ -244,7 +248,7 @@ module.exports = {
                     'allergenType': req.body.allergentype,
                     'severity': req.body.severity,
                     'firstObserved': req.body.firstobserved,
-                    'currentlyActive': req.body.iCheck,
+                    'currentlyActive': req.body.currentlyactive,
                     'note': req.body.note
                 }
             }
@@ -290,12 +294,12 @@ module.exports = {
                     'surgicalHistory': {
                         'procedureType': req.body.procedureType,
                         'date': req.body.date,
-                        'hospital': req.body.hospital,
+                        'hospital': req.body.hospitalName,
                         'bodyLocation': req.body.bodyLocation,
                         'operatedBy': docID,
                         'surgicalNotes': req.body.surgicalNotes,
                         'physicianNotes': req.body.physicianNotes,
-                        'anaesthesiaNotes': req.body.anaesthesiaNotes,
+                        'anesthesiaNotes': req.body.anaesthesiaNotes,
                         'consequence': req.body.consequence,
                     }
                 }
@@ -447,6 +451,7 @@ module.exports = {
         res.redirect('/patient/' + req.params.firstAccount);
     },
 
+
     vitalSignsDetails: function(req, res){
         var viewModel = {
             patient: {}
@@ -461,6 +466,108 @@ module.exports = {
 
                 viewModel.patient = patient;
                 res.render('vitalSignsDetails', viewModel);
+            }
+        });
+    },
+    allergiesDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('allergiesDetails', viewModel);
+            }
+        });
+    },
+    immunizationDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('immunizationDetails', viewModel);
+            }
+        });
+    },
+    surgicalhistoryDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('surgicalhistoryDetails', viewModel);
+            }
+        });
+    },
+    medicationDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('medicationDetails', viewModel);
+            }
+        });
+    },
+    personalDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('personalDetailss', viewModel);
+            }
+        });
+    },
+    reportsDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('reportsDetails', viewModel);
             }
         });
     },

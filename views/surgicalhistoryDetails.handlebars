@@ -3,7 +3,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Vital Signs </h3>
+                <h3>Surgical History </h3>
               </div>
 
               <div class="title_right">
@@ -25,7 +25,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>List of Vital Signs</h2>
+                    <h2>List of Surgeries</h2>
                     <div class="clearfix"></div>
                   </div>
 
@@ -35,12 +35,15 @@
                       <table class="table table-striped jambo_table">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title">Name </th>
+                            <th class="column-title">Procedure Type </th>
                             <th class="column-title">Date </th>
-                            <th class="column-title">Status </th>
-                            <th class="column-title">Value </th>
-                            <th class="column-title">Unit </th>
-                            <th class="column-title">Notes </th>
+                            <th class="column-title">Hospital Name </th>
+                            <th class="column-title">Body Location </th>
+                            <th class="column-title">Operated By </th>
+                            <th class="column-title">Surgical Notes </th>
+                            <th class="column-title">Physician Notes </th>
+                            <th class="column-title">Anesthesia Notes </th>
+                            <th class="column-title">Consequences </th>
                         
                           </tr>
                         </thead>
@@ -48,14 +51,17 @@
                         <tbody>
                                             
                             {{#each patient}}
-                            {{#each vitalSign}}
+                            {{#each surgicalHistory}}
                             <tr class="even pointer">
-                            <td class=" ">{{this.name}}</td>
-                            <td class=" ">{{this.dateOfNote}} </td>
-                            <td class=" ">{{this.status}}</td>
-                            <td class=" ">{{this.value}}</td>
-                            <td class=" ">{{this.unit}}</td>
-                            <td class=" ">{{this.notes}}</td>
+                            <td class=" ">{{this.procedureType}}</td>
+                            <td class=" ">{{this.date}} </td>
+                            <td class=" ">{{this.hospital}}</td>
+                            <td class=" ">{{this.bodyLocation}}</td>
+                            <td class=" ">{{this.operatedBy}}</td>
+                            <td class=" ">{{this.surgicalNotes}}</td>
+                            <td class=" ">{{this.physicianNotes}}</td>
+                            <td class=" ">{{this.anesthesiaNotes}}</td>
+                            <td class=" ">{{this.consequence}}</td>
                           </tr>
 
                           {{/each}}
