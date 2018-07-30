@@ -4,6 +4,8 @@ var Models = require('../models'),
     ipfsAPI = require('ipfs-api'),
     QRCode = require('qrcode'),
     // ursa = require('ursa'),
+
+    ObjectId = require('mongodb').ObjectID;
     fs = require('fs');
 let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
     protocol: 'https'
@@ -449,10 +451,11 @@ module.exports = {
 
     vitalSignsDetails: function(req, res){
         var viewModel = {
-            patient: {}
+            patient: {},
+            
         };
         Models.Patient.findOne({
-            'ethAddr': req.params.firstAccount
+            'ethAddr': req.params.firstAccount,
         }, function (err, patient) {
             if (err) {
                 throw err;
@@ -461,6 +464,30 @@ module.exports = {
 
                 viewModel.patient = patient;
                 res.render('vitalSignsDetails', viewModel);
+            }
+        });
+    },
+    vitalSignsDetailsId: function(req, res){
+       
+        var viewModel = {
+            patient: {},
+            detail:{}
+            
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount,
+            
+            vitalSign :{ $elemMatch : {_id: ObjectId(req.params.vitalSignId)}}
+            
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) { 
+                console.log(patient.vitalSign);
+                viewModel.sign = req.params.vitalSignId;
+                viewModel.patient = patient;
+                res.send(viewModel);
             }
         });
     },

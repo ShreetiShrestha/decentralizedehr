@@ -59,7 +59,7 @@
                                                 <td>{{this.unit}}</td>
                                                 <td>
                                                     
-                                                    <button class="btn btn-info btn-retrieve" data-id='{{../patient.ethAddr}}'>
+                                                    <button class="btn btn-info btn-retrieve-vital" data-id='{{this._id}} {{../this.ethAddr}}'>
                                                         <i class="fa fa-eye"></i>
                                                     </button>
                                                 </td>
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" id="blankProfile">
+                        <div class="col-md-6 col-sm-6 col-xs-12" id="blankProfileVital">
                             <h4 class="text-center" style="margin:6em;">Click on View Details from the list to view Vital Signs Details.</h4>
                         </div>
                         <div class="col-md-6 col-sm-6 col-xs-12" id="vitalSigns">
@@ -87,7 +87,7 @@
                                 </li>
 
                                 <li>
-                                    <i class="fa fa-phone user-profile-icon"></i> Notes: <text id= "vnotes" style="font-size:11pt"></text>
+                                    <i class="fa fa-note user-profile-icon"></i> Notes: <text id= "vnotes" style="font-size:11pt"></text>
                                 </li>
                                 </li>
 

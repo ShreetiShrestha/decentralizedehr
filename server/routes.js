@@ -28,6 +28,7 @@ module.exports = function (app) {
     router.get('/patient/:firstAccount/vitalSigns', patient.vitalsigns);
     router.post('/patient/:firstAccount/vitalSignssubmit', patient.vitalsignssubmit);
     router.get('/patient/:firstAccount/vitalSignsDetails', patient.vitalSignsDetails);
+    router.post('/patient/:firstAccount/vitalSignsDetails/:vitalSignId', patient.vitalSignsDetailsId);
 
     router.get('/patient/:firstAccount/surgicalHistory', patient.surgicalhistory);
     router.post('/patient/:firstAccount/patientsurgicalHistorysubmit', patient.surgicalhistorysubmit);

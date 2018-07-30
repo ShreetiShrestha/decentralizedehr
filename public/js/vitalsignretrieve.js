@@ -1,19 +1,22 @@
 $(function(){
     $('#vitalSigns').hide();
-    $('.btn-retrieve').on('click',function(event){
+    $('.btn-retrieve-vital').on('click',function(event){
         event.preventDefault();
         var ids = $(this).data('id');
-        $.post ('/patient/'+ids+'/vitalSignsDetails').done(function(data){
+        ids=ids.split(' ');
+        
+        $.post ('/patient/'+ids[1]+'/vitalSignsDetails/'+ids[0]).done(function(data){
             // $('.likes-count').text(data.likes);
             
-            $('#blankProfile').hide();
+            $('#blankProfileVital').hide();
 
             $('#vitalSigns').show();
-            $("#vname").text(data.patient.vitalSign.name);
-            $("#vdate").text( data.patient.vitalSign.dateOfNote);
-            $("#vvalue").text("Value: "+ data.patient.vitalSign.value);
-            $("#vstatus").text(data.patient.vitalSign.status);
-            $("#vnotes").text(data.patient.vitalSign.notes);
+            alert( data.patient.vitalSign[0].name);
+            $("#vName").text("Test of: "+data.patient.vitalSign[0].name);
+            $("#vDate").text( "Date: "+data.patient.vitalSign[0].dateOfNote);
+            $("#vvalue").text("Value: "+ data.patient.vitalSign[0].value +' '+data.patient.vitalSign[0].unit);
+            $("#vstatus").text(data.patient.vitalSign[0].status);
+            $("#vnotes").text(data.patient.vitalSign[0].notes);
         });
 
         
