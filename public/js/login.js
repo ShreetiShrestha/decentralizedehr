@@ -48,10 +48,35 @@ $(function () {
                         }
                     } else if (data.key === 1) {
                         alert(data.msg);
-                        window.location.href= '/patient/' + firstAccount;
+                        user.getUserType(function (err, res) {
+                            if (err) throw err;
+                            else {
+                                console.log("usertype",res.c[0]);
+                                if(res.c[0]===2){
+                                    window.location.href = '/patient/' + firstAccount;
+                                }
+                                else{
+                                    alert("Sorry, you are not authorized to enter the system");
+                                    window.location.href = '/'
+                                }
+                            }
+                        });
+                        
                     } else if (data.key === 2) {
                         alert(data.msg);
-                        window.location.href = '/doctor/' + firstAccount;
+                        user.getUserType(function (err, res) {
+                            if (err) throw err;
+                            else {
+                                console.log("usertype",res.c[0]);
+                                if(res.c[0]===1){
+                                    window.location.href = '/doctor/' + firstAccount;
+                                }
+                                else{
+                                    alert("Sorry, you are not authorized to enter the system");
+                                    window.location.href = '/'
+                                }
+                            }
+                        });
                     } else {
                         alert(data.msg);
                         window.location.href = '/';

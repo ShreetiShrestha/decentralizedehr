@@ -546,7 +546,7 @@ module.exports = {
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                fs.writeFile(dir + 'patientdata.txt', data, function (err) {
+                fs.writeFile(dir + 'JSON'+acc+'.txt', data, function (err) {
                     if (err) {
                         console.log(err);
                     }

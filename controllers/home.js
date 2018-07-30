@@ -127,23 +127,15 @@ module.exports = {
     },
     patientthirdform: function (req, res) {
         var saveImage = function () {
-            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
-                imgUrl = ' ';
+            var imgUrl = 'PP'+acc;
 
-            for (var i = 0; i < 6; i++) {
-                imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-
+           
             var tempPath = req.file.path,
                 ext = path.extname(req.file.originalname).toLowerCase();
                 var dir = './public/upload/patients/' + acc +'/';
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                // var dir2 = dir + 'proimg/';
-                // if (!fs.existsSync(dir2)) {
-                //     fs.mkdirSync(dir2);
-                // }
                 targetPath = path.resolve(dir + imgUrl + ext);
                 console.log('account', acc);
                     
@@ -213,12 +205,9 @@ module.exports = {
     },
     drthirdform: function (req, res) {
         var saveImage = function () {
-            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
-                imgUrl = ' ';
+            var imgUrl = 'PPD'+acc;
 
-            for (var i = 0; i < 6; i++) {
-                imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
+            
 
             var tempPath = req.file.path,
                 ext = path.extname(req.file.originalname).toLowerCase();
@@ -226,10 +215,7 @@ module.exports = {
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                // var dir2 = dir + 'proimg/';
-                // if (!fs.existsSync(dir2)) {
-                //     fs.mkdirSync(dir2);
-                // }
+               
                 targetPath = path.resolve(dir + imgUrl + ext);
                 console.log('account', acc);
                    

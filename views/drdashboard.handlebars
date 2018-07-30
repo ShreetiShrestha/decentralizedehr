@@ -6,7 +6,7 @@
                 <h3>HCP Dashboard</h3>
             </div>
 
-            
+
         </div>
 
         <div class="clearfix"></div>
@@ -17,115 +17,125 @@
                     <div class="x_content">
                         <div class="row">
                             <div class="x_content">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>Recent Notifications
-                                        <small><br>Here is a list of patients who want to share their information.</small>
-                                    </h2>
-                                    <div class="clearfix"></div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="x_panel">
+                                        <div class="x_title">
+                                            <h2>Recent Notifications
+                                                <small>
+                                                    <br>Here is a list of patients who want to share their information.</small>
+                                            </h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        {{#if linkslist}}
+                                        <div class="x_content">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Username</th>
+                                                        <th>Contact</th>
+                                                        <th>View Profile</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    {{#each linkslist}}
+                                                    <tr>
+                                                        <td>{{this.personalDetail.firstName}}</td>
+                                                        <td>{{this.personalDetail.lastName}}</td>
+                                                        <td>{{this.username}}</td>
+                                                        <td>{{this.personalDetail.contact}}</td>
+                                                        <td>
+
+                                                            <button class="btn btn-info btn-retrieve-patient" data-id='{{this.ethAddr}} {{../dr.ethAddr}}'>
+                                                                <i class="fa fa-eye"></i>
+                                                            </button>
+                                                        </td>
+
+                                                    </tr>
+                                                    {{/each}}
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        {{else}}
+                                        <h3 class="text-center"> Currently you have no referrals. </h3>
+                                        {{/if}}
+                                    </div>
                                 </div>
-                                <div class="x_content">
+                                {{#if linkslist}}
 
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Username</th>
-                                                <th>Contact</th>
-                                                <th>View Profile</th>
-                                                
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <div class="col-md-6 col-sm-6 col-xs-12" id="blankProfilePatient">
+                                    <h4 class="text-center" style="margin:6em;">Click on View Profile from the list to view Patient profile.</h4>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" id="patientProfile">
+                                    <div class="profile_img">
+                                        <div id="crop-avatar">
+                                            <!-- Current avatar -->
+                                            <img class="img-responsive avatar-view" style="height:10em;" id="patientProImg" src="" alt="Avatar" title="Change the avatar">
+                                        </div>
+                                    </div>
+                                    <h3 id="patientName"></h3>
+                                    <h4 id="patientAge"></h4>
+                                    <h4 id="patientGender"></h4>
+                                    <ul class="list-unstyled user_data">
+                                        <li>
+                                            <i class="fa fa-map-marker user-profile-icon"></i> Address:
+                                            <text id="patientAddress" style="font-size:11pt"></text>
+                                        </li>
 
-                                            {{#each linkslist}}
-                                            <tr>
-                                                <td>{{this.personalDetail.firstName}}</td>
-                                                <td>{{this.personalDetail.lastName}}</td>
-                                                <td>{{this.username}}</td>
-                                                <td>{{this.personalDetail.contact}}</td>
-                                                <td>
-                                                    
-                                                    <button class="btn btn-info btn-retrieve-patient" data-id='{{this.ethAddr}} {{../dr.ethAddr}}'>
-                                                        <i class="fa fa-eye"></i>
-                                                    </button>
-                                                </td>
-                                                
-                                            </tr>
-                                            {{/each}}
+                                        <li>
+                                            <i class="fa fa-phone user-profile-icon"></i> Contact:
+                                            <text id="patientContact" style="font-size:11pt"></text>
+                                        </li>
+                                        </li>
 
-                                        </tbody>
-                                    </table>
+                                        <li class="m-top-xs">
+                                            <i class="fa fa-plus user-profile-icon"></i> Message:
+                                            <text id="patientMsg" style="font-size:11pt"></text>
+                                        </li>
+                                    </ul>
+
+                                    <a class="btn btn-success">
+                                        <i class="fa fa-share-alt m-right-xs"></i>Retrieve</a>
+                                    <br />
+
+
 
                                 </div>
+                                {{else}} {{/if}}
                             </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" id="blankProfilePatient">
-                            <h4 class="text-center" style="margin:6em;">Click on View Profile from the list to view Patient profile.</h4>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12" id="patientProfile">
-                            <div class="profile_img">
-                                <div id="crop-avatar">
-                                    <!-- Current avatar -->
-                                    <img class="img-responsive avatar-view" style="height:10em;"id="patientProImg" src="" alt="Avatar" title="Change the avatar">
-                                </div>
-                            </div>
-                            <h3 id = "patientName"></h3>
-                            <h4 id = "patientAge"></h4>
-                            <h4 id = "patientGender"></h4>
-                            <ul class="list-unstyled user_data">
-                                <li>
-                                    <i class="fa fa-map-marker user-profile-icon"></i> Address: <text id= "patientAddress" style="font-size:11pt"></text>
-                                </li>
 
-                                <li>
-                                    <i class="fa fa-phone user-profile-icon"></i> Contact: <text id= "patientContact" style="font-size:11pt"></text>
-                                </li>
-                                </li>
-
-                                <li class="m-top-xs">
-                                    <i class="fa fa-plus user-profile-icon"></i> Message: <text id= "patientMsg" style="font-size:11pt"></text>
-                                </li>
-                            </ul>
-
-                            <a class="btn btn-success" >
-                                <i class="fa fa-share-alt m-right-xs"></i>Retrieve</a>
-                            <br />
-
-                        
-
-                        </div>
-                    </div>
-                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-md-12">
                 <div class="x_panel">
                     <div class="x_title">
                         <h3>Voting Status</h3>
-                        <h4><br> Here is a list of Doctors who are in the process of voting validation to enter into the system</h4>
+                        <h4>
+                            <br> Here is a list of Doctors who are in the process of voting validation to enter into the system</h4>
                     </div>
+                    {{#if validationList}}
                     <div class="x_content">
                         <div class="row">
-                            
-                            {{#each validationList}}
-                            
-                            {{!-- {{#each ../dr.votedAccounts}} --}}
-                            {{#ifCondList this.ethAddr ../dr.votedAccounts}}
-                            {{#if this}}
-                                <h4> Voted List</h4>
-                            {{/if}}
-                            <h6>You have already voted {{this.ethAddr}}</h6> <br>
 
-                            {{else}}
-{{#if this}}
-                                <h4> Candidate List</h4>
+                            {{#each validationList}} {{!-- {{#each ../dr.votedAccounts}} --}} {{#ifCondList this.ethAddr ../dr.votedAccounts}} {{#if
+                            this}}
+                            <h4> Voted List</h4>
+                            {{/if}}
+                            <h6>You have already voted {{this.ethAddr}}</h6>
+                            <br> {{else}} {{#if this}}
+                            <h4> Candidate List</h4>
                             {{/if}}
                             <div class="col-md-5 col-sm-4 col-xs-12 prodetails profile_details">
                                 <div class="well profile_view">
@@ -158,11 +168,13 @@
                                         </div>
 
                                         <div class="col-xs-12 col-sm-6 emphasis">
-                                            <strong><p style= "color:red;" id="warning"></p></strong>
+                                            <strong>
+                                                <p style="color:red;" id="warning"></p>
+                                            </strong>
                                             <button type="button" class="button-vote btn btn-success btn-xs" data-id="{{this.ethAddr}} {{../dr.ethAddr}}">
                                                 <strong>Vote</strong>
                                             </button>
-                                           
+
                                             <button type="button" class="btn btn-primary btn-xs">
                                                 View Profile
                                             </button>
@@ -170,63 +182,16 @@
                                     </div>
                                 </div>
                             </div>
-                            {{/ifCondList}}
-                               
-                            {{!-- {{#ifCond this.acc ../this.ethAddr}}
-                            You Have Already Voted {{../this.ethAddr}}
-                            {{/ifCond}} --}}
-                            {{!-- {{#ifNotCond this.acc ../this.ethAddr}}
-                            <div class="col-md-5 col-sm-4 col-xs-12 prodetails profile_details">
-                                <div class="well profile_view">
-                                    <div class="col-sm-12">
-                                        <h4 class="brief">
-                                            <i>Health Care Provider</i>
-                                        </h4>
-                                        <div class="left col-xs-7">
-                                            <h2>{{../this.personalDetail.firstName}} {{../this.personalDetail.lastName}}</h2>
-                                            <p>
-                                                <strong>Specialization: </strong> {{../this.personalDetail.specializationDesc}}
-                                            </p>
-                                            <p>
-                                                <strong>NMC Registration #: </strong> {{../this.personalDetail.nmc}}
-                                            </p>
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <i class="fa fa-building"></i> Address: {{../this.personalDetail.address}}</li>
-                                                <li>
-                                                    <i class="fa fa-phone"></i> Contact: {{../this.personalDetail.contact}}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="right col-xs-5 text-center">
-                                            <img src="/public/upload/{{../this.personalDetail.profilePic}}" alt="" class="img-circle img-responsive">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 bottom text-center">
-                                        <div class="col-xs-12 col-sm-6 emphasis">
-
-                                        </div>
-
-                                        <div class="col-xs-12 col-sm-6 emphasis">
-                                            <strong><p style= "color:red;" id="warning"></p></strong>
-                                            <button type="button" class="button-vote btn btn-success btn-xs" data-id="{{../this.ethAddr}} {{../../dr.ethAddr}}">
-                                                <strong>Vote</strong>
-                                            </button>
-                                           
-                                            <button type="button" class="btn btn-primary btn-xs">
-                                                View Profile
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {{/ifNotCond}} --}}
-                            {{!-- {{/each}} --}}
-                            {{/each}}
+                            {{/ifCondList}} {{/each}}
                         </div>
                     </div>
+                    {{else}}
+                    <h3 class="text-center"> Currently there are no new doctors in the system to be reviewed. </h3>
+                    {{/if}}
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 </div>
