@@ -50,7 +50,19 @@ module.exports = {
                         if (err)throw err;
                         else{
                             for (var i=0;i<links.length;i++){
-                                viewModel.linkslist.push(links[i]);
+                                Models.Patient.findOne({
+                                    _id : links[i].patient
+                                },function(err,patient){
+                                    if (err){
+                                        console.log('No patient links found');
+                                        throw err;
+                                    } 
+                                    else{
+                                        console.log(patient);
+                                        viewModel.linkslist.push(patient);
+                                    }
+                                });
+                                
                             }
                         }
                         res.render('drdashboard', viewModel);
@@ -196,5 +208,34 @@ module.exports = {
             }
         });
 
-    }
+    },
+    patientretrieveinfo: function (req, res) {
+        var viewModel = {
+            patient: {},
+            dr: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patient = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+
+                        viewModel.dr = doctor;
+                        res.send(viewModel);
+                    }
+                });
+            }
+        });
+
+    },
 };
