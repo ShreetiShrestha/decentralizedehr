@@ -2,30 +2,26 @@ $(function () {
     var userContract = web3.eth.contract(
         [
             {
-                "constant": true,
+                "constant": false,
                 "inputs": [
                     {
-                        "name": "recordid",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "getRecordDetail",
-                "outputs": [
-                    {
-                        "name": "",
+                        "name": "dr",
                         "type": "address"
-                    },
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    },
-                    {
-                        "name": "",
-                        "type": "string"
                     }
                 ],
+                "name": "addHCP",
+                "outputs": [],
                 "payable": false,
-                "stateMutability": "view",
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "addPatient",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
                 "type": "function"
             },
             {
@@ -50,11 +46,15 @@ $(function () {
                 "constant": false,
                 "inputs": [
                     {
-                        "name": "x",
+                        "name": "to",
                         "type": "address"
+                    },
+                    {
+                        "name": "recid",
+                        "type": "uint256"
                     }
                 ],
-                "name": "addPatient",
+                "name": "setPermission",
                 "outputs": [],
                 "payable": false,
                 "stateMutability": "nonpayable",
@@ -64,27 +64,12 @@ $(function () {
                 "constant": true,
                 "inputs": [
                     {
-                        "name": "x",
-                        "type": "address"
-                    }
-                ],
-                "name": "getUserType",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
                         "name": "to",
                         "type": "address"
+                    },
+                    {
+                        "name": "recid",
+                        "type": "uint256"
                     }
                 ],
                 "name": "checkperm",
@@ -113,40 +98,49 @@ $(function () {
                 "type": "function"
             },
             {
-                "constant": false,
+                "constant": true,
                 "inputs": [
                     {
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "name": "recid",
+                        "name": "recordid",
                         "type": "uint256"
                     }
                 ],
-                "name": "setPermission",
-                "outputs": [],
+                "name": "getRecordDetail",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    },
+                    {
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
                 "payable": false,
-                "stateMutability": "nonpayable",
+                "stateMutability": "view",
                 "type": "function"
             },
             {
-                "constant": false,
-                "inputs": [
+                "constant": true,
+                "inputs": [],
+                "name": "getUserType",
+                "outputs": [
                     {
-                        "name": "x",
-                        "type": "address"
+                        "name": "",
+                        "type": "uint256"
                     }
                 ],
-                "name": "addHCP",
-                "outputs": [],
                 "payable": false,
-                "stateMutability": "nonpayable",
+                "stateMutability": "view",
                 "type": "function"
             }
         ]
     );
-    var user = userContract.at('0x1Df5843529Ca9986dEc8285b0F1ef1D783f2C0d6');
+    var user = userContract.at('0x6a41505fa9fdc3d16c8ceefcb9eb46f6150aa713');
     console.log(user);
     
     $('#finishPatient').on('click', function (event) {

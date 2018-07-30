@@ -2,8 +2,8 @@ var Models = require('../models'),
     multer = require('multer'),
     path = require('path'),
     ipfsAPI = require('ipfs-api'),
-    archiver = require('archiver'),
     QRCode = require('qrcode'),
+    // ursa = require('ursa'),
     fs = require('fs');
 let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
     protocol: 'https'
@@ -514,7 +514,7 @@ module.exports = {
 
     },
     share: function (req, res) {
-        
+
         acc = req.params.patientAccount;
         Models.Patient.findOne({
             'ethAddr': req.params.patientAccount
@@ -591,8 +591,8 @@ module.exports = {
                 });
 
                 //IPFS storage
-                
-                
+
+
                 // ipfs.key.gen('my-key', {
                 //     type: 'rsa',
                 //     size: 2048
@@ -604,40 +604,46 @@ module.exports = {
                 //     }
                 // });
                 // ipfs.key.export('self', 'password', (err, pem) => console.log(pem))
+                // var key = ursa.generatePrivateKey(1024, 65537);
+                // var privkeypem = key.toPrivatePem();
+                // var pubkeypem = key.toPublicPem();
 
+                // console.log(privkeypem.toString('ascii'));
+                // console.log(pubkeypem.toString('ascii'));
                 fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
                     console.log(files);
                     for (var i = 0; i < files.length; i++) {
                         testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
                         var testBuffer = new Buffer(testFile);
+
                         ipfs.files.add(testBuffer, function (err, output) {
                             if (err) {
                                 console.log(err);
                             }
                             console.log(output[0].hash);
                             Models.Doctor.findOne({
-                                'ethAddr':{
-                                    $regex :req.params.drAccount
-                                } 
-                                
-                            },function (err,dr){
+                                'ethAddr': {
+                                    $regex: req.params.drAccount
+                                }
+
+                            }, function (err, dr) {
                                 if (err) throw err;
-                                else{
+                                else {
                                     Models.Patient.findOne({
-                                        'ethAddr':{
-                                            $regex :req.params.patientAccount
-                                        } 
-                                        
-                                    },function (err,patient){
+                                        'ethAddr': {
+                                            $regex: req.params.patientAccount
+                                        }
+
+                                    }, function (err, patient) {
                                         if (err) throw err;
-                                        else{
+                                        else {
                                             Models.Link.update({
                                                 'patient': patient.id,
                                                 'doctor': dr.id
                                             }, {
                                                 $addToSet: {
                                                     'hashes': {
-                                                        'linkage':output[0].hash
+                                                        'linkage': output[0].hash
                                                     }
                                                 }
                                             }, function (err, result) {
@@ -647,27 +653,11 @@ module.exports = {
                                     });
                                 }
                             });
-                          
+
                         });
                     }
-                    // files.forEach(file => {
-                    //     console.log(file);
-                    //     filelist.push(file);
-                    // testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + file);
-                    // var testBuffer = new Buffer(testFile)
 
-                    // ipfs.files.add(testBuffer, function (err, output) {
-                    //     if (err) {
-                    //         console.log(err);
-                    //     }
-                    //     console.log(output[0].hash);
-                    //     hashlist.concat(' ', output[0].hash);
-                    // });
-                    // needs blockchain now
-                    // }, function (err, done) {
-                    //     console.log('filelist:', filelist);
-                    // });
-                   
+
                     res.redirect('/patient/' + req.params.patientAccount);
                 });
 
