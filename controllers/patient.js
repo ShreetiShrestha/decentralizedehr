@@ -447,6 +447,24 @@ module.exports = {
         res.redirect('/patient/' + req.params.firstAccount);
     },
 
+    vitalSignsDetails: function(req, res){
+        var viewModel = {
+            patient: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.firstAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+
+                viewModel.patient = patient;
+                res.render('vitalSignsDetails', viewModel);
+            }
+        });
+    },
+
     getdoc: function (req, res) {
         const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
 
