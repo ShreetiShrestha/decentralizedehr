@@ -6,7 +6,6 @@ var PatientSchema = new Schema({
     username: {type: String,unique:true},
     email: {type: String,unique:true},
     ethAddr: {type: String,unique:true},
-
     personalDetail: {
         firstName: {type: String},
         lastName: {type: String},
@@ -112,6 +111,11 @@ var PatientSchema = new Schema({
 PatientSchema.virtual('uniqueId')
 .get(function(){
     return this.personalDetail.profilePic.replace(path.extname(this.personalDetail.profilePic), '');
+});
+
+PatientSchema.virtual('uniqueReportId')
+.get(function(){
+    return this.reports.filename.replace(path.extname(this.reports.filename), '');
 });
 
 

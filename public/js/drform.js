@@ -1,0 +1,20 @@
+$(function(){
+    $('#checkicon1').hide();
+    $('#finishPatient').hide();
+    $('#finishDr').hide();
+    $('#firstform-post').on('click',function(event){
+        $('#firstform-post').hide();
+        $('#checkicon1').show();
+        $('#finishDr').hide();
+    });
+
+    $('#checkicon2').hide();
+    $('#secondform-post').on('click',function(event){
+        $('#secondform-post').hide();
+        $('#checkicon2').show();
+    });    
+    $('#thirdform-postdr').on('click',function(event){
+        $('#thirdform-postdr').hide();
+        $('#finishDr').show();
+    });    
+});

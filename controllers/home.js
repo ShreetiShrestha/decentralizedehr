@@ -5,6 +5,8 @@ var web3Module = require('../ethereum/web3'),
     multer = require('multer'),
     fs = require('fs'),
     path = require('path');
+    var Web3 = require('web3');
+
 module.exports = {
     index: function (req, res) {
         var viewModel={
@@ -15,7 +17,7 @@ module.exports = {
 
     login: function (req, res) {
         acc = req.params.firstAccount;
-        console.log(req.params.firstAccount);
+        // console.log(req.params.firstAccount);
         Models.Patient.findOne({
             ethAddr: {
                 $regex: acc
@@ -59,11 +61,11 @@ module.exports = {
     },
 
     signuppatient: function (req, res) {
-        console.log(req.params.firstAccount);
+        // console.log(req.params.firstAccount);
         var newPatient = new Models.Patient({
             ethAddr: req.params.firstAccount
         });
-        console.log(newPatient);
+        // console.log(newPatient);
         var viewModel = {
             patient: req.params.firstAccount,
             msg: 'signup'
@@ -73,16 +75,19 @@ module.exports = {
     },
 
     signupdr: function (req, res) {
-        console.log(req.params.firstAccount);
+            
+
         var newDr = new Models.Doctor({
             ethAddr: req.params.firstAccount
         });
-        console.log(newDr);
+        newDr.save(function (err) {
+            if (err) { res.send({'error' : err}); }
+        });       
         var viewModel = {
             dr: req.params.firstAccount,
             msg: 'signup'
         }
-        newDr.save();
+        
         res.render('registerDoctor',viewModel);
     },
 
@@ -122,17 +127,18 @@ module.exports = {
     },
     patientthirdform: function (req, res) {
         var saveImage = function () {
-            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
-                imgUrl = ' ';
+            var imgUrl = 'PP'+acc;
 
-            for (var i = 0; i < 6; i++) {
-                imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-
+           
             var tempPath = req.file.path,
-                ext = path.extname(req.file.originalname).toLowerCase(),
-                targetPath = path.resolve('./public/upload/' + imgUrl + ext);
-
+                ext = path.extname(req.file.originalname).toLowerCase();
+                var dir = './public/upload/patients/' + acc +'/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                targetPath = path.resolve(dir + imgUrl + ext);
+                console.log('account', acc);
+                    
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
                 fs.rename(tempPath, targetPath, function (err) {
                     if (err) {
@@ -150,7 +156,7 @@ module.exports = {
                     var patient = Models.Patient.findOne({
                         'ethAddr': req.params.firstAccount
                     });
-                    console.log(patient);
+                    // console.log(patient);
                 });
             } else {
                 fs.unlink(tempPath, function (err) {
@@ -199,16 +205,20 @@ module.exports = {
     },
     drthirdform: function (req, res) {
         var saveImage = function () {
-            var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
-                imgUrl = ' ';
+            var imgUrl = 'PPD'+acc;
 
-            for (var i = 0; i < 6; i++) {
-                imgUrl += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
+            
 
             var tempPath = req.file.path,
-                ext = path.extname(req.file.originalname).toLowerCase(),
-                targetPath = path.resolve('./public/upload/' + imgUrl + ext);
+                ext = path.extname(req.file.originalname).toLowerCase();
+                var dir = './public/upload/doctors/' + acc +'/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+               
+                targetPath = path.resolve(dir + imgUrl + ext);
+                console.log('account', acc);
+                   
 
             if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif') {
                 fs.rename(tempPath, targetPath, function (err) {
@@ -227,7 +237,6 @@ module.exports = {
                     var dr = Models.Doctor.findOne({
                         'ethAddr': req.params.firstAccount
                     });
-                    console.log(dr);
                 });
             } else {
                 fs.unlink(tempPath, function (err) {
@@ -240,12 +249,4 @@ module.exports = {
         };
         saveImage();
     },
-
-    // patientfourthform: function(req,res){
-
-    // }
-
-
-
-
 };

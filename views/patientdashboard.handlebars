@@ -25,17 +25,7 @@
                 <div class="x_panel">
                     <div class="x_title">
                         {{!-- Pagination if reqd --}}
-                        <div class="row">
-                            {{!--
-                            <div class="btn-toolbar row-bottom">
-                                <div class="btn-group">
-                                    <button class="btn btn-info" type="button">1</button>
-                                    <button class="btn btn-info" type="button">2</button>
-                                    <button class="btn btn-info" type="button">3</button>
-                                    <button class="btn btn-info" type="button">4</button>
-                                </div>
-                            </div> --}}
-                        </div>
+                        
 
                         <div class="clearfix"></div>
                     </div>
@@ -53,11 +43,17 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Personal Details</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/personalDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
-                                            <a href="/patient/{{patient.ethAddr}}/personalDetail" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
+                                                <a href="/patient/{{patient.ethAddr}}/personalDetail" class="btn btn-info" style=""><i class="fa fa-plus"></i></a>
+                                            </div>
+
                                         </p>
                                     </div>
                                 </div>
@@ -75,8 +71,12 @@
                                     </div>
                                     <div class="caption">
                                        <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Vital Signs</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/vitalSignsDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="/patient/{{patient.ethAddr}}/vitalsigns" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
@@ -97,8 +97,12 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Allergies</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/allergiesDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="/patient/{{patient.ethAddr}}/allergies" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
@@ -119,8 +123,12 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Medications</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/medicationDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="/patient/{{patient.ethAddr}}/medications" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
@@ -143,8 +151,12 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Instructions</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="#" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="#" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
@@ -165,8 +177,12 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Immunizations</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/immunizationDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="/patient/{{patient.ethAddr}}/immunization" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
@@ -189,8 +205,12 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Surgical History</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/surgicalhistoryDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="/patient/{{patient.ethAddr}}/surgicalhistory" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>
@@ -212,8 +232,12 @@
                                     </div>
                                     <div class="caption">
                                         <p>
-                                            <div class="col-md-9">
+                                            <div class="col-md-6">
                                             <strong>Reports</strong></div>
+
+                                            <div class="col-md-3">
+                                                <a href="/patient/{{patient.ethAddr}}/reportsDetails" class="btn btn-success" style=""><i class="fa fa-eye"></i></a>
+                                            </div>
                                             
                                             <div class="col-md-3">
                                             <a href="/patient/{{patient.ethAddr}}/reports" class="btn btn-info" style=""><i class="fa fa-plus"></i></a></div>

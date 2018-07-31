@@ -1,0 +1,78 @@
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Allergies </h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>List of Allergies</h2>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Name </th>
+                            <th class="column-title">Reaction </th>
+                            <th class="column-title">Allergen Type </th>
+                            <th class="column-title">Severity </th>
+                            <th class="column-title">First Observed </th>
+                            <th class="column-title">Currently Active </th>
+                            <th class="column-title">Notes </th>
+                        
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                                            
+                            {{#each patient}}
+                            {{#each allergies}}
+                            <tr class="even pointer">
+                            <td class=" ">{{this.name}}</td>
+                            <td class=" ">{{this.reaction}} </td>
+                            <td class=" ">{{this.allergenType}}</td>
+                            <td class=" ">{{this.severity}}</td>
+                            <td class=" ">{{this.firstObserved}}</td>
+                            <td class=" ">{{this.currentlyActive}}</td>
+                            <td class=" ">{{this.note}}</td>
+                          </tr>
+
+                          {{/each}}
+                         {{/each}}
+                          
+                          
+                        </tbody>
+                      </table>
+                    </div>
+							
+						
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->

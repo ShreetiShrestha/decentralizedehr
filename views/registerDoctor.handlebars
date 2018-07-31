@@ -68,7 +68,7 @@
                       <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input type="text" id="username" required="required" class="form-control col-md-7 col-xs-12">
+                      <input type="text" id="username" required="required" class="form-control col-md-7 col-xs-12" name="username">
                     </div>
                   </div>
                   <div class="form-group">
@@ -138,7 +138,7 @@
                       <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <input name='dob' id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" data-inputmask="'mask': '99/99/9999'">
+                      <input name='dob' id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="date">
                     </div>
                   </div>
 
@@ -209,7 +209,7 @@
                   </div>
                   <div class="form-group col-sm-12">
                     <div class="col-sm-12 text-right">
-                      <button type="submit" id="thirdform-post" class="btn btn-success">
+                      <button type="submit" id="thirdform-postdr" class="btn btn-success">
                         <i class="fa fa-comment">Upload</i>
                       </button>
                     </div>
@@ -224,7 +224,7 @@
                 </div>
                 <div class="col-sm-12 text-right" id="last">
                   <a href="/doctor/{{dr}}">
-                    <button type="submit" id="finish" class="btn btn-success">
+                    <button type="submit" id="finishDr" data-id="{{dr}}" class="btn btn-success">
                       <i class="fa fa-check">Finish</i>
                     </button>
                   </a>

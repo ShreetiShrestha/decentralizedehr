@@ -19,7 +19,7 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <br />
+            <br /> {{#if patient}}
             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/patient/{{patient.ethAddr}}/personalDetailedit">
 
               <div class="form-group">
@@ -52,12 +52,23 @@
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                   <div id="gender" class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                      <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                    </label>
-                    <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                      <input type="radio" name="gender" value="female"> Female
-                    </label>
+                    {{#ifCond patient.personalDetail.gender 'male'}}
+                    <label class="btn btn-primary">
+                      {{else}}
+                      <label class="btn btn-default">
+                        {{!--
+                        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default"></label> --}} {{/ifCond}}
+                        <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
+                      </label>
+
+                      {{#ifCond patient.personalDetail.gender 'female'}}
+                      <label class="btn btn-primary">
+                        {{else}}
+                        <label class="btn btn-default">
+                          {{!--
+                          <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default"></label> --}} {{/ifCond}}
+                          <input type="radio" name="gender" value="female"> Female
+                        </label>
                   </div>
                 </div>
               </div>
@@ -99,7 +110,8 @@
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Blood Group</label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <script id="some-template" type="text/x-handlebars-template"> 
+                  {{!--
+                  <script id="some-template" type="text/x-handlebars-template">  --}}
                   <select id="bloodgroup" class="form-control" name="bloodgroup" value="{{patient.personalDetail.bloodGroup}}">
                   {{#each BG}}  
                   <option value="{{bg_id}}">{{value}}</option>
@@ -118,6 +130,119 @@
               </div>
 
             </form>
+            {{/if}}
+            {{#if dr}}
+           
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/doctor/{{dr.ethAddr}}/personalDetailedit">
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="firstname" value="{{dr.personalDetail.firstName}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Middle Name
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="middle-name" class="form-control col-md-7 col-xs-12" name="middlename" value="{{dr.personalDetail.middleName}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="last-name" required="required" class="form-control col-md-7 col-xs-12" name="lastname" value="{{dr.personalDetail.lastName}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <div id="gender" class="btn-group" data-toggle="buttons">
+                    {{#ifCond dr.personalDetail.gender 'male'}}
+                    <label class="btn btn-primary" >
+                      {{else}} 
+                      <label class="btn btn-default">
+                      {{!-- <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default"></label> --}}
+                      {{/ifCond}}
+                      <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
+                    </label>
+                    
+                    {{#ifCond dr.personalDetail.gender 'female'}}
+                    <label class="btn btn-primary" >
+                     {{else}} 
+                     <label class="btn btn-default">
+                     {{!-- <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default"></label> --}}
+                     {{/ifCond}}
+                     <input type="radio" name="gender" value="female"> Female
+                    </label>
+                </div>
+                </div>
+                </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address">Address
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="address" required="required" class="form-control col-md-7 col-xs-12" name="address" value="{{dr.personalDetail.address}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="contact" value="{{dr.personalDetail.contact}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Specialiation Description
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="specializationDesc" value="{{dr.personalDetail.specializationDesc}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">NMC Registration No.
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="nmc" value="{{dr.personalDetail.nmc}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Hospitals
+                  <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" class="form-control col-md-7 col-xs-12" required="required" name="hospitals" value="{{dr.personalDetail.hospitals}}">
+                </div>
+              </div>
+
+
+              <div class="ln_solid"></div>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <button class="btn btn-primary" type="button">Cancel</button>
+                  <button class="btn btn-primary" type="reset">Reset</button>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+              </div>
+
+            </form>
+            {{/if}}
           </div>
         </div>
       </div>
@@ -129,4 +254,4 @@
   var x = $('#bloodgroup option:selected').text();
   document.getElementById('bloodgroup').innerHTML = x; 
 </script>
-<!-- /page content -->
+                  <!-- /page content -->

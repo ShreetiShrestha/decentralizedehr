@@ -21,13 +21,14 @@
 <body class='nav-md'>
     <div class="container body">
         <div class="main_container">
-            {{#unless msg}}
+            {{#unless msg}} {{#if patient}}
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title">
+                        <a href="/patient/{{patient.ethAddr}}" class="site_title">
                             <i class="fa fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span><b>S</b>ANJIVANI</span>
+                            <span>
+                                <b>S</b>ANJIVANI</span>
                         </a>
                     </div>
 
@@ -36,12 +37,12 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic col-md-6">
-                            <img src="/public/upload/{{patient.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
+                            <img src="/public/upload/patients/{{patient.ethAddr}}/{{patient.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
                         </div>
                         <div class="profile_info text-center col-md-6">
                             <span>Welcome</span>
-                            <h2>{{patient.personalDetail.firstName}}
-                                {{patient.personalDetail.lastName}}</h2>
+                            <h2>{{patient.personalDetail.firstName}} {{patient.personalDetail.lastName}}
+                            </h2>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -104,28 +105,14 @@
                                     </a>
                                 </li>
 
+
                             </ul>
                         </div>
 
                     </div>
                     <!-- /sidebar menu -->
 
-                    <!-- /menu footer buttons -->
-                    <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <!-- /menu footer buttons -->
+                   
                 </div>
             </div>
             <!-- top navigation -->
@@ -141,7 +128,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="/public/upload/{{patient.personalDetail.profilePic}}" alt="">{{patient.personalDetail.firstName}}&nbsp;{{patient.personalDetail.lastName}}
+                                    <img src="/public/upload/patients/{{patient.ethAddr}}/{{patient.personalDetail.profilePic}}" alt="">{{patient.personalDetail.firstName}}&nbsp;{{patient.personalDetail.lastName}}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -162,7 +149,132 @@
                 </div>
             </div>
             <!-- /top navigation -->
-            {{/unless}} {{{ body }}}
+            {{/if}} 
+            {{#if dr}}
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="/doctor/{{dr.ethAddr}}" class="site_title">
+                            <i class="fa fa-heart"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span>
+                                <b>S</b>ANJIVANI</span>
+                        </a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic col-md-6">
+                            <img src="/public/upload/doctors/{{dr.ethAddr}}/{{dr.personalDetail.profilePic}}" alt="PP" class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome</span>
+                            <h2>{{dr.personalDetail.firstName}} {{dr.personalDetail.lastName}}
+                            </h2>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Health Care Provider Dashboard</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a>
+                                        <i class="fa fa-home"></i> Personal Details
+                                        <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu navbar_maximize">
+
+                                        <li class="navlist">
+                                            First Name : &nbsp; {{dr.personalDetail.firstName}}
+                                        </li>
+                                        {{#if dr.personalDetail.middleName}}
+                                        <li class="navlist">
+                                            Middle Name : &nbsp; {{dr.personalDetail.middleName}}
+                                        </li>
+                                        {{/if}}
+
+                                        <li class="navlist">
+                                            Last Name : &nbsp; {{dr.personalDetail.lastName}}
+                                        </li>
+                                        <li class="navlist">
+                                            Gender : &nbsp; {{dr.personalDetail.gender}}
+                                        </li>
+                                        <li class="navlist">
+                                            Date of Birth : &nbsp; {{dr.personalDetail.dob}}
+                                        </li>
+                                        <li class="navlist">
+                                            Address : &nbsp; {{dr.personalDetail.address}}
+                                        </li>
+                                        <li class="navlist">
+                                            Contact : &nbsp; {{dr.personalDetail.contact}}
+                                        </li>
+                                        <li class="navlist">
+                                            Specialization : &nbsp; {{dr.personalDetail.specializationDesc}}
+                                        </li>
+                                        <li class="navlist">
+                                            NMC Registration : &nbsp; {{dr.personalDetail.nmc}}
+                                        </li>
+                                        <li class="navlist">
+                                            Hospitals : &nbsp; {{dr.personalDetail.hospitals}}
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="/doctor/{{dr.ethAddr}}/personalDetail">
+                                        <i class="fa fa-edit"></i> Edit Personal Details
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <!-- <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div> -->
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="/public/upload/doctors/{{dr.ethAddr}}/{{dr.personalDetail.profilePic}}" alt="PP">{{dr.personalDetail.firstName}}&nbsp;{{dr.personalDetail.lastName}}
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li>
+                                        <a href="javascript:;"> Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">About Sanjivani</a>
+                                    </li>
+                                    <li>
+                                        <a href="login.html">
+                                            <i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            {{/if}} {{/unless}} {{{ body }}}
+
 
         </div>
     </div>
@@ -195,10 +307,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> {{!-- web3 --}}
-    <script type="text/javascript" src="/public/js/web3.min.js"></script> {{!--
-    <script type="text/javascript" src="/public/js/scripts.js"></script> --}}
+    <script type="text/javascript" src="/public/js/web3.min.js"></script>
+    <script type="text/javascript" src="/public/js/user.js"></script>
+    <script type="text/javascript" src="/public/js/blockchain.js"></script>
+    <script type="text/javascript" src="/public/js/retrieveInfo.js"></script>
+    <script type="text/javascript" src="/public/js/retrieveInfoPatient.js"></script>
+    <script type="text/javascript" src="/public/js/vote.js"></script>
+    <script type="text/javascript" src="/public/js/contract.js"></script>
     <script type="text/javascript" src="/public/js/login.js"></script>
     <script type="text/javascript" src="/public/js/patientform.js"></script>
+    <script type="text/javascript" src="/public/js/drform.js"></script>
 </body>
 
 </html>
