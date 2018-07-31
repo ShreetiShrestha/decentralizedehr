@@ -4,7 +4,11 @@ var mongoose = require('mongoose'),
 
 var LinkSchema = new Schema({
     hashes: [{
-        linkage: {type: String}}],
+        linkage: {type: String},
+        recordid : {type: String}
+    }
+    ],
+
     patient: {
         type: Schema.Types.ObjectId,
         ref: "Patient"

@@ -681,17 +681,18 @@ module.exports = {
                             doctor: doctor.id
                         });
                         newLink.save();
-                        
+
                         fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-                            console.log(files);
+                            
                             for (var i = 0; i < files.length; i++) {
                                 testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
                                 var testBuffer = new Buffer(testFile);
-
+                                var filename = files[i];
                                 ipfs.files.add(testBuffer, function (err, output) {
                                     if (err) {
                                         console.log(err);
                                     }
+                                    console.log("Files:::",filename);
                                     console.log(output[0].hash);
                                     Models.Link.update({
                                         'patient': patient.id,
@@ -699,14 +700,16 @@ module.exports = {
                                     }, {
                                         $addToSet: {
                                             'hashes': {
-                                                'linkage': output[0].hash
+                                                'linkage': output[0].hash,
+                                                'recordid': filename
+
                                             }
                                         }
                                     }, function (err, result) {
                                         if (err) throw err;
                                     }, false, true);
-                                    
-                                   
+
+
                                 });
                             }
 
@@ -718,7 +721,7 @@ module.exports = {
 
 
 
-               
+
                 // const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
                 // QRCode.toDataURL(validCID, function (err, url) {
                 //     console.log(url);
@@ -726,6 +729,51 @@ module.exports = {
 
             }
         });
-        
+
     },
+    blockchain: function (req, res) {
+        var viewModel = {
+            patient: {},
+            dr: {},
+            hash: [],
+            recordid:[]
+        };
+        Models.Patient.findOne({
+            'ethAddr': {
+                $regex: req.params.patientAccount
+            }
+        }, function (err, patient) {
+            if (err) throw err;
+            else {
+                Models.Doctor.findOne({
+                    'ethAddr': {
+                        $regex: req.params.drAccount
+                    }
+                }, function (err, doctor) {
+                    if (err) throw err;
+                    else {
+                        viewModel.patient=patient;
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        }, function (err, link) {
+                            if (err) throw err;
+                            else {
+                                viewModel.dr=doctor;
+                                console.log(link);
+                                for (i=0; i<link.hashes.length; i++){
+                                    console.log("Link",link.hashes[i].linkage);
+                                    viewModel.hash.push(link.hashes[i].linkage);
+                                    viewModel.hash.push(link.hashes[i].recordid);
+                                }
+                                console.log(viewModel);
+                                res.send(viewModel);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+    }
 };

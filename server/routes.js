@@ -50,6 +50,7 @@ module.exports = function (app) {
     router.get('/patient/:firstAccount/sharedoc', patient.sharedoc);
     router.post('/patient/:patientAccount/:drAccount/sharedoc/', patient.retrieveinfo);
     router.get('/patient/:patientAccount/:drAccount/sharedoc/info', patient.share);
+    router.post('/patient/:patientAccount/:drAccount/blockchain', patient.blockchain);
     router.get('/patient/:firstAccount/getdoc', patient.getdoc);
 
     router.post('/doctor/:drAccount/:patientAccount/getPatientInfo/', doctor.patientretrieveinfo);

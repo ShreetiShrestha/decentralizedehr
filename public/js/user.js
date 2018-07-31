@@ -28,7 +28,7 @@ var userContract = web3.eth.contract(
             "inputs": [
                 {
                     "name": "recid",
-                    "type": "uint256"
+                    "type": "string"
                 },
                 {
                     "name": "ipfs",
@@ -50,7 +50,7 @@ var userContract = web3.eth.contract(
                 },
                 {
                     "name": "recid",
-                    "type": "uint256"
+                    "type": "string"
                 }
             ],
             "name": "setPermission",
@@ -68,7 +68,7 @@ var userContract = web3.eth.contract(
                 },
                 {
                     "name": "recid",
-                    "type": "uint256"
+                    "type": "string"
                 }
             ],
             "name": "checkperm",
@@ -101,7 +101,7 @@ var userContract = web3.eth.contract(
             "inputs": [
                 {
                     "name": "recordid",
-                    "type": "uint256"
+                    "type": "string"
                 }
             ],
             "name": "getRecordDetail",
@@ -112,7 +112,7 @@ var userContract = web3.eth.contract(
                 },
                 {
                     "name": "",
-                    "type": "uint256"
+                    "type": "string"
                 },
                 {
                     "name": "",
@@ -139,5 +139,5 @@ var userContract = web3.eth.contract(
         }
     ]
 );
-var user = userContract.at('0x6a41505fa9fdc3d16c8ceefcb9eb46f6150aa713');
+var user = userContract.at('0x835e85340a7d1ffc07a736f41ef2777a62b07db4');
 console.log(user);
