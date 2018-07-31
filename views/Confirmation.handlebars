@@ -1,0 +1,89 @@
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Link Profile</h3>
+            </div>
+            {{!-- Search Bar --}}
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix" text-align="center"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        Are you sure you want to share your profile to the following HCP profile?
+                    </div>
+                    <div class="x_content">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="profile_img">
+                                <div id="crop-avatar">
+                                    <!-- Current avatar -->
+                                    <img class="img-responsive avatar-view" style="height:10em;" id="drProImg" src="/public/upload/doctors/{{drInfo.ethAddr}}/{{drInfo.personalDetail.profilePic}}"
+                                        alt="Avatar" title="Change the avatar">
+                                </div>
+                            </div>
+                            <h3 id="drName">{{drInfo.personalDetail.firstName}} {{drInfo.personalDetail.middleName}} {{drInfo.personalDetail.lastName}}</h3>
+                            <h4 id="drSpecialization">{{drInfo.personalDetail.specializationDesc}}</h4>
+                            <h4 id="drNMC">{{drInfo.personalDetail.nmc}}</h4>
+                            <ul class="list-unstyled user_data">
+                                <li>
+                                    <i class="fa fa-map-marker usrower-profile-icon"></i> Address:
+                                    <text id="drAddress" style="font-size:11pt">{{drInfo.personalDetail.address}}</text>
+                                </li>
+
+                                <li>
+                                    <i class="fa fa-phone user-profile-icon"></i> Contact:
+                                    <text id="drContact" style="font-size:11pt">{{drInfo.personalDetail.contact}}</text>
+                                </li>
+                                </li>
+
+                                <li class="m-top-xs">
+                                    <i class="fa fa-plus user-profile-icon"></i> Hospitals:
+                                    <text id="drHospitals" style="font-size:11pt">{{drInfo.personalDetail.hospitals}}</text>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <h4 class="text-center" style="margin:6em;">Your files have already been uploaded over IPFS, are you sure want to proceed with this link
+                                and connect to the profile via Ethereum Blockchain?</h4>
+                            <div class="row" style="{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}">
+                                
+                                    <button class="btn btn-success" id="recordCall">
+                                        <i class="fa fa-check"></i> Yes
+                                    </button>
+                                
+                               
+                                <button class="btn btn-alert">
+                                    <i class="fa fa-close"></i> No
+                                </button>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<!-- /page content -->

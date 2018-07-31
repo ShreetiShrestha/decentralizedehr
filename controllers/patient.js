@@ -452,7 +452,7 @@ module.exports = {
     },
 
 
-    vitalSignsDetails: function(req, res){
+    vitalSignsDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -469,7 +469,7 @@ module.exports = {
             }
         });
     },
-    allergiesDetails: function(req, res){
+    allergiesDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -486,7 +486,7 @@ module.exports = {
             }
         });
     },
-    immunizationDetails: function(req, res){
+    immunizationDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -503,7 +503,7 @@ module.exports = {
             }
         });
     },
-    surgicalhistoryDetails: function(req, res){
+    surgicalhistoryDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -520,7 +520,7 @@ module.exports = {
             }
         });
     },
-    medicationDetails: function(req, res){
+    medicationDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -537,7 +537,7 @@ module.exports = {
             }
         });
     },
-    personalDetails: function(req, res){
+    personalDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -554,7 +554,7 @@ module.exports = {
             }
         });
     },
-    reportsDetails: function(req, res){
+    reportsDetails: function (req, res) {
         var viewModel = {
             patient: {}
         };
@@ -639,6 +639,10 @@ module.exports = {
 
     },
     share: function (req, res) {
+        var viewModel = {
+            patient: {},
+            drInfo: {}
+        }
 
         acc = req.params.patientAccount;
         Models.Patient.findOne({
@@ -648,145 +652,73 @@ module.exports = {
                 throw err;
             }
             if (!err && patient) {
+                viewModel.patient = patient;
                 data = (JSON.stringify(patient, null, '\t'));
                 var dir = './public/upload/patients/' + acc + '/';
                 if (!fs.existsSync(dir)) {
                     fs.mkdirSync(dir);
                 }
-                fs.writeFile(dir + 'JSON'+acc+'.txt', data, function (err) {
+                fs.writeFile(dir + 'JSON' + acc + '.txt', data, function (err) {
                     if (err) {
                         console.log(err);
                     }
                     console.log('Data written to file');
                 });
-                // fs.writeFile(dir + 'patient.json', data, (err) => {
-                //     if (err) throw err;
-                //     console.log('Data written to file');
-                // });
 
-                //Archive the folder
-                // var baseDir = './public/upload/patients/' + acc + '/';
-                // var dirNames = ['reports', 'proimg', 'details']; //directories to zip
-                // ``
-                // var archive = archiver.create('zip', {});
-                // archive.on('error', function (err) {
-                //     throw err;
-                // });
 
-                // var output = fs.createWriteStream(baseDir + acc + '.zip'); //path to create .zip file
-                // output.on('close', function () {
-                //     console.log(archive.pointer() + ' total bytes');
-                //     console.log('archiver has been finalized and the output file descriptor has closed.');
-                // });
-                // archive.pipe(output);
-
-                // dirNames.forEach(function (dirName) {
-                //     // 1st argument is the path to directory 
-                //     // 2nd argument is how to be structured in the archive (thats what i was missing!)
-                //     archive.directory(baseDir + dirName, dirName);
-                // });
-                // archive.finalize();
-                Models.Patient.findOne({
+                Models.Doctor.findOne({
                     'ethAddr': {
-                        $regex: req.params.patientAccount
+                        $regex: req.params.drAccount
                     }
-                }, function (err, patient) {
+                }, function (err, doctor) {
                     if (err) {
                         throw err;
                     }
-                    if (!err && patient) {
-                        Models.Doctor.findOne({
-                            'ethAddr': {
-                                $regex: req.params.drAccount
-                            }
-                        }, function (err, doctor) {
-                            if (err) {
-                                throw err;
-                            }
-                            if (!err && doctor) {
-                                var newLink = new Models.Link({
-                                    patient: patient.id,
-                                    doctor: doctor.id
-                                });
-                                newLink.save();
-                            }
+                    if (!err && doctor) {
+                        viewModel.drInfo = doctor;
+                        var newLink = new Models.Link({
+                            patient: patient.id,
+                            doctor: doctor.id
                         });
+                        newLink.save();
+                        
+                        fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+                            console.log(files);
+                            for (var i = 0; i < files.length; i++) {
+                                testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                var testBuffer = new Buffer(testFile);
 
-                    }
-                });
-
-                //IPFS storage
-
-
-                // ipfs.key.gen('my-key', {
-                //     type: 'rsa',
-                //     size: 2048
-                // }, function(err, key) {
-                //     if(err){
-                //         console.log(JSON.stringify(err, null));
-                //     }else{
-                //         console.log(JSON.stringify(key, null));
-                //     }
-                // });
-                // ipfs.key.export('self', 'password', (err, pem) => console.log(pem))
-                // var key = ursa.generatePrivateKey(1024, 65537);
-                // var privkeypem = key.toPrivatePem();
-                // var pubkeypem = key.toPublicPem();
-
-                // console.log(privkeypem.toString('ascii'));
-                // console.log(pubkeypem.toString('ascii'));
-                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-                    console.log(files);
-                    for (var i = 0; i < files.length; i++) {
-                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
-                        var testBuffer = new Buffer(testFile);
-
-                        ipfs.files.add(testBuffer, function (err, output) {
-                            if (err) {
-                                console.log(err);
-                            }
-                            console.log(output[0].hash);
-                            Models.Doctor.findOne({
-                                'ethAddr': {
-                                    $regex: req.params.drAccount
-                                }
-
-                            }, function (err, dr) {
-                                if (err) throw err;
-                                else {
-                                    Models.Patient.findOne({
-                                        'ethAddr': {
-                                            $regex: req.params.patientAccount
+                                ipfs.files.add(testBuffer, function (err, output) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    console.log(output[0].hash);
+                                    Models.Link.update({
+                                        'patient': patient.id,
+                                        'doctor': doctor.id
+                                    }, {
+                                        $addToSet: {
+                                            'hashes': {
+                                                'linkage': output[0].hash
+                                            }
                                         }
-
-                                    }, function (err, patient) {
+                                    }, function (err, result) {
                                         if (err) throw err;
-                                        else {
-                                            Models.Link.update({
-                                                'patient': patient.id,
-                                                'doctor': dr.id
-                                            }, {
-                                                $addToSet: {
-                                                    'hashes': {
-                                                        'linkage': output[0].hash
-                                                    }
-                                                }
-                                            }, function (err, result) {
-                                                if (err) throw err;
-                                            }, false, true);
-                                        }
-                                    });
-                                }
-                            });
+                                    }, false, true);
+                                    
+                                   
+                                });
+                            }
+
 
                         });
+                        res.render('Confirmation', viewModel);
                     }
-
-
-                    res.redirect('/patient/' + req.params.patientAccount);
                 });
 
 
+
+               
                 // const validCID = 'QmYqV75oPeiGYJtwCrDkoHjPZ6NUtvT4368WUc4xxWKHFE';
                 // QRCode.toDataURL(validCID, function (err, url) {
                 //     console.log(url);
@@ -794,5 +726,6 @@ module.exports = {
 
             }
         });
+        
     },
 };

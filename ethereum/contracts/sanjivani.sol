@@ -12,6 +12,7 @@ contract User{
     
     
     struct Record{
+    
         string ipfsHash;
         uint recordid;
         address owner;

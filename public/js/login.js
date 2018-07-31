@@ -52,12 +52,12 @@ $(function () {
                             if (err) throw err;
                             else {
                                 console.log("usertype",res.c[0]);
-                                if(res.c[0]===2){
+                                if(res.c[0]===1){
                                     window.location.href = '/patient/' + firstAccount;
                                 }
                                 else{
                                     alert("Sorry, you are not authorized to enter the system");
-                                    window.location.href = '/'
+                                    window.location.href = '/';
                                 }
                             }
                         });
@@ -68,12 +68,12 @@ $(function () {
                             if (err) throw err;
                             else {
                                 console.log("usertype",res.c[0]);
-                                if(res.c[0]===1){
+                                if(res.c[0]===2){
                                     window.location.href = '/doctor/' + firstAccount;
                                 }
                                 else{
                                     alert("Sorry, you are not authorized to enter the system");
-                                    window.location.href = '/'
+                                    window.location.href = '/';
                                 }
                             }
                         });
