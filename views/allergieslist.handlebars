@@ -1,0 +1,119 @@
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Allergies </h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>List of Allergies</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Allergen </th>
+                                        <th class="column-title">Allergen Type</th>
+                                        <th class="column-title">Severity</th>
+                                        <th class="column-title">View Detail </th>
+
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {{#each patientInfo}} {{#each allergies}}
+                                    <tr class="even pointer">
+                                        <td class=" ">{{this.name}}</td>
+                                        <td class=" ">{{this.allergenType}} </td>
+                                        <td class=" ">{{this.severity}}</td>
+                                        <td class=" ">
+                                            <button class="btn btn-info viewAllergy" data-id="{{../this.ethAddr}} {{../../dr.ethAddr}} {{this.id}}">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                    {{/each}} {{/each}}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/allergiesadd" class="btn btn-success"><i class="fa fa-plus"></i> New Entry</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Detail of Allergy </h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div id="allergyBlank">
+                            <h4 class="text-center" style="margin:6em;">Click on View Details from the list to view Allergy details.</h4>
+                        </div>
+                        <div id="allergyDetail">
+
+                            <h3 id="AName"></h3>
+                            <h4 id="AType"></h4>
+                            <h4 id="AReaction"></h4>
+                            <ul class="list-unstyled user_data">
+                                <li>
+                                    
+                                    <text style="font-size:11pt" id="ASeverity"></text>
+                                </li>
+
+                                <li>
+                                   
+                                    <text style="font-size:11pt" id="AFirst"></text>
+                                </li>
+                                <li>
+                                   
+                                    <text style="font-size:11pt" id="AActive"></text>
+                                </li>
+                                </li>
+
+                                <li class="m-top-xs">
+                                    <i class="fa fa-plus user-profile-icon" ></i> 
+                                    <text style="font-size:11pt" id="ANotes"></text>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

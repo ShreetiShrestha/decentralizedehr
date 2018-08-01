@@ -514,4 +514,186 @@ module.exports = {
             }
         });
     },
+
+
+    allergieslist: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {}
+        }
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                viewModel.dr = doctor;
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    viewModel.patientInfo = patient;
+                    res.render("allergieslist", viewModel);
+                });
+            }
+        });
+    },
+    allergiesdetailsview: function (req, res) {
+
+        Models.Patient.findOne({
+            'ethAddr': {
+                $regex: req.params.patientAccount
+            }
+        }, function (err, result) {
+            if (err) throw err;
+            else {
+                for (i = 0; i < result.allergies.length; i++) {
+                    if (result.allergies[i].id === req.params.dataid) {
+
+                        res.send({
+                            'name': result.allergies[i].name,
+                            'allergenType': result.allergies[i].allergenType,
+                            'reaction': result.allergies[i].reaction,
+                            'severity': result.allergies[i].severity,
+                            'firstObserved': result.allergies[i].firstObserved,
+                            'currentlyActive': result.allergies[i].currentlyActive,
+                            'note': result.allergies[i].note,
+                            'id': result.allergies[i].id
+                        });
+                    }
+
+                }
+
+            }
+        });
+    },
+    allergiesadd: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patientInfo = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+                        viewModel.dr = doctor;
+                        res.render('allergies', viewModel);
+                    }
+                });
+            }
+        });
+    },
+    allergiessubmit: function (req, res) {
+        acc= req.params.patientAccount;
+        Models.Patient.update({
+            'ethAddr': req.params.patientAccount
+        }, {
+            $addToSet: {
+                'allergies': {
+                    'name': req.body.name,
+                    'reaction': req.body.reaction,
+                    'allergenType': req.body.allergentype,
+                    'severity': req.body.severity,
+                    'firstObserved': req.body.firstobserved,
+                    'currentlyActive': req.body.currentlyactive,
+                    'note': req.body.note
+                }
+            }
+        }, function (err, result) {
+            if (err) throw err;
+
+        }, false, true);
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    if (err) throw err;
+                    else {
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        }, function (err, link) {
+                            if (link === null) {
+                                console.log('newlink');
+                                var newLink = new Models.Link({
+                                    patient: patient.id,
+                                    doctor: doctor.id
+                                });
+                                newLink.save();
+                            } else {
+                                data = (JSON.stringify(patient, null, '\t'));
+                                var dir = './public/upload/patients/' + acc + '/';
+                                if (!fs.existsSync(dir)) {
+                                    fs.mkdirSync(dir);
+                                }
+                                fs.writeFile(dir + 'JSON' + acc + '.txt', data, function (err) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    console.log('Data written to file');
+                                });
+                                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                        var testBuffer = new Buffer(testFile);
+                                        var filename = files[i];
+                                        ipfs.files.add(testBuffer, function (err, output) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Files:::", filename);
+                                            console.log(output[0].hash);
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': doctor.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage': output[0].hash,
+                                                        'recordid': filename
+
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+
+                                            
+                                        });
+                                    }
+
+
+                                });
+                                res.redirect('/doctor/' + doctor.ethAddr);
+
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+    },
 };
