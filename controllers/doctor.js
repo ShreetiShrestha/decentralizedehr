@@ -330,5 +330,55 @@ module.exports = {
             }
         });
         
+    },
+    vitalsignslist: function(req, res){
+        var viewModel = {
+            patientInfo : {},
+            dr : {}
+        }
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex : req.params.drAccount
+            }
+        }, function (err, doctor){
+            if (err) throw err;
+            else {
+                viewModel.dr=doctor;
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex : req.params.patientAccount
+                    }
+                }, function (err, patient){
+                    viewModel.patientInfo= patient;
+                    res.render ("vitalsignslist",viewModel);
+                });
+            }
+        });
+    },
+    vitalsignsdetailsview:function(req,res){
+        
+        Models.Patient.findOne ({
+            'ethAddr':{
+                $regex: req.params.patientAccount
+            }
+        }, function(err,result){
+            if (err) throw err;
+            else {
+                for (i = 0; i < result.vitalSign.length ; i++){
+                    if (result.vitalSign[i].id===req.params.dataid){
+                                      
+                        res.send({'name':result.vitalSign[i].name ,
+                        'dateOfNote': result.vitalSign[i].dateOfNote,
+                        'status': result.vitalSign[i].status,
+                        'value': result.vitalSign[i].value,
+                        'unit': result.vitalSign[i].unit,
+                        'notes': result.vitalSign[i].notes,
+                        'id': result.vitalSign[i].id});
+                    }
+                  
+                }
+                
+            }
+        });
     }
 };
