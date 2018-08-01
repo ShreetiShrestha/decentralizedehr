@@ -284,6 +284,6 @@ module.exports = {
         
     },
     patientInfo : function(req,res){
-        res.send("hello")
+        res.render('patientRetrieveInfo');
     }
 };
