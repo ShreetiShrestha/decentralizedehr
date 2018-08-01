@@ -284,6 +284,51 @@ module.exports = {
         
     },
     patientInfo : function(req,res){
-        res.render('patientRetrieveInfo');
+        var viewModel= {
+            dr:{},
+            patientInfo: {},
+            link:{}
+        }
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex:req.params.drAccount
+            }
+                
+        }, function (err, doctor) {
+            if (err) {
+                throw err;
+            }
+            if (!err && doctor) {
+
+                viewModel.dr = doctor;
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex:req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && patient) {
+                        viewModel.patientInfo = patient;
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor' : doctor.id
+                        }, function (err, link) {
+                            if (err) {
+                                throw err;
+                            }
+                            if (!err && link) {
+                                viewModel.link = link;
+        
+                                res.render('patientRetrieveInfo',viewModel);
+                            }
+                        });
+                    }
+                });
+               
+            }
+        });
+        
     }
 };

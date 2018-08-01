@@ -12,6 +12,7 @@ var PatientSchema = new Schema({
         middleName: {type: String},
         gender: {type: String, enum: ["Male", "Female"]},
         dob: {type: Date},
+       
         address: {type: String},
         contact: {
             type: Number,
