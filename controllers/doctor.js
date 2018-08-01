@@ -238,4 +238,52 @@ module.exports = {
         });
 
     },
+    retrieve : function(req,res){
+        var viewModel= {
+            patientInfo:{},
+            dr: {},
+            hash:[]
+        }
+
+        Models.Patient.findOne({
+            'ethAddr':{
+                $regex: req.params.patientAccount
+            } 
+        }, function(err, patient){
+            if (err) throw err;
+            else{
+                viewModel.patientInfo=patient;
+                Models.Doctor.findOne ({
+                    'ethAddr':{
+                        $regex: req.params.drAccount
+                    }
+                }, function (error, doctor){
+                    if (error) throw error;
+                    else {
+                        viewModel.dr = doctor;
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        }, function (er, link){
+                            if (er) throw er;
+                            else{
+                                console.log(link);
+                                for (i=0; i<link.hashes.length; i++){
+                                    console.log("Link",link.hashes[i].linkage);
+                                    viewModel.hash.push(link.hashes[i].linkage);
+                                    viewModel.hash.push(link.hashes[i].recordid);
+                                }
+                                console.log(viewModel);
+                                res.send(viewModel);
+                            }
+                        })
+                    }
+                })
+            }
+        })
+        
+    },
+    patientInfo : function(req,res){
+        res.send("hello")
+    }
 };
