@@ -675,47 +675,57 @@ module.exports = {
                         throw err;
                     }
                     if (!err && doctor) {
-                        viewModel.drInfo = doctor;
-                        var newLink = new Models.Link({
-                            patient: patient.id,
-                            doctor: doctor.id
-                        });
-                        newLink.save();
-
-                        fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-                            
-                            for (var i = 0; i < files.length; i++) {
-                                testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
-                                var testBuffer = new Buffer(testFile);
-                                var filename = files[i];
-                                ipfs.files.add(testBuffer, function (err, output) {
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    console.log("Files:::",filename);
-                                    console.log(output[0].hash);
-                                    Models.Link.update({
-                                        'patient': patient.id,
-                                        'doctor': doctor.id
-                                    }, {
-                                        $addToSet: {
-                                            'hashes': {
-                                                'linkage': output[0].hash,
-                                                'recordid': filename
-
-                                            }
-                                        }
-                                    }, function (err, result) {
-                                        if (err) throw err;
-                                    }, false, true);
-
-
+                        viewModel.drInfo = doctor;                     
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        },function(err, link){
+                            if (link===null) {
+                                console.log('newlink');
+                                var newLink = new Models.Link({
+                                    patient: patient.id,
+                                    doctor: doctor.id
                                 });
+                                newLink.save();
                             }
-
-
-                        });
-                        res.render('Confirmation', viewModel);
+                            else{
+                                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+                            
+                                    for (var i = 0; i < files.length; i++) {
+                                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                        var testBuffer = new Buffer(testFile);
+                                        var filename = files[i];
+                                        ipfs.files.add(testBuffer, function (err, output) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Files:::",filename);
+                                            console.log(output[0].hash);
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': doctor.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage': output[0].hash,
+                                                        'recordid': filename
+        
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+        
+        
+                                        });
+                                    }
+        
+        
+                                });
+                                res.render('Confirmation', viewModel);
+                            }
+                        })
+                        
                     }
                 });
 

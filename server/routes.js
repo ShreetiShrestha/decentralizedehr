@@ -59,7 +59,8 @@ module.exports = function (app) {
 
     router.get('/doctor/:drAccount/:patientAccount/vitalSignList/', doctor.vitalsignslist);
     router.post('/doctor/:drAccount/:patientAccount/vitalSignDetailView/:dataid', doctor.vitalsignsdetailsview);
-   
+    router.get('/doctor/:drAccount/:patientAccount/vitalSignsadd', doctor.vitalsignsadd);
+    router.post('/doctor/:drAccount/:patientAccount/vitalSignssubmit', doctor.vitalsignssubmit);
 
     router.get('/doctor/:firstAccount/personalDetail', doctor.personaldetail);
     router.post('/doctor/:firstAccount/personalDetailedit', doctor.personalDetailedit);

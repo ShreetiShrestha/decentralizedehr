@@ -1,4 +1,13 @@
-var Models = require('../models');
+var Models = require('../models'),
+    multer = require('multer'),
+    path = require('path'),
+    ipfsAPI = require('ipfs-api'),
+    QRCode = require('qrcode'),
+    // ursa = require('ursa'),
+    fs = require('fs');
+let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
+    protocol: 'https'
+});
 module.exports = {
     index: function (req, res) {
         var viewModel = {
@@ -10,7 +19,7 @@ module.exports = {
 
 
         Models.Doctor.count({}, function (err, count) {
-            console.log("Number of doctors:", count);
+
 
             if (count <= 3) {
                 Models.Doctor.update({
@@ -30,7 +39,7 @@ module.exports = {
                 for (index = 0; index < doctors.length; ++index) {
                     if (doctors[index].validDoc === false) {
                         viewModel.validationList.push(doctors[index]);
-                        console.log(viewModel.validationList);
+
                     }
                 }
             });
@@ -40,46 +49,44 @@ module.exports = {
                 }
             }, function (err, doctor) {
                 validity = doctor.validDoc;
-                console.log(doctor.validDoc);
                 viewModel.dr = doctor;
                 viewModel.countlist.myCount = doctor.voteCount;
                 if (validity === true) {
                     Models.Link.find({
-                        'doctor':doctor.id
-                    },function(err,links){
-                        if (err)throw err;
-                        else{
-                            for (var i=0;i<links.length;i++){
+                        'doctor': doctor.id
+                    }, function (err, links) {
+                        if (err) throw err;
+                        else {
+                            for (var i = 0; i < links.length; i++) {
                                 Models.Patient.findOne({
-                                    _id : links[i].patient
-                                },function(err,patient){
-                                    if (err){
-                                        console.log('No patient links found');
+                                    _id: links[i].patient
+                                }, function (err, patient) {
+                                    if (err) {
+
                                         throw err;
-                                    } 
-                                    else{
-                                        console.log(patient);
+                                    } else {
+
                                         viewModel.linkslist.push(patient);
                                     }
                                 });
-                                
+
                             }
                         }
                         res.render('drdashboard', viewModel);
                     });
-                    
+
                 } else {
                     Models.Doctor.find({
                         'validDoc': true
                     }).count({}, function (err, count) {
                         threshold = Math.ceil(count * .50);
-                        console.log("No of valid dr:", count);
+
                         viewModel.countlist.dr = count;
                         viewModel.countlist.threshold = threshold;
                         viewModel.countlist.needed = threshold - viewModel.countlist.myCount + 1;
                         Models.Patient.count({}, function (err, countPatient) {
-                            viewModel.countlist.patients=countPatient;
-                            viewModel.countlist.total = countPatient +viewModel.countlist.dr;
+                            viewModel.countlist.patients = countPatient;
+                            viewModel.countlist.total = countPatient + viewModel.countlist.dr;
                             res.render('drVotingStatus', viewModel);
                         });
                     });
@@ -103,7 +110,7 @@ module.exports = {
                 throw err;
             }
             if (!err && doctor) {
-                console.log(doctor);
+
                 viewModel.dr = doctor;
                 res.render('personalDetails', viewModel);
             }
@@ -184,8 +191,6 @@ module.exports = {
                     'validDoc': true
                 }).count({}, function (err, count) {
                     threshold = Math.floor(count * .50);
-                    console.log("No of valid dr:", count);
-                    console.log("Threshold value:", threshold);
                     if (candidate.voteCount >= threshold) {
                         Models.Doctor.update({
                             'ethAddr': req.params.candidateAccount
@@ -238,42 +243,42 @@ module.exports = {
         });
 
     },
-    retrieve : function(req,res){
-        var viewModel= {
-            patientInfo:{},
+    retrieve: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
             dr: {},
-            hash:[]
+            hash: []
         }
 
         Models.Patient.findOne({
-            'ethAddr':{
+            'ethAddr': {
                 $regex: req.params.patientAccount
-            } 
-        }, function(err, patient){
+            }
+        }, function (err, patient) {
             if (err) throw err;
-            else{
-                viewModel.patientInfo=patient;
-                Models.Doctor.findOne ({
-                    'ethAddr':{
+            else {
+                viewModel.patientInfo = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': {
                         $regex: req.params.drAccount
                     }
-                }, function (error, doctor){
+                }, function (error, doctor) {
                     if (error) throw error;
                     else {
                         viewModel.dr = doctor;
                         Models.Link.findOne({
                             'patient': patient.id,
                             'doctor': doctor.id
-                        }, function (er, link){
+                        }, function (er, link) {
                             if (er) throw er;
-                            else{
-                                console.log(link);
-                                for (i=0; i<link.hashes.length; i++){
-                                    console.log("Link",link.hashes[i].linkage);
+                            else {
+
+                                for (i = 0; i < link.hashes.length; i++) {
+
                                     viewModel.hash.push(link.hashes[i].linkage);
                                     viewModel.hash.push(link.hashes[i].recordid);
                                 }
-                                console.log(viewModel);
+
                                 res.send(viewModel);
                             }
                         })
@@ -281,19 +286,19 @@ module.exports = {
                 })
             }
         })
-        
+
     },
-    patientInfo : function(req,res){
-        var viewModel= {
-            dr:{},
+    patientInfo: function (req, res) {
+        var viewModel = {
+            dr: {},
             patientInfo: {},
-            link:{}
+            link: {}
         }
         Models.Doctor.findOne({
             'ethAddr': {
-                $regex:req.params.drAccount
+                $regex: req.params.drAccount
             }
-                
+
         }, function (err, doctor) {
             if (err) {
                 throw err;
@@ -303,7 +308,7 @@ module.exports = {
                 viewModel.dr = doctor;
                 Models.Patient.findOne({
                     'ethAddr': {
-                        $regex:req.params.patientAccount
+                        $regex: req.params.patientAccount
                     }
                 }, function (err, patient) {
                     if (err) {
@@ -313,72 +318,200 @@ module.exports = {
                         viewModel.patientInfo = patient;
                         Models.Link.findOne({
                             'patient': patient.id,
-                            'doctor' : doctor.id
+                            'doctor': doctor.id
                         }, function (err, link) {
                             if (err) {
                                 throw err;
                             }
                             if (!err && link) {
                                 viewModel.link = link;
-        
-                                res.render('patientRetrieveInfo',viewModel);
+
+                                res.render('patientRetrieveInfo', viewModel);
                             }
                         });
                     }
                 });
-               
+
             }
         });
-        
+
     },
-    vitalsignslist: function(req, res){
+    vitalsignslist: function (req, res) {
         var viewModel = {
-            patientInfo : {},
-            dr : {}
+            patientInfo: {},
+            dr: {}
         }
         Models.Doctor.findOne({
             'ethAddr': {
-                $regex : req.params.drAccount
+                $regex: req.params.drAccount
             }
-        }, function (err, doctor){
+        }, function (err, doctor) {
             if (err) throw err;
             else {
-                viewModel.dr=doctor;
+                viewModel.dr = doctor;
                 Models.Patient.findOne({
                     'ethAddr': {
-                        $regex : req.params.patientAccount
+                        $regex: req.params.patientAccount
                     }
-                }, function (err, patient){
-                    viewModel.patientInfo= patient;
-                    res.render ("vitalsignslist",viewModel);
+                }, function (err, patient) {
+                    viewModel.patientInfo = patient;
+                    res.render("vitalsignslist", viewModel);
                 });
             }
         });
     },
-    vitalsignsdetailsview:function(req,res){
-        
-        Models.Patient.findOne ({
-            'ethAddr':{
+    vitalsignsdetailsview: function (req, res) {
+
+        Models.Patient.findOne({
+            'ethAddr': {
                 $regex: req.params.patientAccount
             }
-        }, function(err,result){
+        }, function (err, result) {
             if (err) throw err;
             else {
-                for (i = 0; i < result.vitalSign.length ; i++){
-                    if (result.vitalSign[i].id===req.params.dataid){
-                                      
-                        res.send({'name':result.vitalSign[i].name ,
-                        'dateOfNote': result.vitalSign[i].dateOfNote,
-                        'status': result.vitalSign[i].status,
-                        'value': result.vitalSign[i].value,
-                        'unit': result.vitalSign[i].unit,
-                        'notes': result.vitalSign[i].notes,
-                        'id': result.vitalSign[i].id});
+                for (i = 0; i < result.vitalSign.length; i++) {
+                    if (result.vitalSign[i].id === req.params.dataid) {
+
+                        res.send({
+                            'name': result.vitalSign[i].name,
+                            'dateOfNote': result.vitalSign[i].dateOfNote,
+                            'status': result.vitalSign[i].status,
+                            'value': result.vitalSign[i].value,
+                            'unit': result.vitalSign[i].unit,
+                            'notes': result.vitalSign[i].notes,
+                            'id': result.vitalSign[i].id
+                        });
                     }
-                  
+
                 }
-                
+
             }
         });
-    }
+    },
+    vitalsignsadd: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {}
+        };
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patientInfo = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+                        viewModel.dr = doctor;
+                        res.render('vitalSigns', viewModel);
+                    }
+                });
+            }
+        });
+    },
+    vitalsignssubmit: function (req, res) {
+        acc= req.params.patientAccount;
+        Models.Patient.update({
+            'ethAddr': req.params.patientAccount
+        }, {
+            $addToSet: {
+                'vitalSign': {
+                    'name': req.body.name,
+                    'dateOfNote': req.body.dateOfNote,
+                    'status': req.body.status,
+                    'value': req.body.value,
+                    'unit': req.body.unit,
+                    'notes': req.body.notes
+                }
+            }
+        }, function (err, result) {
+            if (err) throw err;
+
+        }, false, true);
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    if (err) throw err;
+                    else {
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        }, function (err, link) {
+                            if (link === null) {
+                                console.log('newlink');
+                                var newLink = new Models.Link({
+                                    patient: patient.id,
+                                    doctor: doctor.id
+                                });
+                                newLink.save();
+                            } else {
+                                data = (JSON.stringify(patient, null, '\t'));
+                                var dir = './public/upload/patients/' + acc + '/';
+                                if (!fs.existsSync(dir)) {
+                                    fs.mkdirSync(dir);
+                                }
+                                fs.writeFile(dir + 'JSON' + acc + '.txt', data, function (err) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    console.log('Data written to file');
+                                });
+                                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                        var testBuffer = new Buffer(testFile);
+                                        var filename = files[i];
+                                        ipfs.files.add(testBuffer, function (err, output) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Files:::", filename);
+                                            console.log(output[0].hash);
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': doctor.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage': output[0].hash,
+                                                        'recordid': filename
+
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+
+                                            
+                                        });
+                                    }
+
+
+                                });
+                                res.redirect('/doctor/' + doctor.ethAddr);
+
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+    },
 };

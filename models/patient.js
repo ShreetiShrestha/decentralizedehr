@@ -40,7 +40,7 @@ var PatientSchema = new Schema({
         name: {type: String},
         dateOfNote: {type: Date},
         status: {type: String},
-        value: {type: Number},
+        value: {type: String},
         unit: {type: String},
         notes: {type: String}
     }],

@@ -21,4 +21,17 @@ $(function(){
         
 
     });
+
+    $(".loadingSpinner").hide();
+    $('.submitByDr').on('click', function (event){
+        var id = $(this).data('id');
+        
+        $(".submitByDr").hide();
+        $(".loadingSpinner").show().delay(5000).fadeOut(0);
+            
+      
+        
+
+    });
+    
 });
