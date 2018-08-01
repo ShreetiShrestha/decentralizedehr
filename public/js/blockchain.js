@@ -24,9 +24,10 @@ $(function(){
                         console.log ("Permission set");
                     }
                 });      
-                window.location.href = '/patient/' + data.patient.ethAddr;
+                
                 
             } 
+            window.location.href = '/patient/' + data.patient.ethAddr;
         });
     });
 });
