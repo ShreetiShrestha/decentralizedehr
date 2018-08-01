@@ -43,6 +43,35 @@ $(function(){
         
 
     });
+
+    $('#medicationDetail').hide();
+    $('.viewMedication').on('click', function (event){
+        event.preventDefault();
+        $("#medicationBlank").hide();
+        var ids = $(this).data('id');
+        ids=ids.split(' ');
+        
+       
+        $.post ('/doctor/'+ids[1]+'/'+ids[0]+'/medicationsDetailView/'+ids[2]).done(function(data){
+            $('#medicationDetail').show();
+            $("#MName").text("Medicine Name :" +data.name);
+            $("#MType").text( "Medicine Type : "+data.medicationType);
+            $("#MPrescribed").text("Prescribed By : "+ data.prescribedBy);
+            $("#MDose").text("Dosage : "+data.dose);
+            $("#MFreq").text("Frequency : "+data.frequency);
+            $("#MTime").text("Time : "+data.time);
+            $("#MStrength").text("Strength : "+data.strength);
+            $("#MInstructions").text("Instructions : "+data.instructions);
+            $("#MReasons").text("Reasons : "+data.reasonsForTaking);
+            $("#MSDate").text("Starting Date : "+data.startDate);
+            $("#MEDate").text("Ending Date : "+data.endDate);
+            $("#MCurrent").text("Currently Taking : "+data.currentlyTaking);
+            $("#MNotes").text("Notes : "+data.notes);
+           
+        });
+        
+
+    });
     $(".loadingSpinner").hide();
     $('.submitByDr').on('click', function (event){
         var id = $(this).data('id');

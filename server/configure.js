@@ -5,10 +5,11 @@
      exphbs = require('express-handlebars'),
      express = require('express'),
      bodyParser = require('body-parser'),
+     Models = require('../models'),
      ipfsAPI = require('ipfs-api'),
      multer = require('multer');
 
- methodOverride = require('method-override'),
+    methodOverride = require('method-override'),
      errorHandler = require('errorhandler');
 
 
@@ -39,6 +40,29 @@
          layoutsDir: app.get('views') + '/layouts',
          partialsDir: [app.get('views') + '/partials'],
          helpers: {
+            // hbs.registerAsyncHelper('formatid', function(id, cb) {
+            //     mOrders.formatOrderID(id, function(err, formatted_id){
+            //       // err is always null, no need to handle
+            //       console.log(formatted_id);
+            //       cb(formatted_id);
+            //     });
+            //   });
+             idtoName: function (id,string){
+                
+                Models.Doctor.findOne({
+                    '_id': id
+                },function(err,res){
+                    if (err) {
+                        console.log ("no id found");
+                    }
+                    else{
+                        string.data = res.personalDetail.firstName +" "+res.personalDetail.lastName;
+                    }
+                    
+                });
+               
+                return string.data.root.dr.personalDetail.firstName +" "+string.data.root.dr.personalDetail.lastName;
+             },
              yearago: function (timestamp) {
                  return Math.floor(moment(new Date()).diff(moment(timestamp,"MM/DD/YYYY"),'years',true));
              },

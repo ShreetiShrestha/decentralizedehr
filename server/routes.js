@@ -67,10 +67,10 @@ module.exports = function (app) {
     router.get('/doctor/:drAccount/:patientAccount/allergiesadd', doctor.allergiesadd);
     router.post('/doctor/:drAccount/:patientAccount/allergiessubmit', doctor.allergiessubmit);
 
-    // router.get('/doctor/:drAccount/:patientAccount/medicationsList/', doctor.medicationslist);
-    // router.post('/doctor/:drAccount/:patientAccount/medicationsDetailView/:dataid', doctor.medicationsdetailsview);
-    // router.get('/doctor/:drAccount/:patientAccount/medicationsadd', doctor.medicationsadd);
-    // router.post('/doctor/:drAccount/:patientAccount/medicationssubmit', doctor.medicationssubmit);
+    router.get('/doctor/:drAccount/:patientAccount/medicationsList/', doctor.medicationslist);
+    router.post('/doctor/:drAccount/:patientAccount/medicationsDetailView/:dataid', doctor.medicationsdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/medicationsadd', doctor.medicationsadd);
+    router.post('/doctor/:drAccount/:patientAccount/medicationssubmit', doctor.medicationssubmit);
 
     // router.get('/doctor/:drAccount/:patientAccount/immunizationsList/', doctor.immunizationslist);
     // router.post('/doctor/:drAccount/:patientAccount/immunizationsDetailView/:dataid', doctor.immunizationsdetailsview);
