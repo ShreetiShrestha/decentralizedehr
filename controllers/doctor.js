@@ -1095,4 +1095,212 @@ module.exports = {
         });
     },
 
+    surgicalHistorylist: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {},
+        }
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                viewModel.dr = doctor;
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    viewModel.patientInfo = patient; 
+                    res.render("surgicalHistorylist", viewModel);
+                });
+            }
+        });
+    },
+    surgicalHistorydetailsview: function (req, res) {
+
+        Models.Patient.findOne({
+            'ethAddr': {
+                $regex: req.params.patientAccount
+            }
+        }, function (err, result) {
+            if (err) throw err;
+            else {
+                for (i = 0; i < result.surgicalHistory.length; i++) {
+                    if (result.surgicalHistory[i].id === req.params.dataid) {
+
+                        res.send({
+                          
+                            'procedureType': result.surgicalHistory[i].procedureType,
+                            'date': result.surgicalHistory[i].date,
+                            'hospital': result.surgicalHistory[i].hospital,
+                            'operatedBy': result.surgicalHistory[i].operatedBy,
+                            'bodyLocation': result.surgicalHistory[i].bodyLocation,
+                            'surgicalNotes': result.surgicalHistory[i].surgicalNotes,
+                            'physicianNotes': result.surgicalHistory[i].physicianNotes,
+                            'anaesthesiaNotes': result.surgicalHistory[i].anesthesiaNotes,
+                            'consequence': result.surgicalHistory[i].consequence,
+                            
+                            'id': result.surgicalHistory[i].id
+                        });
+                    }
+
+                }
+
+            }
+        });
+    },
+    surgicalHistoryadd: function (req, res) {
+        var viewModel = {
+            doctors: [],
+            patientInfo: {},
+            dr: {}
+        };
+        Models.Doctor.find(function (err, doctors) {
+            if (err) {
+                throw err;
+            }
+            for (index = 0; index < doctors.length; ++index) {
+                if (doctors[index].validDoc) {
+                    viewModel.doctors.push(doctors[index].personalDetail.firstName + " " + doctors[index].personalDetail.lastName);
+                }
+            }
+        });
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patientInfo = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+                        viewModel.dr = doctor;
+                        res.render('surgicalHistory', viewModel);
+                    }
+                });
+            }
+        });
+    },
+    surgicalHistorysubmit: function (req, res) {
+        acc= req.params.patientAccount;
+        Models.Doctor.findOne({
+            'personalDetail.firstName': {
+                $regex: req.body.operatedby.split(" ")[0]
+            }
+        }, function (err, doctor) {
+            if (err) {
+                throw err;
+            }
+            docID = doctor.id;
+            Models.Patient.update({
+                'ethAddr': req.params.patientAccount
+            }, {
+                $addToSet: {
+                    'surgicalHistory': {
+                        'procedureType': req.body.procedureType,
+                        'date': req.body.date,
+                        'hospital': req.body.hospitalName,
+                        'bodyLocation': req.body.bodyLocation,
+                        'operatedBy': docID,
+                        'surgicalNotes': req.body.surgicalNotes,
+                        'physicianNotes': req.body.physicianNotes,
+                        'anesthesiaNotes': req.body.anaesthesiaNotes,
+                        'consequence': req.body.consequence,
+                    }
+                }
+            }, function (err, result) {
+                if (err) throw err;
+            }, false, true);
+        });
+        
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    if (err) throw err;
+                    else {
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        }, function (err, link) {
+                            if (link === null) {
+                                console.log('newlink');
+                                var newLink = new Models.Link({
+                                    patient: patient.id,
+                                    doctor: doctor.id
+                                });
+                                newLink.save();
+                            } else {
+                                data = (JSON.stringify(patient, null, '\t'));
+                                var dir = './public/upload/patients/' + acc + '/';
+                                if (!fs.existsSync(dir)) {
+                                    fs.mkdirSync(dir);
+                                }
+                                fs.writeFile(dir + 'JSON' + acc + '.txt', data, function (err) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    console.log('Data written to file');
+                                });
+                                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                        var testBuffer = new Buffer(testFile);
+                                        var filename = files[i];
+                                        ipfs.files.add(testBuffer, function (err, output) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Files:::", filename);
+                                            console.log(output[0].hash);
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': doctor.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage': output[0].hash,
+                                                        'recordid': filename
+
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+
+                                            
+                                        });
+                                    }
+
+
+                                });
+                                res.redirect('/doctor/' + doctor.ethAddr);
+
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+    },
+
 };

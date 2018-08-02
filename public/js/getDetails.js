@@ -54,11 +54,11 @@ $(function(){
        
         $.post ('/doctor/'+ids[1]+'/'+ids[0]+'/immunizationsDetailView/'+ids[2]).done(function(data){
             $('#immunizationDetail').show();
-            $("#IName").text("Allergen :" +data.name);
-            $("#IType").text( "Allergen Type : "+data.type);
-            $("#IDose").text("Reaction : "+ data.dose);
-            $("#IDate").text("Severity : "+data.date);
-            $("#IGivenBy").text("First Observed(approx.) : "+data.givenBy);
+            $("#IName").text("Vaccine Name :" +data.name);
+            $("#IType").text( "Vaccine Type : "+data.type);
+            $("#IDose").text("Dose : "+ data.dose);
+            $("#IDate").text("Date : "+data.date);
+            $("#IGivenBy").text("Taken At/Given By : "+data.givenBy);
             $("#INotes").text("Notes : "+data.note);
         });      
 
@@ -92,6 +92,30 @@ $(function(){
         
 
     });
+
+    $('#surgicalHistoryDetail').hide();
+    $('.viewsurgicalHistory').on('click', function (event){
+        event.preventDefault();
+        $("#surgicalHistoryBlank").hide();
+        var ids = $(this).data('id');
+        ids=ids.split(' ');
+        
+       
+        $.post ('/doctor/'+ids[1]+'/'+ids[0]+'/surgicalHistoryDetailView/'+ids[2]).done(function(data){
+            $('#surgicalHistoryDetail').show();
+            $("#SType").text("Procedure Type : " +data.procedureType);
+            $("#SDate").text( "Date : "+data.date);
+            $("#SHospital").text("Hospital : "+ data.hospital);
+            $("#SLocation").text("Body Location : "+data.bodyLocation);
+            $("#SSurgical").text("Surgical Notes : "+data.surgicalNotes);
+            $("#SPhysician").text("Physician Notes : "+data.physicianNotes);
+            $("#SAnaesthesia").text("Anaesthesia Notes : "+data.anesthesiaNotes);
+            $("#SConsequences").text("Consequences : "+data.consequence);           
+        });
+        
+
+    });
+
     $(".loadingSpinner").hide();
     $('.submitByDr').on('click', function (event){
         var id = $(this).data('id');
