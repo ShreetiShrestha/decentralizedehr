@@ -44,6 +44,26 @@ $(function(){
 
     });
 
+    $('#immunizationDetail').hide();
+    $('.viewImmunization').on('click', function (event){
+        event.preventDefault();
+        $("#immunizationBlank").hide();
+        var ids = $(this).data('id');
+        ids=ids.split(' ');
+        
+       
+        $.post ('/doctor/'+ids[1]+'/'+ids[0]+'/immunizationsDetailView/'+ids[2]).done(function(data){
+            $('#immunizationDetail').show();
+            $("#IName").text("Allergen :" +data.name);
+            $("#IType").text( "Allergen Type : "+data.type);
+            $("#IDose").text("Reaction : "+ data.dose);
+            $("#IDate").text("Severity : "+data.date);
+            $("#IGivenBy").text("First Observed(approx.) : "+data.givenBy);
+            $("#INotes").text("Notes : "+data.note);
+        });      
+
+    });
+
     $('#medicationDetail').hide();
     $('.viewMedication').on('click', function (event){
         event.preventDefault();

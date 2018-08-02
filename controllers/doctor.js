@@ -913,4 +913,186 @@ module.exports = {
             }
         });
     },
+
+    immunizationslist: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {},
+        }
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                viewModel.dr = doctor;
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    viewModel.patientInfo = patient;
+                    
+                    res.render("immunizationslist", viewModel);
+                });
+            }
+        });
+    },
+    immunizationsdetailsview: function (req, res) {
+
+        Models.Patient.findOne({
+            'ethAddr': {
+                $regex: req.params.patientAccount
+            }
+        }, function (err, result) {
+            if (err) throw err;
+            else {
+                for (i = 0; i < result.immunization.length; i++) {
+                    if (result.immunization[i].id === req.params.dataid) {
+
+                        res.send({
+                            'name': result.immunization[i].name,
+                            'type': result.immunization[i].type,
+                            'dose': result.immunization[i].dose,
+                            'date': result.immunization[i].date,
+                            'givenBy': result.immunization[i].givenBy,
+                            'note': result.immunization[i].note,
+                            'id': result.immunization[i].id
+                        });
+                    }
+
+                }
+
+            }
+        });
+    },
+    immunizationsadd: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {}
+        };
+
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patientInfo = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+                        viewModel.dr = doctor;
+                        res.render('immunization', viewModel);
+                    }
+                });
+            }
+        });
+    },
+    immunizationssubmit: function (req, res) {
+        acc= req.params.patientAccount;
+        Models.Patient.update({
+            'ethAddr': req.params.patientAccount
+        }, {
+            $addToSet: {
+                'immunization': {
+                    'name': req.body.name,
+                    'dose': req.body.dose,
+                    'type': req.body.type,
+                    'date': req.body.date,
+                    'givenBy': req.body.givenBy,
+                    'note': req.body.note
+                }
+            }
+        }, function (err, result) {
+            if (err) throw err;
+
+        }, false, true);
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    if (err) throw err;
+                    else {
+                        Models.Link.findOne({
+                            'patient': patient.id,
+                            'doctor': doctor.id
+                        }, function (err, link) {
+                            if (link === null) {
+                                console.log('newlink');
+                                var newLink = new Models.Link({
+                                    patient: patient.id,
+                                    doctor: doctor.id
+                                });
+                                newLink.save();
+                            } else {
+                                data = (JSON.stringify(patient, null, '\t'));
+                                var dir = './public/upload/patients/' + acc + '/';
+                                if (!fs.existsSync(dir)) {
+                                    fs.mkdirSync(dir);
+                                }
+                                fs.writeFile(dir + 'JSON' + acc + '.txt', data, function (err) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    console.log('Data written to file');
+                                });
+                                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                        var testBuffer = new Buffer(testFile);
+                                        var filename = files[i];
+                                        ipfs.files.add(testBuffer, function (err, output) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Files:::", filename);
+                                            console.log(output[0].hash);
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': doctor.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage': output[0].hash,
+                                                        'recordid': filename
+
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+
+                                            
+                                        });
+                                    }
+
+
+                                });
+                                res.redirect('/doctor/' + doctor.ethAddr);
+
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+    },
+
 };

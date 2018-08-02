@@ -43,7 +43,7 @@ $(function(){
                                         window.location.href =  '/doctor/'+ids[1]+'/'+ids[0]+'/patientInfo';
                                     }
                                     
-                                    alert ("Sorry, you have no permission to view the profile");
+                                    // alert ("Sorry, you have no permission to view the profile");
                                   
                                 }
 
