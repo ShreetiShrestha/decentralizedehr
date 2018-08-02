@@ -2,11 +2,11 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     path = require('path');
 
-var MessageSchema = new Schema({
+var MessageDrSchema = new Schema({
     message: [{
         text: {type: String},
-    }
-    ],
+        date: {type : Date}
+    }],
     patient: {
         type: Schema.Types.ObjectId,
         ref: "Patient"
@@ -14,7 +14,11 @@ var MessageSchema = new Schema({
     doctor: {
         type: Schema.Types.ObjectId,
         ref: "Doctor"
+    },
+    doctorName :{
+        type :String
     }
+    
 });
 
-module.exports= mongoose.model('Message', MessageSchema);
+module.exports= mongoose.model('MessageDr', MessageDrSchema);

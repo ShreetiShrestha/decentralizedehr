@@ -47,6 +47,8 @@ module.exports = function (app) {
     router.post('/patient/:firstAccount/reportssubmit', patient.reportssubmit);
     router.get('/patient/:firstAccount/reportsDetails', patient.reportsDetails);
 
+    router.get('/patient/:firstAccount/notification', patient.notification);
+
     router.get('/patient/:firstAccount/sharedoc', patient.sharedoc);
     router.post('/patient/:patientAccount/:drAccount/sharedoc/', patient.retrieveinfo);
     router.get('/patient/:patientAccount/:drAccount/sharedoc/info', patient.share);
@@ -87,6 +89,7 @@ module.exports = function (app) {
     router.get('/doctor/:drAccount/:patientAccount/reportsadd', doctor.reportsadd);
     router.post('/doctor/:drAccount/:patientAccount/reportssubmit', doctor.reportssubmit);
     router.post('/doctor/:drAccount/:patientAccount/reportsdownload/:filename', doctor.reportsdownload);
+    router.post('/doctor/:drAccount/:patientAccount/messagebydr/:msg', doctor.messagedrsubmit);
 
     router.get('/doctor/:firstAccount/personalDetail', doctor.personaldetail);
     router.post('/doctor/:firstAccount/personalDetailedit', doctor.personalDetailedit);

@@ -1580,6 +1580,64 @@ module.exports = {
         //         // decrement a download credit, etc.
         //     }
         // });
+    },
+    messagedrsubmit: function(req,res){
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex : req.params.drAccount
+            }
+        }, function (err, doctor){
+            if (err) throw err;
+            else {
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex : req.params.patientAccount
+                    }
+                }, function (err, patient){
+                    if (err) throw err;
+                    else {
+                        Models.MessageDr.findOne({
+                            'doctor': doctor.id,
+                            'patient' : patient.id
+                        }, function (err, msg){
+                            if (err) throw err;
+                            else {
+                                if (msg===null){
+                                    var newMsg = new Models.MessageDr({
+                                        patient: patient.id,
+                                        doctor: doctor.id,
+                                    });
+                                    newMsg.message.text=req.params.msg;
+                                    newMsg.save();
+                                    
+                                }else {
+                                    Models.MessageDr.update({
+                                        'doctor': doctor.id,
+                                        'patient' : patient.id
+                                    }, {
+                                        $addToSet: {
+                                            'message': {
+                                                'text': req.params.msg,
+                                                'date': Date.now(),
+                                                'doctorName': doctor.personalDetail.firstName + " "+doctor.personalDetail.middleName + " "+doctor.personalDetail.lastName 
+        
+                                            }
+                                        }
+                    
+                                    }, function (err, result) {
+                                        if (err) {
+                                            throw err;
+                                        }
+                                        res.send({'message': 'The message has been forwarded to patient.'});
+                                    }, false, true);
+                                   
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
 

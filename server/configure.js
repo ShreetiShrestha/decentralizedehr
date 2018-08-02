@@ -56,6 +56,7 @@
                         console.log ("no id found");
                     }
                     else{
+                        
                         string.data = res.personalDetail.firstName +" "+res.personalDetail.lastName;
                     }
                     

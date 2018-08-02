@@ -11,7 +11,8 @@ let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
 module.exports = {
     index: function (req, res) {
         var viewModel = {
-            patient: {}
+            patient: {},
+            messageAvail: ''
         };
         Models.Patient.findOne({
             'ethAddr': req.params.firstAccount
@@ -22,7 +23,18 @@ module.exports = {
             if (!err && patient) {
 
                 viewModel.patient = patient;
-                res.render('patientdashboard', viewModel);
+                Models.MessageDr.findOne({
+                    'patient': patient.id,
+
+                }, function (err, msg) {
+                    if (msg.message.length > 0) {
+
+                        viewModel.messageAvail= 'yes';
+                    }
+
+                    res.render('patientdashboard', viewModel);
+                });
+
             }
         });
     },
@@ -675,22 +687,26 @@ module.exports = {
                         throw err;
                     }
                     if (!err && doctor) {
-                        viewModel.drInfo = doctor;                     
+                        viewModel.drInfo = doctor;
                         Models.Link.findOne({
                             'patient': patient.id,
                             'doctor': doctor.id
-                        },function(err, link){
-                            if (link===null) {
+                        }, function (err, link) {
+                            if (link === null) {
                                 console.log('newlink');
                                 var newLink = new Models.Link({
                                     patient: patient.id,
                                     doctor: doctor.id
                                 });
                                 newLink.save();
-                            }
-                            else{
+                                var newMessage = new Models.MessageDr({
+                                    patient: patient.id,
+                                    doctor: doctor.id,
+                                    doctorName: doctor.personalDetail.firstName + " "+doctor.personalDetail.middleName + " "+doctor.personalDetail.lastName 
+                                });
+                                newMessage.save();
                                 fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
-                            
+
                                     for (var i = 0; i < files.length; i++) {
                                         testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
                                         var testBuffer = new Buffer(testFile);
@@ -699,8 +715,9 @@ module.exports = {
                                             if (err) {
                                                 console.log(err);
                                             }
-                                            console.log("Files:::",filename);
+                                            console.log("Files:::", filename);
                                             console.log(output[0].hash);
+
                                             Models.Link.update({
                                                 'patient': patient.id,
                                                 'doctor': doctor.id
@@ -709,23 +726,59 @@ module.exports = {
                                                     'hashes': {
                                                         'linkage': output[0].hash,
                                                         'recordid': filename
-        
+
                                                     }
                                                 }
                                             }, function (err, result) {
                                                 if (err) throw err;
                                             }, false, true);
-        
-        
+
+
                                         });
                                     }
-        
-        
+
+
+                                });
+                                res.render('Confirmation', viewModel);
+                            } else {
+                                fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+
+                                    for (var i = 0; i < files.length; i++) {
+                                        testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                        var testBuffer = new Buffer(testFile);
+                                        var filename = files[i];
+                                        ipfs.files.add(testBuffer, function (err, output) {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                            console.log("Files:::", filename);
+                                            console.log(output[0].hash);
+
+                                            Models.Link.update({
+                                                'patient': patient.id,
+                                                'doctor': doctor.id
+                                            }, {
+                                                $addToSet: {
+                                                    'hashes': {
+                                                        'linkage': output[0].hash,
+                                                        'recordid': filename
+
+                                                    }
+                                                }
+                                            }, function (err, result) {
+                                                if (err) throw err;
+                                            }, false, true);
+
+
+                                        });
+                                    }
+
+
                                 });
                                 res.render('Confirmation', viewModel);
                             }
                         })
-                        
+
                     }
                 });
 
@@ -746,7 +799,7 @@ module.exports = {
             patient: {},
             dr: {},
             hash: [],
-            recordid:[]
+            recordid: []
         };
         Models.Patient.findOne({
             'ethAddr': {
@@ -762,17 +815,17 @@ module.exports = {
                 }, function (err, doctor) {
                     if (err) throw err;
                     else {
-                        viewModel.patient=patient;
+                        viewModel.patient = patient;
                         Models.Link.findOne({
                             'patient': patient.id,
                             'doctor': doctor.id
                         }, function (err, link) {
                             if (err) throw err;
                             else {
-                                viewModel.dr=doctor;
+                                viewModel.dr = doctor;
                                 console.log(link);
-                                for (i=0; i<link.hashes.length; i++){
-                                    console.log("Link",link.hashes[i].linkage);
+                                for (i = 0; i < link.hashes.length; i++) {
+                                    console.log("Link", link.hashes[i].linkage);
                                     viewModel.hash.push(link.hashes[i].linkage);
                                     viewModel.hash.push(link.hashes[i].recordid);
                                 }
@@ -785,5 +838,35 @@ module.exports = {
             }
         });
 
+    },
+    notification: function (req, res) {
+        var viewModel = {
+            patient: {},
+            msgs: [],
+        }
+        Models.Patient.findOne({
+            'ethAddr': {
+                $regex: req.params.firstAccount
+            }
+        }, function (err, patient) {
+            if (err) throw err;
+            else {
+                viewModel.patient = patient;
+                Models.MessageDr.find({
+                    patient: patient.id
+                }, function (err, msg) {
+                    if (err) {
+                        throw err;
+                    }
+                    for (index = 0; index < msg.length; ++index) {
+
+                        viewModel.msgs.push(msg[index]);
+                        res.render('notifications', viewModel)
+
+                    }
+                });
+
+            }
+        });
     }
 };

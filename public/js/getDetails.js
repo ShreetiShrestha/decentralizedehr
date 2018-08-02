@@ -146,10 +146,7 @@ $(function(){
         
         $(".submitByDr").hide();
         $(".loadingSpinner").show().delay(5000).fadeOut(0);
-            
-      
-        
-
     });
+   
     
 });
