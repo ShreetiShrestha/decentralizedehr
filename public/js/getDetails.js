@@ -128,12 +128,12 @@ $(function(){
             $('#reportDetail').show();
             $("#RTitle").text("Procedure Type : " +data.title);
             $("#RDescription").text( "Description : "+data.description);
-            $('#downloadReport').on('click',function(event){
-                event.preventDefault();
-                $.post('/doctor/'+ids[1]+'/'+ids[0]+'/reportsdownload/'+data.filename).done(function(data1){
-                    
-                });
-            });
+            // $('#downloadReport').on('click',function(event){
+                // event.preventDefault();
+                // $.post('/doctor/'+ids[1]+'/'+ids[0]+'/reportsdownload/'+data.filename).done(function(data1){
+                   $('#downloadAnchor').attr('href','/public/upload/patients/'+ids[0]+'/'+data.filename); 
+                // });
+            // });
         });
         
 
