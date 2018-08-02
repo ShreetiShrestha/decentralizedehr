@@ -82,10 +82,11 @@ module.exports = function (app) {
     router.get('/doctor/:drAccount/:patientAccount/surgicalHistoryadd', doctor.surgicalHistoryadd);
     router.post('/doctor/:drAccount/:patientAccount/surgicalHistorysubmit', doctor.surgicalHistorysubmit);
 
-    // router.get('/doctor/:drAccount/:patientAccount/reportsList/', doctor.reportslist);
-    // router.post('/doctor/:drAccount/:patientAccount/reportsDetailView/:dataid', doctor.reportsdetailsview);
-    // router.get('/doctor/:drAccount/:patientAccount/reportsadd', doctor.reportsadd);
-    // router.post('/doctor/:drAccount/:patientAccount/reportssubmit', doctor.reportssubmit);
+    router.get('/doctor/:drAccount/:patientAccount/reportsList/', doctor.reportslist);
+    router.post('/doctor/:drAccount/:patientAccount/reportsDetailView/:dataid', doctor.reportsdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/reportsadd', doctor.reportsadd);
+    router.post('/doctor/:drAccount/:patientAccount/reportssubmit', doctor.reportssubmit);
+    router.post('/doctor/:drAccount/:patientAccount/reportsdownload/:filename', doctor.reportsdownload);
 
     router.get('/doctor/:firstAccount/personalDetail', doctor.personaldetail);
     router.post('/doctor/:firstAccount/personalDetailedit', doctor.personalDetailedit);

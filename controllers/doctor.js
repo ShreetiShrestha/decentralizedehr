@@ -3,6 +3,7 @@ var Models = require('../models'),
     path = require('path'),
     ipfsAPI = require('ipfs-api'),
     QRCode = require('qrcode'),
+    express = require('express'),
     // ursa = require('ursa'),
     fs = require('fs');
 let ipfs = ipfsAPI('ipfs.infura.io', '5001', {
@@ -416,7 +417,7 @@ module.exports = {
         });
     },
     vitalsignssubmit: function (req, res) {
-        acc= req.params.patientAccount;
+        acc = req.params.patientAccount;
         Models.Patient.update({
             'ethAddr': req.params.patientAccount
         }, {
@@ -498,7 +499,7 @@ module.exports = {
                                                 if (err) throw err;
                                             }, false, true);
 
-                                            
+
                                         });
                                     }
 
@@ -597,7 +598,7 @@ module.exports = {
         });
     },
     allergiessubmit: function (req, res) {
-        acc= req.params.patientAccount;
+        acc = req.params.patientAccount;
         Models.Patient.update({
             'ethAddr': req.params.patientAccount
         }, {
@@ -680,7 +681,7 @@ module.exports = {
                                                 if (err) throw err;
                                             }, false, true);
 
-                                            
+
                                         });
                                     }
 
@@ -701,7 +702,7 @@ module.exports = {
         var viewModel = {
             patientInfo: {},
             dr: {},
-            pres:''
+            pres: ''
         }
         Models.Doctor.findOne({
             'ethAddr': {
@@ -717,7 +718,7 @@ module.exports = {
                     }
                 }, function (err, patient) {
                     viewModel.patientInfo = patient;
-                    
+
                     res.render("medicationslist", viewModel);
                 });
             }
@@ -736,7 +737,7 @@ module.exports = {
                     if (result.medications[i].id === req.params.dataid) {
 
                         res.send({
-                          
+
                             'name': result.medications[i].name,
                             'medicationType': result.medications[i].medicationType,
                             'dose': result.medications[i].dose,
@@ -798,7 +799,7 @@ module.exports = {
         });
     },
     medicationssubmit: function (req, res) {
-        acc= req.params.patientAccount;
+        acc = req.params.patientAccount;
         Models.Doctor.findOne({
             'personalDetail.firstName': {
                 $regex: req.body.prescribedBy.split(" ")[0]
@@ -832,7 +833,7 @@ module.exports = {
                 if (err) throw err;
             }, false, true);
         });
-        
+
         Models.Doctor.findOne({
             'ethAddr': {
                 $regex: req.params.drAccount
@@ -897,7 +898,7 @@ module.exports = {
                                                 if (err) throw err;
                                             }, false, true);
 
-                                            
+
                                         });
                                     }
 
@@ -933,7 +934,7 @@ module.exports = {
                     }
                 }, function (err, patient) {
                     viewModel.patientInfo = patient;
-                    
+
                     res.render("immunizationslist", viewModel);
                 });
             }
@@ -996,7 +997,7 @@ module.exports = {
         });
     },
     immunizationssubmit: function (req, res) {
-        acc= req.params.patientAccount;
+        acc = req.params.patientAccount;
         Models.Patient.update({
             'ethAddr': req.params.patientAccount
         }, {
@@ -1078,7 +1079,7 @@ module.exports = {
                                                 if (err) throw err;
                                             }, false, true);
 
-                                            
+
                                         });
                                     }
 
@@ -1113,7 +1114,7 @@ module.exports = {
                         $regex: req.params.patientAccount
                     }
                 }, function (err, patient) {
-                    viewModel.patientInfo = patient; 
+                    viewModel.patientInfo = patient;
                     res.render("surgicalHistorylist", viewModel);
                 });
             }
@@ -1132,7 +1133,7 @@ module.exports = {
                     if (result.surgicalHistory[i].id === req.params.dataid) {
 
                         res.send({
-                          
+
                             'procedureType': result.surgicalHistory[i].procedureType,
                             'date': result.surgicalHistory[i].date,
                             'hospital': result.surgicalHistory[i].hospital,
@@ -1142,7 +1143,7 @@ module.exports = {
                             'physicianNotes': result.surgicalHistory[i].physicianNotes,
                             'anaesthesiaNotes': result.surgicalHistory[i].anesthesiaNotes,
                             'consequence': result.surgicalHistory[i].consequence,
-                            
+
                             'id': result.surgicalHistory[i].id
                         });
                     }
@@ -1191,7 +1192,7 @@ module.exports = {
         });
     },
     surgicalHistorysubmit: function (req, res) {
-        acc= req.params.patientAccount;
+        acc = req.params.patientAccount;
         Models.Doctor.findOne({
             'personalDetail.firstName': {
                 $regex: req.body.operatedby.split(" ")[0]
@@ -1213,7 +1214,7 @@ module.exports = {
                         'operatedBy': docID,
                         'surgicalNotes': req.body.surgicalNotes,
                         'physicianNotes': req.body.physicianNotes,
-                        'anesthesiaNotes': req.body.anaesthesiaNotes,
+                        'anesthesiaNotes': req.body.anesthesiaNotes,
                         'consequence': req.body.consequence,
                     }
                 }
@@ -1221,7 +1222,7 @@ module.exports = {
                 if (err) throw err;
             }, false, true);
         });
-        
+
         Models.Doctor.findOne({
             'ethAddr': {
                 $regex: req.params.drAccount
@@ -1286,7 +1287,7 @@ module.exports = {
                                                 if (err) throw err;
                                             }, false, true);
 
-                                            
+
                                         });
                                     }
 
@@ -1302,5 +1303,284 @@ module.exports = {
             }
         });
     },
+
+    reportslist: function (req, res) {
+        var viewModel = {
+            patientInfo: {},
+            dr: {},
+        }
+        Models.Doctor.findOne({
+            'ethAddr': {
+                $regex: req.params.drAccount
+            }
+        }, function (err, doctor) {
+            if (err) throw err;
+            else {
+                viewModel.dr = doctor;
+                Models.Patient.findOne({
+                    'ethAddr': {
+                        $regex: req.params.patientAccount
+                    }
+                }, function (err, patient) {
+                    viewModel.patientInfo = patient;
+                    res.render("reportslist", viewModel);
+                });
+            }
+        });
+    },
+    reportsdetailsview: function (req, res) {
+
+        Models.Patient.findOne({
+            'ethAddr': {
+                $regex: req.params.patientAccount
+            }
+        }, function (err, result) {
+            if (err) throw err;
+            else {
+                for (i = 0; i < result.reports.length; i++) {
+                    if (result.reports[i].id === req.params.dataid) {
+
+                        res.send({
+                            'title': result.reports[i].title,
+                            'description': result.reports[i].description,
+                            'filename': result.reports[i].filename,
+                            'docEdited': result.reports[i].docEdited,
+                            'id': result.reports[i].id
+                        });
+                    }
+
+                }
+
+            }
+        });
+    },
+    reportsadd: function (req, res) {
+        var viewModel = {
+            doctors: [],
+            patientInfo: {},
+            dr: {}
+        };
+        Models.Doctor.find(function (err, doctors) {
+            if (err) {
+                throw err;
+            }
+            for (index = 0; index < doctors.length; ++index) {
+                if (doctors[index].validDoc) {
+                    viewModel.doctors.push(doctors[index].personalDetail.firstName + " " + doctors[index].personalDetail.lastName);
+                }
+            }
+        });
+        Models.Patient.findOne({
+            'ethAddr': req.params.patientAccount
+        }, function (err, patient) {
+            if (err) {
+                throw err;
+            }
+            if (!err && patient) {
+                viewModel.patientInfo = patient;
+                Models.Doctor.findOne({
+                    'ethAddr': req.params.drAccount
+                }, function (err, doctor) {
+                    if (err) {
+                        throw err;
+                    }
+                    if (!err && doctor) {
+                        viewModel.dr = doctor;
+                        res.render('reports', viewModel);
+                    }
+                });
+            }
+        });
+    },
+    reportssubmit: function (req, res) {
+        pathFile = req.file.path;
+        nameFile = req.file.originalname;
+        acc = req.params.firstAccount;
+        title = req.body.title;
+        desc = req.body.description;
+        Models.Doctor.findOne({
+            'personalDetail.firstName': {
+                $regex: req.body.addedBy.split(" ")[0]
+            }
+        }, function (err, doctor, req) {
+            if (err) {
+                throw err;
+            }
+            docID = doctor.id;
+            console.log(req);
+            var saveFile = function (req) {
+                var possible = 'abcdefghijklmnopqrstuvwxyz0123456789',
+                    fileUrl = ' ';
+
+                for (var i = 0; i < 6; i++) {
+                    fileUrl += possible.charAt(Math.floor(Math.random() * possible.length));
+                }
+
+                var tempPath = pathFile,
+                    ext = path.extname(nameFile).toLowerCase();
+                var dir = './public/upload/patients/' + acc + '/';
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir);
+                }
+                // var dir2 = dir + 'reports/';
+                // if (!fs.existsSync(dir2)) {
+                //     fs.mkdirSync(dir2);
+                // }
+                targetPath = path.resolve(dir + fileUrl + ext);
+                console.log('account', acc);
+
+
+                if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.gif' || ext === '.pdf' || ext === '.docx') {
+                    fs.rename(tempPath, targetPath, function (err, req) {
+                        if (err) {
+                            throw err;
+                        }
+                        Models.Patient.update({
+                            'ethAddr': acc
+                        }, {
+                            $addToSet: {
+                                'reports': {
+                                    'filename': fileUrl + ext,
+                                    'title': title,
+                                    'description': desc,
+                                    'docEdited': docID
+
+                                }
+                            }
+                        }, function (err, result) {
+                            if (err) throw err;
+                        }, false, true);
+                        var patient = Models.Patient.findOne({
+                            'ethAddr': acc
+                        });
+                        // console.log(patient);
+                    });
+                } else {
+                    fs.unlink(tempPath, function (err) {
+                        if (err) throw err;
+                        res.json(500, {
+                            error: 'The type of Files that were uploaded are unsupported formats.'
+                        });
+                    });
+                }
+            };
+            saveFile();
+            Models.Doctor.findOne({
+                'ethAddr': {
+                    $regex: req.params.drAccount
+                }
+            }, function (err, doctor) {
+                if (err) throw err;
+                else {
+                    Models.Patient.findOne({
+                        'ethAddr': {
+                            $regex: req.params.patientAccount
+                        }
+                    }, function (err, patient) {
+                        if (err) throw err;
+                        else {
+                            Models.Link.findOne({
+                                'patient': patient.id,
+                                'doctor': doctor.id
+                            }, function (err, link) {
+                                if (link === null) {
+                                    console.log('newlink');
+                                    var newLink = new Models.Link({
+                                        patient: patient.id,
+                                        doctor: doctor.id
+                                    });
+                                    newLink.save();
+                                } else {
+                                    data = (JSON.stringify(patient, null, '\t'));
+                                    var dir = './public/upload/patients/' + acc + '/';
+                                    if (!fs.existsSync(dir)) {
+                                        fs.mkdirSync(dir);
+                                    }
+                                    fs.writeFile(dir + 'JSON' + acc + '.txt', data, function (err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        console.log('Data written to file');
+                                    });
+                                    fs.readdir("./public/upload/patients/" + acc + "/", (err, files) => {
+
+                                        for (var i = 0; i < files.length; i++) {
+                                            testFile = fs.readFileSync("./public/upload/patients/" + acc + "/" + files[i]);
+                                            var testBuffer = new Buffer(testFile);
+                                            var filename = files[i];
+                                            ipfs.files.add(testBuffer, function (err, output) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                                console.log("Files:::", filename);
+                                                console.log(output[0].hash);
+                                                Models.Link.update({
+                                                    'patient': patient.id,
+                                                    'doctor': doctor.id
+                                                }, {
+                                                    $addToSet: {
+                                                        'hashes': {
+                                                            'linkage': output[0].hash,
+                                                            'recordid': filename
+
+                                                        }
+                                                    }
+                                                }, function (err, result) {
+                                                    if (err) throw err;
+                                                }, false, true);
+
+
+                                            });
+                                        }
+
+
+                                    });
+                                    res.redirect('/doctor/' + doctor.ethAddr);
+
+                                }
+                            });
+                        }
+                    });
+
+                }
+            });
+        });
+    },
+    reportsdownload: function (req, res) {
+        pathname = '/upload/patients/' + req.params.patientAccount + '/' + req.params.filename;
+        
+        var file = path.join(__dirname,'../public');
+        filename =path.join(file,pathname);
+        console.log(filename);
+
+        res.download(filename, function (err,res) {
+            if (err) {
+                console.log("Error");
+                console.log(err);
+                res.send({"msg":"Error downloading file"});
+
+            } else {
+                console.log("Success");
+            }
+        });
+        
+         
+        // res.download(__dirname + '/public/upload/patients/' + req.params.patientAccount + '/' + req.params.filename, 'report.pdf', function (err) {
+        //     if (err) {
+        //         console.log("File not found");
+        //         res.send({
+        //             'msg': 'File not found'
+        //         });
+        //         // Handle error, but keep in mind the response may be partially-sent
+        //         // so check res.headersSent
+        //     } else {
+        //         res.send({
+        //             'msg': "Download"
+        //         });
+        //         // decrement a download credit, etc.
+        //     }
+        // });
+    }
+
 
 };

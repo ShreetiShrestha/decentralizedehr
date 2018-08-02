@@ -116,6 +116,30 @@ $(function(){
 
     });
 
+    $('#reportDetail').hide();
+    $('.viewReport').on('click', function (event){
+        event.preventDefault();
+        $("#reportBlank").hide();
+        var ids = $(this).data('id');
+        ids=ids.split(' ');
+        
+       
+        $.post ('/doctor/'+ids[1]+'/'+ids[0]+'/reportsDetailView/'+ids[2]).done(function(data){
+            $('#reportDetail').show();
+            $("#RTitle").text("Procedure Type : " +data.title);
+            $("#RDescription").text( "Description : "+data.description);
+            $('#downloadReport').on('click',function(event){
+                event.preventDefault();
+                $.post('/doctor/'+ids[1]+'/'+ids[0]+'/reportsdownload/'+data.filename).done(function(data1){
+                    
+                });
+            });
+        });
+        
+
+    });
+    
+
     $(".loadingSpinner").hide();
     $('.submitByDr').on('click', function (event){
         var id = $(this).data('id');

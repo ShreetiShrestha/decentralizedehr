@@ -299,7 +299,7 @@ module.exports = {
                         'operatedBy': docID,
                         'surgicalNotes': req.body.surgicalNotes,
                         'physicianNotes': req.body.physicianNotes,
-                        'anesthesiaNotes': req.body.anaesthesiaNotes,
+                        'anesthesiaNotes': req.body.anesthesiaNotes,
                         'consequence': req.body.consequence,
                     }
                 }
