@@ -12,7 +12,7 @@ module.exports = {
         var viewModel={
             msg : 'home'
         }
-        res.render('index',viewModel);
+        res.render('index',{layout: 'main1'});
     },
 
     login: function (req, res) {
