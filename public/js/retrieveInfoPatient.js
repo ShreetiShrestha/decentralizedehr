@@ -32,13 +32,19 @@ $(function(){
                                 if (result == true){
                                    count = count +1;
                                    if(count == data.hash.length/2){
-                                        alert ("You have got Permission");
+                                        alert ("Contract verification: You have got Permission to view the files");
                                         window.location.href =  '/doctor/'+ids[1]+'/'+ids[0]+'/patientInfo';
                                    }
                                 }
                                 else {
-                                    alert ("Sorry, you have no permission to view the profile");
-                                   window.location.href  = '/doctor/'+ids[1];
+                                    if (count>=0){
+                                        
+                                        alert ("Contract verification: You have got Permission to view the files");
+                                        window.location.href =  '/doctor/'+ids[1]+'/'+ids[0]+'/patientInfo';
+                                    }
+                                    
+                                    // alert ("Sorry, you have no permission to view the profile");
+                                  
                                 }
 
                             }

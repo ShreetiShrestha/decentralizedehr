@@ -1,1 +1,268 @@
-hi
+<!-- page content -->
+
+
+<div class="right_col" role="main">
+    <div class=""></div>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Patient Information</h3>
+        </div>
+    </div>
+
+    <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <button class="btn btn-success" id="addMsgDr" data-id="{{dr.ethAddr}} {{patientInfo.ethAddr}}"> <i class= "fa fa-plus"> Add Message</i></button>
+        </div>
+    </div>
+
+    <div class="clearfix" text-align="center"></div>
+    <div class="row" id="loadinggif">
+        <div class="col-md-12">
+            <h3 class="text-center">Retrieving hashes from Blockchain and Loading from IPFS</h3>
+            <img src="/public/img/loading.gif" alt='Retrieving hashes from Blockchain and Loading from IPFS' class="img img-responsive"
+                style="postion:relative; align-content:center; padding-left:18em;">
+        </div>
+    </div>
+    <div class="row" id="Infocontent">
+        <div class="col-md-9">
+            <div class="x_panel">
+                <div class="x_title">
+                    {{!-- Pagination if reqd --}}
+
+
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+                    <div>
+                        <div class="row row-bottom">
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        <a href="#">
+                                            <img style="width: 50%;  height:90%; margin-left:auto;margin-right:auto; display: block;" src="/public/img/vitalsigns.png"
+                                                alt="image" />
+                                        </a>
+                                        <div class="mask">
+                                            <p>Health is wealth.</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>
+                                            <div class="col-md-9">
+                                                <strong>Vital Signs</strong>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/vitalSignList" class="btn btn-success" style="">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+
+                                        <img style="width: 50%;  height:90%; margin-left:auto;margin-right:auto; display: block;" src="/public/img/allergies.png"
+                                            alt="image" />
+
+                                        <div class="mask">
+                                            <p>An apple a day keeps the doctor away.</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>
+                                            <div class="col-md-9">
+                                                <strong>Allergies</strong>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/allergiesList" class="btn btn-success" style="">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        <a href="#">
+                                            <img style="width: 50%;  height:90%; margin-left:auto;margin-right:auto; display: block;" src="/public/img/medications.png"
+                                                alt="image" />
+                                        </a>
+                                        <div class="mask">
+                                            <p>Healthy mind exist in healthy body.</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>
+                                            <div class="col-md-9">
+                                                <strong>Medications</strong>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/medicationsList" class="btn btn-success" style="">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-bottom">
+
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        <a href="#">
+                                            <img style="width: 50%;  height:90%; margin-left:auto;margin-right:auto; display: block;" src="/public/img/immunizations.png"
+                                                alt="image" />
+                                        </a>
+                                        <div class="mask">
+                                            <p>Prevention is better than cure.</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>
+                                            <div class="col-md-9">
+                                                <strong>Immunizations</strong>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/immunizationsList" class="btn btn-success" style="">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        <a href="#">
+                                            <img style="width: 50%;  height:90%; margin-left:auto;margin-right:auto; display: block;" src="/public/img/surgicalHistory.png"
+                                                alt="image" />
+                                        </a>
+                                        <div class="mask">
+                                            <p>To enjoy the glow of good health, you must exercise.</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>
+                                            <div class="col-md-9">
+                                                <strong>Surgical History</strong>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/surgicalHistoryList" class="btn btn-success" style="">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        <a href="#">
+                                            <img style="width: 50%;  height:90%; margin-left:auto;margin-right:auto; display: block;" src="/public/img/reports.png" alt="image"
+                                            />
+                                        </a>
+                                        <div class="mask">
+                                            <p>Health is not valued till sickness come.</p>
+
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <p>
+                                            <div class="col-md-9">
+                                                <strong>Reports</strong>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/reportsList" class="btn btn-success" style="">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </div>
+
+
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="x_panel">
+                <div class="x_header">
+                    <div>
+                        <div class="profile_img">
+                            <div id="crop-avatar">
+                                <!-- Current avatar -->
+                                <img style='align-content:center;' class="img-responsive avatar-view" style="height:10em;" id="patientProImg" src="/public/upload/patients/{{patientInfo.ethAddr}}/{{patientInfo.personalDetail.profilePic}}"
+                                    alt="Avatar" title="Change the avatar">
+                            </div>
+                        </div>
+                        <h3>{{patientInfo.personalDetail.firstName}} {{patientInfo.personalDetail.middleName}} {{patientInfo.personalDetail.lastName}}</h3>
+                        <h4>Age: {{yearago patientInfo.personalDetail.dob }} Years old </h4>
+                        <h4>Gender: {{patientInfo.personalDetail.gender}}</h4>
+                        <ul class="list-unstyled user_data">
+                            <li>
+                                <i class="fa fa-map-marker user-profile-icon"></i> Address:
+                                <text style="font-size:11pt">{{patientInfo.personalDetail.address}}</text>
+                            </li>
+
+                            <li>
+                                <i class="fa fa-phone user-profile-icon"></i> Contact:
+                                <text style="font-size:11pt">{{patientInfo.personalDetail.contact}}</text>
+                            </li>
+                            <li>
+                                <i class="fa fa-phone user-profile-icon"></i>Emergency Contact:
+                                <text style="font-size:11pt">{{patientInfo.personalDetail.emergencyContact}}</text>
+                            </li>
+                            </li>
+
+                            <li class="m-top-xs">
+                                <i class="fa fa-plus user-profile-icon"></i> Message:
+                                <text style="font-size:11pt"></text>
+                            </li>
+                        </ul>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /page content -->

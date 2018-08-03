@@ -47,6 +47,8 @@ module.exports = function (app) {
     router.post('/patient/:firstAccount/reportssubmit', patient.reportssubmit);
     router.get('/patient/:firstAccount/reportsDetails', patient.reportsDetails);
 
+    router.get('/patient/:firstAccount/notification', patient.notification);
+
     router.get('/patient/:firstAccount/sharedoc', patient.sharedoc);
     router.post('/patient/:patientAccount/:drAccount/sharedoc/', patient.retrieveinfo);
     router.get('/patient/:patientAccount/:drAccount/sharedoc/info', patient.share);
@@ -56,6 +58,38 @@ module.exports = function (app) {
     router.post('/doctor/:drAccount/:patientAccount/getPatientInfo/', doctor.patientretrieveinfo);
     router.post('/doctor/:drAccount/:patientAccount/retrieve/', doctor.retrieve);
     router.get('/doctor/:drAccount/:patientAccount/patientInfo/', doctor.patientInfo);
+
+    router.get('/doctor/:drAccount/:patientAccount/vitalSignList/', doctor.vitalsignslist);
+    router.post('/doctor/:drAccount/:patientAccount/vitalSignDetailView/:dataid', doctor.vitalsignsdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/vitalSignsadd', doctor.vitalsignsadd);
+    router.post('/doctor/:drAccount/:patientAccount/vitalSignssubmit', doctor.vitalsignssubmit);
+
+    router.get('/doctor/:drAccount/:patientAccount/allergiesList/', doctor.allergieslist);
+    router.post('/doctor/:drAccount/:patientAccount/allergiesDetailView/:dataid', doctor.allergiesdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/allergiesadd', doctor.allergiesadd);
+    router.post('/doctor/:drAccount/:patientAccount/allergiessubmit', doctor.allergiessubmit);
+
+    router.get('/doctor/:drAccount/:patientAccount/medicationsList/', doctor.medicationslist);
+    router.post('/doctor/:drAccount/:patientAccount/medicationsDetailView/:dataid', doctor.medicationsdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/medicationsadd', doctor.medicationsadd);
+    router.post('/doctor/:drAccount/:patientAccount/medicationssubmit', doctor.medicationssubmit);
+
+    router.get('/doctor/:drAccount/:patientAccount/immunizationsList/', doctor.immunizationslist);
+    router.post('/doctor/:drAccount/:patientAccount/immunizationsDetailView/:dataid', doctor.immunizationsdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/immunizationsadd', doctor.immunizationsadd);
+    router.post('/doctor/:drAccount/:patientAccount/immunizationssubmit', doctor.immunizationssubmit);
+
+    router.get('/doctor/:drAccount/:patientAccount/surgicalHistoryList/', doctor.surgicalHistorylist);
+    router.post('/doctor/:drAccount/:patientAccount/surgicalHistoryDetailView/:dataid', doctor.surgicalHistorydetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/surgicalHistoryadd', doctor.surgicalHistoryadd);
+    router.post('/doctor/:drAccount/:patientAccount/surgicalHistorysubmit', doctor.surgicalHistorysubmit);
+
+    router.get('/doctor/:drAccount/:patientAccount/reportsList/', doctor.reportslist);
+    router.post('/doctor/:drAccount/:patientAccount/reportsDetailView/:dataid', doctor.reportsdetailsview);
+    router.get('/doctor/:drAccount/:patientAccount/reportsadd', doctor.reportsadd);
+    router.post('/doctor/:drAccount/:patientAccount/reportssubmit', doctor.reportssubmit);
+    router.post('/doctor/:drAccount/:patientAccount/reportsdownload/:filename', doctor.reportsdownload);
+    router.post('/doctor/:drAccount/:patientAccount/messagebydr/:msg', doctor.messagedrsubmit);
 
     router.get('/doctor/:firstAccount/personalDetail', doctor.personaldetail);
     router.post('/doctor/:firstAccount/personalDetailedit', doctor.personalDetailedit);

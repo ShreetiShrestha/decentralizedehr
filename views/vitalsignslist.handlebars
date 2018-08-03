@@ -1,0 +1,116 @@
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Vital Signs </h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>List of Vital Signs</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+
+                        <div class="table-responsive">
+                            <table class="table table-striped jambo_table">
+                                <thead>
+                                    <tr class="headings">
+                                        <th class="column-title">Name </th>
+                                        <th class="column-title">Date </th>
+                                        <th class="column-title">Status </th>
+                                        <th class="column-title">View Detail </th>
+
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {{#each patientInfo}} {{#each vitalSign}}
+                                    <tr class="even pointer">
+                                        <td class=" ">{{this.name}}</td>
+                                        <td class=" ">{{this.dateOfNote}} </td>
+                                        <td class=" ">{{this.status}}</td>
+                                        <td class=" ">
+                                            <button class="btn btn-info viewVitalSign" data-id="{{../this.ethAddr}} {{../../dr.ethAddr}} {{this.id}}">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                    {{/each}} {{/each}}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <a href="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/vitalSignsadd" class="btn btn-success"><i class="fa fa-plus"></i> New Entry</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Detail of Vital Sign</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        <div id="vitalSignBlank">
+                            <h4 class="text-center" style="margin:6em;">Click on View Details from the list to view Vital sign details.</h4>
+                        </div>
+                        <div id="vitalSignDetail">
+
+                            <h3 id="VSName"></h3>
+                            <h4 id="VSDate"></h4>
+                            <h4 id="VSStatus"></h4>
+                            <ul class="list-unstyled user_data">
+                                <li>
+                                     Value :
+                                    <text style="font-size:11pt" id="VSVal"></text>
+                                </li>
+
+                                <li>
+                                    Unit :
+                                    <text style="font-size:11pt" id="VSUnit"></text>
+                                </li>
+                                </li>
+
+                                <li class="m-top-xs">
+                                    <i class="fa fa-plus user-profile-icon" ></i> Notes :
+                                    <text style="font-size:11pt" id="VSNotes"></text>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->

@@ -105,6 +105,7 @@ module.exports = {
     },
 
     patientsecondform: function (req, res) {
+       
         Models.Patient.update({
             'ethAddr': req.params.firstAccount
         }, {
@@ -113,7 +114,7 @@ module.exports = {
                 'personalDetail.lastName': req.body.lastname,
                 'personalDetail.middleName': req.body.middlename,
                 'personalDetail.gender': req.body.gender,
-                'personalDetail.dob': req.body.dob,
+                'personalDetail.dob': new Date(req.body.dob),
                 'personalDetail.address': req.body.address,
                 'personalDetail.contact': req.body.contact,
 

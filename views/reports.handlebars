@@ -19,57 +19,67 @@
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
-            <br />
-            <form class="form-horizontal form-label-left" method="post" action="/patient/{{patient.ethAddr}}/reportssubmit" enctype="multipart/form-data">
+            <br /> {{#if patient}}
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/patient/{{patient.ethAddr}}/reportssubmit" enctype="multipart/form-data">
+              {{/if}} {{#if patientInfo}}
+              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/doctor/{{dr.ethAddr}}/{{patientInfo.ethAddr}}/reportssubmit" enctype="multipart/form-data">
+                {{/if}}
 
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Title
-                  <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="title" required="required" class="form-control col-md-7 col-xs-12" name="title">
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">Title
+                    <span class="required">*</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" id="title" required="required" class="form-control col-md-7 col-xs-12" name="title">
+                  </div>
                 </div>
-              </div>
 
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description"> Reports Description
-                  <br>(20 chars min, 100 max) :</label>
-                <textarea id="message" required="required" class="col-md-6 col-sm-6 col-xs-12" name="description" data-parsley-trigger="keyup"
-                  data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
-                  data-parsley-validation-threshold="10"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="profilePic">Upload Lab Reports </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="file" enctype="multipart/form-data" class="form-control-file col-md-7 col-xs-12" name="img">
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description"> Reports Description
+                    <br>(20 chars min, 100 max) :</label>
+                  <textarea id="message" required="required" class="col-md-6 col-sm-6 col-xs-12" name="description" data-parsley-trigger="keyup"
+                    data-parsley-minlength="20" data-parsley-maxlength="100" data-parsley-minlength-message="Come on! You need to enter at least a 20 caracters long comment.."
+                    data-parsley-validation-threshold="10"></textarea>
                 </div>
-              </div>
 
-              <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Added By:
-                  <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select class="form-control" name="addedBy">
-                    {{#each users}}
-                    <option>{{this}}</option>
-                    {{/each}}
-                  </select>
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="profilePic">Upload Lab Reports </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="file" enctype="multipart/form-data" class="form-control-file col-md-7 col-xs-12" name="img">
+                  </div>
                 </div>
-              </div>
 
-              <div class="ln_solid"></div>
-              <div class="form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                  <button class="btn btn-primary" type="button">Cancel</button>
-                  <button class="btn btn-primary" type="reset">Reset</button>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12">Added By:
+                    <span class="required">*</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select class="form-control" name="addedBy">
+                      {{#if users}} {{#each users}}
+                      <option>{{this}}</option>
+                      {{/each}} {{/if}} {{#if doctors}} {{#each doctors}}
+                      <option>{{this}}</option>
+                      {{/each}} {{/if}}
+                    </select>
+                  </div>
                 </div>
-              </div>
 
-            </form>
-            
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                  <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    <button class="btn btn-primary" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    {{#if patient}}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    {{/if}} {{#if patientInfo}}
+                    <button type="submit" class="btn btn-success submitByDr" data-id={{dr.ethAddr}}>Submit</button>
+                    <i class="fa fa-spinner loadingSpinner"> Uploading Link to IPFS</i>
+                    {{/if}}
+                  </div>
+                </div>
+
+              </form>
+
           </div>
         </div>
       </div>
