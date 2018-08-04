@@ -27,11 +27,12 @@ module.exports = {
                     'patient': patient.id,
 
                 }, function (err, msg) {
-                    if (msg.message.length > 0) {
+                    if(msg!=null){
+                        if (msg.message.length > 0) {
 
-                        viewModel.messageAvail= 'yes';
+                            viewModel.messageAvail= 'yes';
+                        }
                     }
-
                     res.render('patientdashboard', viewModel);
                 });
 

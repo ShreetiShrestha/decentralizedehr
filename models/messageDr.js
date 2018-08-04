@@ -20,5 +20,6 @@ var MessageDrSchema = new Schema({
     }
     
 });
-
+// var connect =  mongoose.model('MessageDr', MessageDrSchema);
+// connect.collection.insert({doctorName : 'aabs'});
 module.exports= mongoose.model('MessageDr', MessageDrSchema);
